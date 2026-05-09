@@ -1,0 +1,36 @@
+# ============================================================
+# requirements.txt — Boostify ML Dependencies
+# ============================================================
+# Install semua: pip install -r requirements.txt
+#
+# Untuk Raspberry Pi, tambahkan flag:
+# pip install -r requirements.txt --break-system-packages
+# ============================================================
+
+# Core ML
+deepface==0.0.93
+tensorflow==2.15.0       # untuk laptop/PC
+# tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
+
+# Computer Vision
+opencv-python==4.9.0.80
+opencv-python-headless==4.9.0.80  # untuk Raspi (tanpa GUI)
+
+# Numerik
+numpy==1.26.4
+scikit-learn==1.4.0
+
+# Utilitas
+Pillow==10.2.0
+tqdm==4.66.2
+matplotlib==3.8.3
+
+# Penyimpanan embedding
+# (pickle sudah built-in Python, tidak perlu install)
+
+# ============================================================
+# Catatan untuk Raspberry Pi:
+# - Ganti tensorflow → tflite-runtime
+# - Ganti opencv-python → opencv-python-headless
+# - Tambahkan flag --break-system-packages
+# ============================================================

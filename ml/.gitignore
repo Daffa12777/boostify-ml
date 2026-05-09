@@ -1,0 +1,6 @@
+# Jangan push file besar & sensitif
+ml/dataset/
+ml/__pycache__/
+ml/utils/__pycache__/
+ml/logs/
+*.pyc
