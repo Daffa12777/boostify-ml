@@ -127,3 +127,21 @@ result = recognizer.recognize(frame)
 - CLAHE sudah diaplikasikan secara otomatis
 - Tambah lampu tambahan di sekitar kamera
 - Pertimbangkan kamera NoIR + IR LED
+
+
+
+
+# Hapus semua dataset lama
+Remove-Item -Recurse -Force dataset\raw\*
+Remove-Item -Recurse -Force dataset\processed\*
+
+# Hapus model lama juga
+Remove-Item -Force models\embeddings.pkl
+Remove-Item -Force models\labels.pkl
+
+python collect_faces.py --nama "Nama Orang" --jumlah 80
+python preprocess.py
+python train.py
+
+python evaluate.py
+python predict.py

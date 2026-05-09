@@ -9,8 +9,8 @@
 
 # Core ML
 deepface==0.0.93
-tensorflow==2.15.0       # untuk laptop/PC
-# tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
+#tensorflow==2.15.0       # untuk laptop/PC
+tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
 
 # Computer Vision
 opencv-python==4.9.0.80
