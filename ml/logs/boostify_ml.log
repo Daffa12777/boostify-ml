@@ -462,3 +462,381 @@ Mulai training untuk 1 orang ...
 [2026-05-09 11:11:28] [INFO] [predict] ABSEN: daffa | confidence: 0.678
 [2026-05-09 11:11:31] [INFO] [predict] ABSEN: daffa | confidence: 0.877
 [2026-05-09 11:11:34] [INFO] [predict] ABSEN: daffa | confidence: 0.835
+[2026-05-09 12:19:52] [INFO] [train] Loading model Facenet (pertama kali mungkin download ~100MB) ...
+[2026-05-09 12:20:24] [INFO] [train] 
+Mulai training untuk 1 orang ...
+
+[2026-05-09 12:20:24] [INFO] [train] [daffa] Mengekstrak embedding dari 1200 foto ...
+[2026-05-09 12:32:50] [INFO] [train]   [daffa] ✅ Berhasil: 1200 | ❌ Gagal: 0 | Embedding shape: (128,)
+[2026-05-09 12:32:50] [INFO] [train] 
+==================================================
+[2026-05-09 12:32:50] [INFO] [train] ✅ TRAINING SELESAI
+[2026-05-09 12:32:50] [INFO] [train] Total orang terdaftar : 1
+[2026-05-09 12:32:50] [INFO] [train] Nama terdaftar        : ['daffa']
+[2026-05-09 12:32:50] [INFO] [train] File embedding        : E:\RISETCPS\ml_boostify\ml\models\embeddings.pkl
+[2026-05-09 12:32:50] [INFO] [train] File labels           : E:\RISETCPS\ml_boostify\ml\models\labels.pkl
+[2026-05-09 12:32:50] [INFO] [train] ==================================================
+[2026-05-09 12:32:50] [INFO] [train] Sekarang copy folder models/ ke Raspberry Pi.
+[2026-05-09 12:33:02] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 12:33:02] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 12:33:09] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 12:33:09] [INFO] [predict] Siap. 1 orang terdaftar: ['daffa']
+[2026-05-09 12:33:11] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 12:33:19] [INFO] [predict] ABSEN: daffa | confidence: 0.808
+[2026-05-09 12:33:22] [INFO] [predict] ABSEN: daffa | confidence: 0.838
+[2026-05-09 12:33:26] [INFO] [predict] ABSEN: daffa | confidence: 0.841
+[2026-05-09 12:33:29] [INFO] [predict] ABSEN: daffa | confidence: 0.817
+[2026-05-09 12:33:32] [INFO] [predict] ABSEN: daffa | confidence: 0.831
+[2026-05-09 12:33:35] [INFO] [predict] ABSEN: daffa | confidence: 0.836
+[2026-05-09 12:33:38] [INFO] [predict] ABSEN: daffa | confidence: 0.855
+[2026-05-09 12:33:41] [INFO] [predict] ABSEN: daffa | confidence: 0.707
+[2026-05-09 12:33:52] [INFO] [predict] ABSEN: daffa | confidence: 0.886
+[2026-05-09 12:33:55] [INFO] [predict] ABSEN: daffa | confidence: 0.831
+[2026-05-09 12:33:59] [INFO] [predict] ABSEN: daffa | confidence: 0.844
+[2026-05-09 12:35:40] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 12:35:40] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 12:35:48] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 12:35:48] [INFO] [predict] Siap. 1 orang terdaftar: ['daffa']
+[2026-05-09 12:35:49] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 12:35:56] [INFO] [predict] ABSEN: daffa | confidence: 0.817
+[2026-05-09 12:35:59] [INFO] [predict] ABSEN: daffa | confidence: 0.852
+[2026-05-09 12:36:03] [INFO] [predict] ABSEN: daffa | confidence: 0.873
+[2026-05-09 12:36:06] [INFO] [predict] ABSEN: daffa | confidence: 0.886
+[2026-05-09 12:36:09] [INFO] [predict] ABSEN: daffa | confidence: 0.765
+[2026-05-09 12:36:12] [INFO] [predict] ABSEN: daffa | confidence: 0.750
+[2026-05-09 12:36:15] [INFO] [predict] ABSEN: daffa | confidence: 0.862
+[2026-05-09 12:36:19] [INFO] [predict] ABSEN: daffa | confidence: 0.753
+[2026-05-09 16:04:04] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 16:04:04] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 16:04:13] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 16:04:13] [INFO] [predict] Siap. 1 orang terdaftar: ['daffa']
+[2026-05-09 16:04:15] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 16:04:22] [INFO] [predict] ABSEN: daffa | confidence: 0.572
+[2026-05-09 16:04:26] [INFO] [predict] ABSEN: daffa | confidence: 0.794
+[2026-05-09 16:04:29] [INFO] [predict] ABSEN: daffa | confidence: 0.772
+[2026-05-09 16:04:33] [INFO] [predict] ABSEN: daffa | confidence: 0.795
+[2026-05-09 16:04:37] [INFO] [predict] ABSEN: daffa | confidence: 0.725
+[2026-05-09 16:04:41] [INFO] [predict] ABSEN: daffa | confidence: 0.756
+[2026-05-09 16:05:16] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 16:05:16] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 16:05:24] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 16:05:24] [INFO] [predict] Siap. 1 orang terdaftar: ['daffa']
+[2026-05-09 16:05:25] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 16:05:33] [INFO] [predict] ABSEN: daffa | confidence: 0.774
+[2026-05-09 16:05:36] [INFO] [predict] ABSEN: daffa | confidence: 0.793
+[2026-05-09 16:05:40] [INFO] [predict] ABSEN: daffa | confidence: 0.715
+[2026-05-09 16:05:43] [INFO] [predict] ABSEN: daffa | confidence: 0.629
+[2026-05-09 16:05:46] [INFO] [predict] ABSEN: daffa | confidence: 0.776
+[2026-05-09 16:05:50] [INFO] [predict] ABSEN: daffa | confidence: 0.709
+[2026-05-09 16:05:53] [INFO] [predict] ABSEN: daffa | confidence: 0.744
+[2026-05-09 16:05:57] [INFO] [predict] ABSEN: daffa | confidence: 0.753
+[2026-05-09 16:06:01] [INFO] [predict] ABSEN: daffa | confidence: 0.789
+[2026-05-09 16:26:57] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 16:26:57] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 16:27:03] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 16:27:03] [INFO] [predict] Siap. 1 orang terdaftar: ['daffa']
+[2026-05-09 16:27:05] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 16:27:11] [INFO] [predict] ABSEN: daffa | code: DFF | confidence: 0.779 | uuid: a758b59b-1536-4579-9bc2-eecc3ad8a1ff
+[2026-05-09 16:27:14] [INFO] [predict] ABSEN: daffa | code: DFF | confidence: 0.799 | uuid: 649da15f-23cb-45c2-83d6-52d373dd182b
+[2026-05-09 16:27:18] [INFO] [predict] ABSEN: daffa | code: DFF | confidence: 0.738 | uuid: 83427430-bd55-4bd3-a21b-33a902669ed6
+[2026-05-09 16:27:21] [INFO] [predict] ABSEN: daffa | code: DFF | confidence: 0.839 | uuid: 95b35810-e1cf-4e9a-83ef-d57bdd8b3d1a
+[2026-05-09 16:27:25] [INFO] [predict] ABSEN: daffa | code: DFF | confidence: 0.797 | uuid: 32ef4613-2c1c-4928-a2e2-9cb083e8e06e
+[2026-05-09 16:32:14] [INFO] [collect_faces] Mengumpulkan foto untuk: Dirgi
+[2026-05-09 16:32:14] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 200
+[2026-05-09 16:32:14] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi
+[2026-05-09 16:32:15] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-09 16:32:15] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-09 16:32:15] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-09 16:32:15] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-09 16:32:21] [INFO] [collect_faces] Auto-capture: ON
+[2026-05-09 16:32:21] [INFO] [collect_faces]   📸 [1/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0001.jpg
+[2026-05-09 16:32:22] [INFO] [collect_faces]   📸 [2/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0002.jpg
+[2026-05-09 16:32:22] [INFO] [collect_faces]   📸 [3/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0003.jpg
+[2026-05-09 16:32:23] [INFO] [collect_faces]   📸 [4/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0004.jpg
+[2026-05-09 16:32:23] [INFO] [collect_faces]   📸 [5/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0005.jpg
+[2026-05-09 16:32:24] [INFO] [collect_faces]   📸 [6/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0006.jpg
+[2026-05-09 16:32:24] [INFO] [collect_faces]   📸 [7/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0007.jpg
+[2026-05-09 16:32:25] [INFO] [collect_faces]   📸 [8/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0008.jpg
+[2026-05-09 16:32:25] [INFO] [collect_faces]   📸 [9/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0009.jpg
+[2026-05-09 16:32:26] [INFO] [collect_faces]   📸 [10/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0010.jpg
+[2026-05-09 16:32:26] [INFO] [collect_faces]   📸 [11/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0011.jpg
+[2026-05-09 16:32:27] [INFO] [collect_faces]   📸 [12/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0012.jpg
+[2026-05-09 16:32:27] [INFO] [collect_faces]   📸 [13/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0013.jpg
+[2026-05-09 16:32:28] [INFO] [collect_faces]   📸 [14/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0014.jpg
+[2026-05-09 16:32:29] [INFO] [collect_faces]   📸 [15/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0015.jpg
+[2026-05-09 16:32:29] [INFO] [collect_faces]   📸 [16/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0016.jpg
+[2026-05-09 16:32:30] [INFO] [collect_faces]   📸 [17/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0017.jpg
+[2026-05-09 16:32:30] [INFO] [collect_faces]   📸 [18/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0018.jpg
+[2026-05-09 16:32:31] [INFO] [collect_faces]   📸 [19/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0019.jpg
+[2026-05-09 16:32:31] [INFO] [collect_faces]   📸 [20/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0020.jpg
+[2026-05-09 16:32:32] [INFO] [collect_faces]   📸 [21/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0021.jpg
+[2026-05-09 16:32:32] [INFO] [collect_faces]   📸 [22/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0022.jpg
+[2026-05-09 16:32:33] [INFO] [collect_faces]   📸 [23/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0023.jpg
+[2026-05-09 16:32:33] [INFO] [collect_faces]   📸 [24/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0024.jpg
+[2026-05-09 16:32:34] [INFO] [collect_faces]   📸 [25/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0025.jpg
+[2026-05-09 16:32:34] [INFO] [collect_faces]   📸 [26/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0026.jpg
+[2026-05-09 16:32:35] [INFO] [collect_faces]   📸 [27/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0027.jpg
+[2026-05-09 16:32:35] [INFO] [collect_faces]   📸 [28/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0028.jpg
+[2026-05-09 16:32:36] [INFO] [collect_faces]   📸 [29/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0029.jpg
+[2026-05-09 16:32:36] [INFO] [collect_faces]   📸 [30/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0030.jpg
+[2026-05-09 16:32:37] [INFO] [collect_faces]   📸 [31/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0031.jpg
+[2026-05-09 16:32:37] [INFO] [collect_faces]   📸 [32/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0032.jpg
+[2026-05-09 16:32:38] [INFO] [collect_faces]   📸 [33/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0033.jpg
+[2026-05-09 16:32:38] [INFO] [collect_faces]   📸 [34/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0034.jpg
+[2026-05-09 16:32:39] [INFO] [collect_faces]   📸 [35/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0035.jpg
+[2026-05-09 16:32:40] [INFO] [collect_faces]   📸 [36/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0036.jpg
+[2026-05-09 16:32:40] [INFO] [collect_faces]   📸 [37/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0037.jpg
+[2026-05-09 16:32:41] [INFO] [collect_faces]   📸 [38/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0038.jpg
+[2026-05-09 16:32:41] [INFO] [collect_faces]   📸 [39/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0039.jpg
+[2026-05-09 16:32:42] [INFO] [collect_faces]   📸 [40/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0040.jpg
+[2026-05-09 16:32:42] [INFO] [collect_faces]   📸 [41/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0041.jpg
+[2026-05-09 16:32:43] [INFO] [collect_faces]   📸 [42/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0042.jpg
+[2026-05-09 16:32:43] [INFO] [collect_faces]   📸 [43/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0043.jpg
+[2026-05-09 16:32:44] [INFO] [collect_faces]   📸 [44/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0044.jpg
+[2026-05-09 16:32:44] [INFO] [collect_faces]   📸 [45/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0045.jpg
+[2026-05-09 16:32:45] [INFO] [collect_faces]   📸 [46/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0046.jpg
+[2026-05-09 16:32:45] [INFO] [collect_faces]   📸 [47/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0047.jpg
+[2026-05-09 16:32:46] [INFO] [collect_faces]   📸 [48/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0048.jpg
+[2026-05-09 16:32:46] [INFO] [collect_faces]   📸 [49/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0049.jpg
+[2026-05-09 16:32:47] [INFO] [collect_faces]   📸 [50/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0050.jpg
+[2026-05-09 16:32:47] [INFO] [collect_faces]   📸 [51/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0051.jpg
+[2026-05-09 16:32:48] [INFO] [collect_faces]   📸 [52/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0052.jpg
+[2026-05-09 16:32:49] [INFO] [collect_faces]   📸 [53/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0053.jpg
+[2026-05-09 16:32:49] [INFO] [collect_faces]   📸 [54/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0054.jpg
+[2026-05-09 16:32:50] [INFO] [collect_faces]   📸 [55/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0055.jpg
+[2026-05-09 16:32:50] [INFO] [collect_faces]   📸 [56/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0056.jpg
+[2026-05-09 16:32:51] [INFO] [collect_faces]   📸 [57/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0057.jpg
+[2026-05-09 16:32:51] [INFO] [collect_faces]   📸 [58/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0058.jpg
+[2026-05-09 16:32:52] [INFO] [collect_faces]   📸 [59/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0059.jpg
+[2026-05-09 16:32:52] [INFO] [collect_faces]   📸 [60/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0060.jpg
+[2026-05-09 16:32:53] [INFO] [collect_faces]   📸 [61/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0061.jpg
+[2026-05-09 16:32:53] [INFO] [collect_faces]   📸 [62/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0062.jpg
+[2026-05-09 16:32:54] [INFO] [collect_faces]   📸 [63/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0063.jpg
+[2026-05-09 16:32:54] [INFO] [collect_faces]   📸 [64/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0064.jpg
+[2026-05-09 16:32:55] [INFO] [collect_faces]   📸 [65/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0065.jpg
+[2026-05-09 16:32:55] [INFO] [collect_faces]   📸 [66/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0066.jpg
+[2026-05-09 16:32:56] [INFO] [collect_faces]   📸 [67/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0067.jpg
+[2026-05-09 16:32:56] [INFO] [collect_faces]   📸 [68/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0068.jpg
+[2026-05-09 16:32:57] [INFO] [collect_faces]   📸 [69/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0069.jpg
+[2026-05-09 16:32:57] [INFO] [collect_faces]   📸 [70/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0070.jpg
+[2026-05-09 16:32:58] [INFO] [collect_faces]   📸 [71/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0071.jpg
+[2026-05-09 16:32:59] [INFO] [collect_faces]   📸 [72/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0072.jpg
+[2026-05-09 16:32:59] [INFO] [collect_faces]   📸 [73/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0073.jpg
+[2026-05-09 16:33:00] [INFO] [collect_faces]   📸 [74/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0074.jpg
+[2026-05-09 16:33:00] [INFO] [collect_faces]   📸 [75/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0075.jpg
+[2026-05-09 16:33:01] [INFO] [collect_faces]   📸 [76/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0076.jpg
+[2026-05-09 16:33:01] [INFO] [collect_faces]   📸 [77/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0077.jpg
+[2026-05-09 16:33:02] [INFO] [collect_faces]   📸 [78/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0078.jpg
+[2026-05-09 16:33:02] [INFO] [collect_faces]   📸 [79/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0079.jpg
+[2026-05-09 16:33:03] [INFO] [collect_faces]   📸 [80/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0080.jpg
+[2026-05-09 16:33:03] [INFO] [collect_faces]   📸 [81/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0081.jpg
+[2026-05-09 16:33:04] [INFO] [collect_faces]   📸 [82/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0082.jpg
+[2026-05-09 16:33:04] [INFO] [collect_faces]   📸 [83/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0083.jpg
+[2026-05-09 16:33:05] [INFO] [collect_faces]   📸 [84/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0084.jpg
+[2026-05-09 16:33:05] [INFO] [collect_faces]   📸 [85/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0085.jpg
+[2026-05-09 16:33:06] [INFO] [collect_faces]   📸 [86/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0086.jpg
+[2026-05-09 16:33:06] [INFO] [collect_faces]   📸 [87/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0087.jpg
+[2026-05-09 16:33:07] [INFO] [collect_faces]   📸 [88/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0088.jpg
+[2026-05-09 16:33:08] [INFO] [collect_faces]   📸 [89/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0089.jpg
+[2026-05-09 16:33:08] [INFO] [collect_faces]   📸 [90/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0090.jpg
+[2026-05-09 16:33:09] [INFO] [collect_faces]   📸 [91/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0091.jpg
+[2026-05-09 16:33:09] [INFO] [collect_faces]   📸 [92/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0092.jpg
+[2026-05-09 16:33:10] [INFO] [collect_faces]   📸 [93/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0093.jpg
+[2026-05-09 16:33:10] [INFO] [collect_faces]   📸 [94/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0094.jpg
+[2026-05-09 16:33:11] [INFO] [collect_faces]   📸 [95/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0095.jpg
+[2026-05-09 16:33:11] [INFO] [collect_faces]   📸 [96/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0096.jpg
+[2026-05-09 16:33:12] [INFO] [collect_faces]   📸 [97/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0097.jpg
+[2026-05-09 16:33:12] [INFO] [collect_faces]   📸 [98/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0098.jpg
+[2026-05-09 16:33:13] [INFO] [collect_faces]   📸 [99/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0099.jpg
+[2026-05-09 16:33:13] [INFO] [collect_faces]   📸 [100/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0100.jpg
+[2026-05-09 16:33:14] [INFO] [collect_faces]   📸 [101/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0101.jpg
+[2026-05-09 16:33:14] [INFO] [collect_faces]   📸 [102/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0102.jpg
+[2026-05-09 16:33:15] [INFO] [collect_faces]   📸 [103/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0103.jpg
+[2026-05-09 16:33:15] [INFO] [collect_faces]   📸 [104/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0104.jpg
+[2026-05-09 16:33:16] [INFO] [collect_faces]   📸 [105/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0105.jpg
+[2026-05-09 16:33:17] [INFO] [collect_faces]   📸 [106/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0106.jpg
+[2026-05-09 16:33:17] [INFO] [collect_faces]   📸 [107/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0107.jpg
+[2026-05-09 16:33:18] [INFO] [collect_faces]   📸 [108/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0108.jpg
+[2026-05-09 16:33:18] [INFO] [collect_faces]   📸 [109/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0109.jpg
+[2026-05-09 16:33:19] [INFO] [collect_faces]   📸 [110/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0110.jpg
+[2026-05-09 16:33:19] [INFO] [collect_faces]   📸 [111/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0111.jpg
+[2026-05-09 16:33:20] [INFO] [collect_faces]   📸 [112/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0112.jpg
+[2026-05-09 16:33:20] [INFO] [collect_faces]   📸 [113/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0113.jpg
+[2026-05-09 16:33:21] [INFO] [collect_faces]   📸 [114/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0114.jpg
+[2026-05-09 16:33:21] [INFO] [collect_faces]   📸 [115/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0115.jpg
+[2026-05-09 16:33:22] [INFO] [collect_faces]   📸 [116/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0116.jpg
+[2026-05-09 16:33:22] [INFO] [collect_faces]   📸 [117/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0117.jpg
+[2026-05-09 16:33:23] [INFO] [collect_faces]   📸 [118/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0118.jpg
+[2026-05-09 16:33:23] [INFO] [collect_faces]   📸 [119/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0119.jpg
+[2026-05-09 16:33:24] [INFO] [collect_faces]   📸 [120/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0120.jpg
+[2026-05-09 16:33:24] [INFO] [collect_faces]   📸 [121/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0121.jpg
+[2026-05-09 16:33:25] [INFO] [collect_faces]   📸 [122/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0122.jpg
+[2026-05-09 16:33:25] [INFO] [collect_faces]   📸 [123/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0123.jpg
+[2026-05-09 16:33:26] [INFO] [collect_faces]   📸 [124/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0124.jpg
+[2026-05-09 16:33:26] [INFO] [collect_faces]   📸 [125/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0125.jpg
+[2026-05-09 16:33:27] [INFO] [collect_faces]   📸 [126/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0126.jpg
+[2026-05-09 16:33:28] [INFO] [collect_faces]   📸 [127/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0127.jpg
+[2026-05-09 16:33:28] [INFO] [collect_faces]   📸 [128/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0128.jpg
+[2026-05-09 16:33:29] [INFO] [collect_faces]   📸 [129/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0129.jpg
+[2026-05-09 16:33:29] [INFO] [collect_faces]   📸 [130/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0130.jpg
+[2026-05-09 16:33:30] [INFO] [collect_faces]   📸 [131/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0131.jpg
+[2026-05-09 16:33:30] [INFO] [collect_faces]   📸 [132/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0132.jpg
+[2026-05-09 16:33:31] [INFO] [collect_faces]   📸 [133/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0133.jpg
+[2026-05-09 16:33:31] [INFO] [collect_faces]   📸 [134/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0134.jpg
+[2026-05-09 16:33:32] [INFO] [collect_faces]   📸 [135/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0135.jpg
+[2026-05-09 16:33:32] [INFO] [collect_faces]   📸 [136/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0136.jpg
+[2026-05-09 16:33:33] [INFO] [collect_faces]   📸 [137/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0137.jpg
+[2026-05-09 16:33:33] [INFO] [collect_faces]   📸 [138/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0138.jpg
+[2026-05-09 16:33:34] [INFO] [collect_faces]   📸 [139/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0139.jpg
+[2026-05-09 16:33:34] [INFO] [collect_faces]   📸 [140/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0140.jpg
+[2026-05-09 16:33:35] [INFO] [collect_faces]   📸 [141/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0141.jpg
+[2026-05-09 16:33:35] [INFO] [collect_faces]   📸 [142/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0142.jpg
+[2026-05-09 16:33:36] [INFO] [collect_faces]   📸 [143/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0143.jpg
+[2026-05-09 16:33:37] [INFO] [collect_faces]   📸 [144/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0144.jpg
+[2026-05-09 16:33:37] [INFO] [collect_faces]   📸 [145/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0145.jpg
+[2026-05-09 16:33:38] [INFO] [collect_faces]   📸 [146/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0146.jpg
+[2026-05-09 16:33:38] [INFO] [collect_faces]   📸 [147/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0147.jpg
+[2026-05-09 16:33:39] [INFO] [collect_faces]   📸 [148/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0148.jpg
+[2026-05-09 16:33:39] [INFO] [collect_faces]   📸 [149/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0149.jpg
+[2026-05-09 16:33:40] [INFO] [collect_faces]   📸 [150/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0150.jpg
+[2026-05-09 16:33:40] [INFO] [collect_faces]   📸 [151/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0151.jpg
+[2026-05-09 16:33:41] [INFO] [collect_faces]   📸 [152/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0152.jpg
+[2026-05-09 16:33:41] [INFO] [collect_faces]   📸 [153/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0153.jpg
+[2026-05-09 16:33:42] [INFO] [collect_faces]   📸 [154/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0154.jpg
+[2026-05-09 16:33:42] [INFO] [collect_faces]   📸 [155/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0155.jpg
+[2026-05-09 16:33:43] [INFO] [collect_faces]   📸 [156/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0156.jpg
+[2026-05-09 16:33:43] [INFO] [collect_faces]   📸 [157/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0157.jpg
+[2026-05-09 16:33:44] [INFO] [collect_faces]   📸 [158/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0158.jpg
+[2026-05-09 16:33:44] [INFO] [collect_faces]   📸 [159/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0159.jpg
+[2026-05-09 16:33:45] [INFO] [collect_faces]   📸 [160/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0160.jpg
+[2026-05-09 16:33:45] [INFO] [collect_faces]   📸 [161/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0161.jpg
+[2026-05-09 16:33:46] [INFO] [collect_faces]   📸 [162/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0162.jpg
+[2026-05-09 16:33:46] [INFO] [collect_faces]   📸 [163/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0163.jpg
+[2026-05-09 16:33:47] [INFO] [collect_faces]   📸 [164/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0164.jpg
+[2026-05-09 16:33:48] [INFO] [collect_faces]   📸 [165/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0165.jpg
+[2026-05-09 16:33:48] [INFO] [collect_faces]   📸 [166/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0166.jpg
+[2026-05-09 16:33:49] [INFO] [collect_faces]   📸 [167/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0167.jpg
+[2026-05-09 16:33:49] [INFO] [collect_faces]   📸 [168/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0168.jpg
+[2026-05-09 16:33:50] [INFO] [collect_faces]   📸 [169/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0169.jpg
+[2026-05-09 16:33:50] [INFO] [collect_faces]   📸 [170/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0170.jpg
+[2026-05-09 16:33:51] [INFO] [collect_faces]   📸 [171/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0171.jpg
+[2026-05-09 16:33:51] [INFO] [collect_faces]   📸 [172/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0172.jpg
+[2026-05-09 16:33:52] [INFO] [collect_faces]   📸 [173/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0173.jpg
+[2026-05-09 16:33:52] [INFO] [collect_faces]   📸 [174/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0174.jpg
+[2026-05-09 16:33:53] [INFO] [collect_faces]   📸 [175/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0175.jpg
+[2026-05-09 16:33:53] [INFO] [collect_faces]   📸 [176/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0176.jpg
+[2026-05-09 16:33:54] [INFO] [collect_faces]   📸 [177/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0177.jpg
+[2026-05-09 16:33:54] [INFO] [collect_faces]   📸 [178/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0178.jpg
+[2026-05-09 16:33:55] [INFO] [collect_faces]   📸 [179/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0179.jpg
+[2026-05-09 16:33:55] [INFO] [collect_faces]   📸 [180/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0180.jpg
+[2026-05-09 16:33:56] [INFO] [collect_faces]   📸 [181/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0181.jpg
+[2026-05-09 16:33:56] [INFO] [collect_faces]   📸 [182/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0182.jpg
+[2026-05-09 16:33:57] [INFO] [collect_faces]   📸 [183/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0183.jpg
+[2026-05-09 16:33:57] [INFO] [collect_faces]   📸 [184/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0184.jpg
+[2026-05-09 16:33:58] [INFO] [collect_faces]   📸 [185/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0185.jpg
+[2026-05-09 16:33:58] [INFO] [collect_faces]   📸 [186/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0186.jpg
+[2026-05-09 16:33:59] [INFO] [collect_faces]   📸 [187/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0187.jpg
+[2026-05-09 16:34:00] [INFO] [collect_faces]   📸 [188/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0188.jpg
+[2026-05-09 16:34:00] [INFO] [collect_faces]   📸 [189/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0189.jpg
+[2026-05-09 16:34:01] [INFO] [collect_faces]   📸 [190/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0190.jpg
+[2026-05-09 16:34:01] [INFO] [collect_faces]   📸 [191/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0191.jpg
+[2026-05-09 16:34:02] [INFO] [collect_faces]   📸 [192/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0192.jpg
+[2026-05-09 16:34:02] [INFO] [collect_faces]   📸 [193/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0193.jpg
+[2026-05-09 16:34:03] [INFO] [collect_faces]   📸 [194/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0194.jpg
+[2026-05-09 16:34:03] [INFO] [collect_faces]   📸 [195/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0195.jpg
+[2026-05-09 16:34:04] [INFO] [collect_faces]   📸 [196/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0196.jpg
+[2026-05-09 16:34:04] [INFO] [collect_faces]   📸 [197/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0197.jpg
+[2026-05-09 16:34:05] [INFO] [collect_faces]   📸 [198/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0198.jpg
+[2026-05-09 16:34:05] [INFO] [collect_faces]   📸 [199/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0199.jpg
+[2026-05-09 16:34:06] [INFO] [collect_faces]   📸 [200/200] E:\RISETCPS\ml_boostify\ml\dataset\raw\Dirgi\img_0200.jpg
+[2026-05-09 16:34:06] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 200
+[2026-05-09 16:34:06] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-09 16:34:06] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-09 16:34:06] [INFO] [collect_faces]   2. python train.py
+[2026-05-09 16:34:41] [INFO] [preprocess] 🚀 Mulai preprocessing dataset Boostify ...
+[2026-05-09 16:34:41] [INFO] [preprocess] Ditemukan 2 orang: ['daffa', 'Dirgi']
+[2026-05-09 16:34:41] [INFO] [preprocess] [daffa] Memproses 200 foto ...
+[2026-05-09 16:35:07] [INFO] [preprocess]   [daffa] ✅ Tersimpan: 1400 | ❌ Gagal: 0
+[2026-05-09 16:35:07] [INFO] [preprocess] [Dirgi] Memproses 200 foto ...
+[2026-05-09 16:35:13] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0046.jpg
+[2026-05-09 16:35:13] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0047.jpg
+[2026-05-09 16:35:13] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0048.jpg
+[2026-05-09 16:35:14] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0049.jpg
+[2026-05-09 16:35:14] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0050.jpg
+[2026-05-09 16:35:29] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0186.jpg
+[2026-05-09 16:35:30] [INFO] [preprocess]   [Dirgi] ✅ Tersimpan: 1358 | ❌ Gagal: 6
+[2026-05-09 16:35:30] [INFO] [preprocess] 
+==================================================
+[2026-05-09 16:35:30] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-09 16:35:30] [INFO] [preprocess] Total foto berhasil diproses : 2758
+[2026-05-09 16:35:30] [INFO] [preprocess] Total foto gagal             : 6
+[2026-05-09 16:35:30] [INFO] [preprocess] Output di: E:\RISETCPS\ml_boostify\ml\dataset\processed
+[2026-05-09 16:36:03] [INFO] [train] Loading model Facenet (pertama kali mungkin download ~100MB) ...
+[2026-05-09 16:36:09] [INFO] [train] 
+Mulai training untuk 2 orang ...
+
+[2026-05-09 16:36:09] [INFO] [train] [daffa] Mengekstrak embedding dari 1400 foto ...
+[2026-05-09 16:52:45] [INFO] [train]   [daffa] ✅ Berhasil: 1400 | ❌ Gagal: 0 | Embedding shape: (128,)
+[2026-05-09 16:52:45] [INFO] [train] [Dirgi] Mengekstrak embedding dari 1358 foto ...
+[2026-05-09 17:12:29] [INFO] [train]   [Dirgi] ✅ Berhasil: 1358 | ❌ Gagal: 0 | Embedding shape: (128,)
+[2026-05-09 17:12:29] [INFO] [train] 
+==================================================
+[2026-05-09 17:12:29] [INFO] [train] ✅ TRAINING SELESAI
+[2026-05-09 17:12:29] [INFO] [train] Total orang terdaftar : 2
+[2026-05-09 17:12:29] [INFO] [train] Nama terdaftar        : ['daffa', 'Dirgi']
+[2026-05-09 17:12:29] [INFO] [train] File embedding        : E:\RISETCPS\ml_boostify\ml\models\embeddings.pkl
+[2026-05-09 17:12:29] [INFO] [train] File labels           : E:\RISETCPS\ml_boostify\ml\models\labels.pkl
+[2026-05-09 17:12:29] [INFO] [train] ==================================================
+[2026-05-09 17:12:29] [INFO] [train] Sekarang copy folder models/ ke Raspberry Pi.
+[2026-05-09 17:13:06] [INFO] [evaluate] Mulai evaluasi model Boostify ...
+[2026-05-09 17:13:06] [INFO] [evaluate] Database: ['daffa', 'Dirgi']
+[2026-05-09 17:13:13] [INFO] [evaluate] Evaluasi untuk 1 orang: ['daffa']
+
+[2026-05-09 17:13:13] [INFO] [evaluate] [daffa] Testing 20 foto ...
+[2026-05-09 17:13:43] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 17:13:43] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 17:13:50] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 17:13:50] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-09 17:13:51] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 17:13:57] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.863 | uuid: b867edc6-b0fd-4862-86bf-12dd6b7afdd3
+[2026-05-09 17:14:00] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.886 | uuid: c2bf9184-0814-43ea-845a-805d5d687e0d
+[2026-05-09 17:14:04] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.887 | uuid: 189df543-62a8-4804-a578-e65cd5b6d535
+[2026-05-09 17:14:05] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.792 | uuid: 5308b766-f2f2-4392-8756-df7df6da9a1a
+[2026-05-09 17:14:08] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.839 | uuid: cd58de5a-a429-433d-ba99-5f1def178263
+[2026-05-09 17:14:11] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.800 | uuid: 510944e2-04b0-4938-9343-69d40e6c5e92
+[2026-05-09 17:14:12] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.817 | uuid: 85bb657e-6128-481b-89d7-8731f7d2e851
+[2026-05-09 17:14:16] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.599 | uuid: 0254693a-fb18-456d-a092-70db7b2eba66
+[2026-05-09 17:14:17] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.752 | uuid: 4e28e1c6-cf4d-401f-9c5d-088603156dd7
+[2026-05-09 17:14:20] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.612 | uuid: f5c5c3d4-e7e8-4584-a8a8-e4c4315f154b
+[2026-05-09 17:14:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.681 | uuid: e307b999-4237-4c96-90d2-3b75df20f19d
+[2026-05-09 17:14:24] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.904 | uuid: 444dbb92-b24a-41ee-956b-95b904ebc07a
+[2026-05-09 18:09:28] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-09 18:09:28] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 18:09:35] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 18:09:35] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-09 18:09:36] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 18:09:44] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.582 | uuid: 44e48fc5-85ba-4b38-a36d-930cefcc57aa
+[2026-05-09 18:09:47] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.638 | uuid: 6d365a23-2a8a-435c-9669-c7d3e8c159bd
+[2026-05-09 18:09:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.845 | uuid: 2da5589d-2de4-4507-a9c0-b870df0da7bc
+[2026-05-09 18:09:54] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.813 | uuid: 99ea5021-74be-4983-a3a5-87a7ea7f48a4
+[2026-05-09 18:09:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.746 | uuid: b81e6cfe-89af-413b-897a-b6dd38d8aa1f
+[2026-05-09 18:10:00] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.740 | uuid: 9acc0507-063b-4bb4-a4db-ae2a9a462ca6
+[2026-05-09 18:10:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.785 | uuid: df0bfb3f-f029-4da3-b832-3619bdfe536b
+[2026-05-09 18:10:08] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.795 | uuid: 8dc5ba4d-f218-4f88-9b83-b129875a63bc
+[2026-05-09 18:10:12] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.828 | uuid: dc9a0fd2-825e-45af-bc3c-4c31ba6087da
+[2026-05-09 18:10:19] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.789 | uuid: affa962e-2a03-4ccc-a4a2-5ba1251f5bcb
+[2026-05-09 18:10:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.807 | uuid: 44a61ff9-ad67-40fe-867d-8f3fe2a2de8f
+[2026-05-09 18:10:27] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.849 | uuid: 1aee268c-3592-41af-9d64-e6803bb0bd2e
+[2026-05-09 18:10:30] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.802 | uuid: 67f0f208-9fc0-48d8-9753-a86c0abef315
+[2026-05-09 18:10:33] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.690 | uuid: 4d840140-9ebb-4422-b687-76e252856bfa
+[2026-05-09 18:10:36] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.729 | uuid: a51b4737-0d0d-45d0-a2ec-8ab64ddf2a77
+[2026-05-09 18:10:39] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.805 | uuid: a4819e5b-6bda-4d55-b612-fad661b059af
+[2026-05-09 18:10:42] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.831 | uuid: 3477f2c0-c64f-4517-acb7-c593907a9698
+[2026-05-09 18:10:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.750 | uuid: b4db9f18-44fd-4c94-be49-0bfb32a33db3
+[2026-05-09 18:10:49] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.781 | uuid: 182f4294-e267-4dd4-ad4a-a1a7a1004f43
+[2026-05-09 18:10:52] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.807 | uuid: 4eceee48-1447-449f-b48e-9953058a19e0
+[2026-05-09 18:10:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.773 | uuid: f830d048-bfc2-4270-81b0-3ad7f7c8b6d8
+[2026-05-09 18:11:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.675 | uuid: 0c511e3b-d21e-4caf-b08b-101656184965

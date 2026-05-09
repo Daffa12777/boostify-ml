@@ -1,16 +1,17 @@
 """
-predict.py — Face Recognition Engine Boostify (Fixed)
-Menggunakan DeepFace built-in detector yang lebih robust
-dari Haar Cascade.
+predict.py — Face Recognition Engine Boostify
+Output format disesuaikan dengan API /api/attendances
 """
 
 import os
 import sys
 import pickle
 import time
+import uuid
+import tempfile
 import numpy as np
 import cv2
-import tempfile
+from datetime import datetime, timezone
 from typing import Optional
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +27,9 @@ from config import (
 from utils.logger import get_logger
 
 logger = get_logger("predict")
+
+TMP_DETECT = os.path.join(tempfile.gettempdir(), "boostify_detect.jpg")
+TMP_FACE   = os.path.join(tempfile.gettempdir(), "boostify_face.jpg")
 
 MOTIVASI_MESSAGES = [
     "Semangat Hari Ini!",
@@ -44,6 +48,42 @@ def get_random_message() -> str:
 
 
 # ─────────────────────────────────────────────
+# GENERATE KODE ABSEN (dari nama)
+# Contoh: "daffa" → "DFF", "dirgi" → "DRG"
+# ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
+# KODE CUSTOM PER ORANG — EDIT DI SINI
+# ─────────────────────────────────────────────
+KODE_ASISTEN = {
+    "daffa" : "FDR",   # ← ganti kode sesuai keinginan
+    "dirgi" : "DRG",
+    "dea"   : "DEA",
+    # tambah orang baru:
+    # "nama" : "KODE",
+}
+
+def generate_code(nama: str) -> str:
+    """
+    Ambil kode dari dictionary KODE_ASISTEN.
+    Kalau nama tidak ada di list → pakai 3 huruf pertama otomatis.
+    """
+    return KODE_ASISTEN.get(nama.lower(), nama[:3].upper())
+
+# ─────────────────────────────────────────────
+# FORMAT WAKTU
+# ─────────────────────────────────────────────
+def get_time_data() -> dict:
+    """
+    Generate timestamp dalam format yang sama dengan API web.
+    """
+    now = datetime.now(timezone.utc)
+    return {
+        "time"         : now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{now.microsecond // 1000:03d}Z",
+        "formattedTime": now.strftime("%A, %B %d, %Y")
+    }
+
+
+# ─────────────────────────────────────────────
 # CLAHE ENHANCEMENT
 # ─────────────────────────────────────────────
 def apply_clahe(image: np.ndarray) -> np.ndarray:
@@ -56,44 +96,31 @@ def apply_clahe(image: np.ndarray) -> np.ndarray:
 
 
 # ─────────────────────────────────────────────
-# CROP WAJAH — pakai DeepFace detector
-# Kalau gagal → pakai center crop (fallback)
+# CROP WAJAH
 # ─────────────────────────────────────────────
 def get_face_crop(image: np.ndarray, DeepFace) -> np.ndarray:
-    """
-    Coba deteksi wajah pakai DeepFace (lebih akurat dari Haar Cascade).
-    Kalau tidak terdeteksi → pakai center crop sebagai fallback.
-    Sistem absensi = orang berdiri di depan kamera → center crop cukup.
-    """
     try:
-        # Simpan frame sementara
-        tmp = os.path.join(tempfile.gettempdir(), "boostify_detect.jpg")
-        cv2.imwrite(tmp, image)
-
+        cv2.imwrite(TMP_DETECT, image)
         faces = DeepFace.extract_faces(
-            img_path          = tmp,
+            img_path          = TMP_DETECT,
             detector_backend  = "opencv",
             enforce_detection = False,
             align             = True
         )
-
         if faces and len(faces) > 0:
             face_data = faces[0]["face"]
-            # DeepFace return float 0-1, convert ke uint8
             if face_data.max() <= 1.0:
                 face_data = (face_data * 255).astype(np.uint8)
             return cv2.resize(face_data, FACE_SIZE)
-
     except Exception as e:
         logger.debug(f"DeepFace detect gagal: {e}")
 
-    # ── Fallback: center crop ──
-    h, w = image.shape[:2]
+    # Fallback: center crop
+    h, w  = image.shape[:2]
     size  = min(h, w)
     y1    = (h - size) // 2
     x1    = (w - size) // 2
-    crop  = image[y1:y1+size, x1:x1+size]
-    return cv2.resize(crop, FACE_SIZE)
+    return cv2.resize(image[y1:y1+size, x1:x1+size], FACE_SIZE)
 
 
 # ─────────────────────────────────────────────
@@ -122,7 +149,7 @@ class FaceRecognizer:
 
     def _load_database(self):
         if not os.path.exists(EMBEDDING_FILE):
-            raise FileNotFoundError(f"Jalankan train.py dulu!")
+            raise FileNotFoundError("Jalankan train.py dulu!")
         with open(EMBEDDING_FILE, "rb") as f:
             self.embeddings_db = pickle.load(f)
         with open(LABEL_FILE, "rb") as f:
@@ -135,10 +162,9 @@ class FaceRecognizer:
 
     def _extract_embedding(self, face_img: np.ndarray) -> Optional[np.ndarray]:
         try:
-            tmp = os.path.join(tempfile.gettempdir(), "boostify_face.jpg")
-            cv2.imwrite(tmp, face_img)
+            cv2.imwrite(TMP_FACE, face_img)
             result = self.deepface.represent(
-                img_path          = tmp,
+                img_path          = TMP_FACE,
                 model_name        = MODEL_BACKEND,
                 detector_backend  = "skip",
                 enforce_detection = False,
@@ -164,49 +190,95 @@ class FaceRecognizer:
     def _on_cooldown(self, nama: str) -> bool:
         return (time.time() - self._last_detected_time.get(nama, 0)) < COOLDOWN_SEC
 
+    # ─────────────────────────────────────────
+    # FUNGSI UTAMA — dipanggil oleh IoT
+    # ─────────────────────────────────────────
     def recognize(self, frame: np.ndarray) -> dict:
-        # Step 1: enhance
+        """
+        Proses frame dari kamera.
+
+        Return format (match dengan API /api/attendances):
+        {
+            "status"          : "recognized" | "unknown" | "no_face" | "cooldown",
+            "assisstant_code" : "DFF",
+            "name"            : "daffa",
+            "confidence"      : 0.877,
+            "time"            : "2024-09-05T14:18:54.737Z",
+            "uuid"            : "5461f949-...",
+            "formattedTime"   : "Thursday, September 5, 2024",
+            "message"         : "Selamat Datang, daffa!"
+        }
+        """
+        # Step 1: enhance + crop wajah
         enhanced = apply_clahe(frame)
+        face     = get_face_crop(enhanced, self.deepface)
 
-        # Step 2: crop wajah
-        face = get_face_crop(enhanced, self.deepface)
-
-        # Step 3: extract embedding
+        # Step 2: extract embedding
         emb = self._extract_embedding(face)
         if emb is None:
-            return {"status": "no_face", "nama": "", "confidence": 0.0, "message": ""}
+            return {
+                "status"          : "no_face",
+                "assisstant_code" : "",
+                "name"            : "",
+                "confidence"      : 0.0,
+                "time"            : "",
+                "uuid"            : "",
+                "formattedTime"   : "",
+                "message"         : ""
+            }
 
-        # Step 4: cari kecocokan
+        # Step 3: cari kecocokan
         nama, confidence = self._find_best_match(emb)
 
-        # Step 5: cek threshold
+        # Step 4: cek threshold
         if confidence < SIMILARITY_THRESHOLD:
             return {
-                "status"    : "unknown",
-                "nama"      : "Unknown",
-                "confidence": round(confidence, 3),
-                "message"   : "Wajah tidak dikenal"
+                "status"          : "unknown",
+                "assisstant_code" : "",
+                "name"            : "Unknown",
+                "confidence"      : round(confidence, 3),
+                "time"            : "",
+                "uuid"            : "",
+                "formattedTime"   : "",
+                "message"         : "Wajah tidak dikenal"
             }
 
-        # Step 6: cek cooldown
+        # Step 5: cek cooldown
         if self._on_cooldown(nama):
             return {
-                "status"    : "cooldown",
-                "nama"      : nama,
-                "confidence": round(confidence, 3),
-                "message"   : f"Hai, {nama}!"
+                "status"          : "cooldown",
+                "assisstant_code" : generate_code(nama),
+                "name"            : nama,
+                "confidence"      : round(confidence, 3),
+                "time"            : "",
+                "uuid"            : "",
+                "formattedTime"   : "",
+                "message"         : f"Hai, {nama}! Sudah absen."
             }
 
-        # Step 7: sukses!
+        # Step 6: sukses — generate data absensi
         self._last_detected_time[nama] = time.time()
-        logger.info(f"ABSEN: {nama} | confidence: {confidence:.3f}")
+        time_data = get_time_data()
 
-        return {
-            "status"    : "recognized",
-            "nama"      : nama,
-            "confidence": round(confidence, 3),
-            "message"   : f"Selamat Datang, {nama}!\n{get_random_message()}"
+        attendance = {
+            "status"          : "recognized",
+            "assisstant_code" : generate_code(nama),
+            "name"            : nama,
+            "confidence"      : round(confidence, 3),
+            "time"            : time_data["time"],
+            "uuid"            : str(uuid.uuid4()),
+            "formattedTime"   : time_data["formattedTime"],
+            "message"         : f"Selamat Datang, {nama}!\n{get_random_message()}"
         }
+
+        logger.info(
+            f"ABSEN: {nama} | "
+            f"code: {attendance['assisstant_code']} | "
+            f"confidence: {confidence:.3f} | "
+            f"uuid: {attendance['uuid']}"
+        )
+
+        return attendance
 
     def reload_database(self):
         self._load_database()
@@ -217,49 +289,62 @@ class FaceRecognizer:
 # TEST REALTIME
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
+    import json
+
     logger.info("Test predict.py — Realtime Recognition")
     recognizer  = FaceRecognizer()
     cap         = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
     frame_count = 0
     last_result = {}
 
-    # Warmup kamera
     time.sleep(1)
     logger.info("Kamera aktif. Tekan Q untuk keluar.")
 
     while True:
         ret, frame = cap.read()
         if not ret:
-            logger.error("Gagal baca frame kamera!")
             break
 
         frame_count += 1
         if frame_count % FRAME_SKIP == 0:
             last_result = recognizer.recognize(frame)
 
-        # ── Tampilan ──
+            # Print format JSON seperti API response
+            if last_result["status"] == "recognized":
+                print("\n" + "="*50)
+                print("DATA ABSENSI (siap kirim ke API):")
+                print(json.dumps({
+                    "assisstant_code": last_result["assisstant_code"],
+                    "name"           : last_result["name"],
+                    "time"           : last_result["time"],
+                    "uuid"           : last_result["uuid"],
+                    "formattedTime"  : last_result["formattedTime"]
+                }, indent=4))
+                print("="*50)
+
+        # Tampilan kamera
         display = frame.copy()
         if last_result:
             status = last_result.get("status", "")
-            nama   = last_result.get("nama", "")
+            nama   = last_result.get("name", "")
             conf   = last_result.get("confidence", 0.0)
+            code   = last_result.get("assisstant_code", "")
 
             color = (0, 200, 0)   if status == "recognized" else \
                     (0, 0, 220)   if status == "unknown"    else \
                     (180, 180, 0) if status == "cooldown"   else \
                     (100, 100, 100)
 
-            cv2.putText(display, f"{nama}",
-                        (20, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.2, color, 2)
+            cv2.putText(display, f"{nama} [{code}]",
+                        (20, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.0, color, 2)
             cv2.putText(display, f"conf: {conf:.2f} | {status}",
                         (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.65, color, 2)
 
             if status == "recognized":
-                msg = last_result.get("message", "").split("\n")
-                if len(msg) > 1:
-                    cv2.putText(display, msg[1],
-                                (20, 115), cv2.FONT_HERSHEY_SIMPLEX,
-                                0.65, (0, 220, 100), 2)
+                fmt_time = last_result.get("formattedTime", "")
+                cv2.putText(display, fmt_time,
+                            (20, 110), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.55, (200, 200, 200), 1)
 
         cv2.imshow("Boostify — Test Recognition", display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
