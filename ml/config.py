@@ -39,13 +39,14 @@ MIN_FACE_SIZE   = 20         # piksel minimum agar wajah dianggap valid
 # =============================================================
 # PARAMETER RECOGNITION
 # =============================================================
-SIMILARITY_THRESHOLD = 0.60  # cosine similarity >= ini → dikenali
+SIMILARITY_THRESHOLD = 0.55  # cosine similarity >= ini → dikenali
                               # Naikkan (0.70) = lebih ketat
                               # Turunkan (0.50) = lebih longgar
 MIN_PHOTOS_PER_PERSON = 10   # minimal foto per orang untuk training
 AUGMENT_PER_IMAGE = 10        # jumlah augmentasi per foto asli
 
-# =============================================================
+# =====================================
+# ========================
 # PARAMETER TRAINING
 # =============================================================
 MODEL_BACKEND   = "Facenet"  # pilihan: "ArcFace", "Facenet", "Facenet512"
