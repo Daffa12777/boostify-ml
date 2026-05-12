@@ -69,7 +69,8 @@ def generate_code(nama: str) -> str:
 def get_time_data() -> dict:
     now = datetime.now(timezone.utc)
     return {
-        "time"         : now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{now.microsecond // 1000:03d}Z",
+        # Kirim dalam format ISO — Prisma/Supabase otomatis convert ke TIMESTAMP
+        "time"         : now.isoformat(),
         "formattedTime": now.strftime("%A, %B %d, %Y")
     }
 

@@ -840,3 +840,103 @@ Mulai training untuk 2 orang ...
 [2026-05-09 18:10:52] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.807 | uuid: 4eceee48-1447-449f-b48e-9953058a19e0
 [2026-05-09 18:10:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.773 | uuid: f830d048-bfc2-4270-81b0-3ad7f7c8b6d8
 [2026-05-09 18:11:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.675 | uuid: 0c511e3b-d21e-4caf-b08b-101656184965
+[2026-05-09 22:40:27] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-09 22:40:27] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-09 22:40:41] [INFO] [predict] Model Facenet dimuat.
+[2026-05-09 22:40:41] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-09 22:40:42] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-09 22:40:50] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.583 | senyum: False | uuid: 680aa6e6-d786-4dec-ab57-8a3fe00d4fe8
+[2026-05-09 22:40:54] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.799 | senyum: False | uuid: d8d1df56-6181-45af-9445-ce35772f955c
+[2026-05-09 22:40:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.694 | senyum: True | uuid: a50f56ce-2b72-4bbc-9bbd-823313e00904
+[2026-05-09 22:41:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.717 | senyum: True | uuid: 28cb751f-aac5-46a8-ae66-a7a66baca868
+[2026-05-09 22:41:06] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.743 | senyum: False | uuid: 43abada1-f903-485f-8a4f-8cdce0a0d935
+[2026-05-09 22:41:09] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.706 | senyum: False | uuid: c9b472b4-02f8-4b4d-aa72-6fdd3ac8e395
+[2026-05-09 22:41:12] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.786 | senyum: True | uuid: b0f90730-7a9c-4c48-af7b-f9b764792add
+[2026-05-09 22:41:15] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.810 | senyum: False | uuid: 16974a04-0770-478b-892c-afe34458e110
+[2026-05-09 22:41:19] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.791 | senyum: False | uuid: d9c849a4-04c4-43b4-bcc4-1bba16815f69
+[2026-05-09 22:41:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.781 | senyum: True | uuid: cea54fa7-7383-403e-a5d0-e963aec2025f
+[2026-05-09 22:41:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.669 | senyum: False | uuid: c360a7b1-c372-4a08-b753-de75693d686a
+[2026-05-09 22:41:29] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.805 | senyum: False | uuid: 1a4e0b21-33b7-438f-89a6-3d963fd8770f
+[2026-05-09 22:41:32] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.860 | senyum: False | uuid: 9e3cc6ac-a5d2-4114-a934-cf606f123455
+[2026-05-09 22:41:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.782 | senyum: False | uuid: 26342bbe-5ad3-47c7-a73a-8ba5877fca76
+[2026-05-09 22:41:40] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.833 | senyum: False | uuid: 731eb684-54fa-42ef-b1b3-43cf37b1ddce
+[2026-05-10 10:12:25] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-10 10:12:25] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-10 10:12:51] [INFO] [predict] Model Facenet dimuat.
+[2026-05-10 10:12:51] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-10 10:12:52] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-10 10:13:15] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.649 | senyum: False | uuid: f5163b7f-2080-4c39-8229-89ccc1d5cb2b
+[2026-05-10 10:13:18] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.731 | senyum: False | uuid: 866d929b-e657-4fe5-8b0a-0111893fa657
+[2026-05-10 10:13:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.742 | senyum: False | uuid: 6d0b288f-f1f1-4b93-a3b7-c63fe6f7ea4e
+[2026-05-10 10:13:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.683 | senyum: False | uuid: c90806c5-58da-44a4-82c1-35186bc503d2
+[2026-05-10 10:13:28] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.705 | senyum: False | uuid: 1949e9b3-ab2e-44eb-b91e-e50acce4e584
+[2026-05-10 10:13:31] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.781 | senyum: False | uuid: f7bafd8e-9093-409c-b1dc-3bcbf62e40c4
+[2026-05-10 10:13:35] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.789 | senyum: False | uuid: 8bc83a88-7b5a-4207-b21e-b6d9dea909d6
+[2026-05-10 10:13:38] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.698 | senyum: False | uuid: 3a9c553f-51f7-48e1-9ddd-501456d82a63
+[2026-05-10 10:13:41] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.586 | senyum: False | uuid: f6e553a6-b445-41d1-a9fd-80174eb17711
+[2026-05-10 10:13:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.684 | senyum: False | uuid: 3d6a3e0e-10e3-479c-a117-124f50f9cdae
+[2026-05-10 10:13:49] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.750 | senyum: False | uuid: 811dc9b0-ab12-416c-8f8b-45fd079af66d
+[2026-05-10 10:13:53] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.598 | senyum: False | uuid: fd1b2704-439a-4a7c-b85e-a4290c290286
+[2026-05-10 10:13:56] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.594 | senyum: False | uuid: 03c30802-5d55-469c-b3ed-d6025a58df2f
+[2026-05-10 10:13:59] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.650 | senyum: False | uuid: 50c54c96-8f07-4615-8678-898004d3f92e
+[2026-05-10 10:14:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.786 | senyum: False | uuid: 23e70f5b-a13c-4e6e-b8ea-fdc636044908
+[2026-05-10 10:14:06] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.807 | senyum: False | uuid: fb430e3a-23fa-41ed-b245-80874b3e7fac
+[2026-05-10 10:14:11] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.715 | senyum: False | uuid: a4785ae5-0d8d-40d8-afa9-64be58489a5f
+[2026-05-10 10:14:14] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.726 | senyum: False | uuid: 13139caa-f2c2-4552-a095-74ea8a2ee173
+[2026-05-10 10:14:17] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.734 | senyum: False | uuid: d2465cdf-a84a-4cd1-8634-08ec372d0908
+[2026-05-10 10:14:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.569 | senyum: False | uuid: 1b770c9a-4176-4fd3-98b6-14ea20f3f52b
+[2026-05-10 10:14:29] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.729 | senyum: False | uuid: ff21df9f-2f1f-4e77-b81b-e8a2e398abf7
+[2026-05-10 10:14:32] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.763 | senyum: False | uuid: 0431b898-8d96-461e-9600-a10991e358f7
+[2026-05-10 10:14:35] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.754 | senyum: False | uuid: 41c8ad65-ba95-429c-8ea4-46e0e99c79aa
+[2026-05-10 10:14:41] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.589 | senyum: False | uuid: 7669b9d9-a185-4bd6-bc90-f211b2fb9a74
+[2026-05-10 10:14:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.560 | senyum: False | uuid: 493bc145-0ca4-4d09-a617-2e82717ba2f2
+[2026-05-10 10:14:49] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.574 | senyum: False | uuid: c791ebad-308d-40ba-bfa0-bcb1ac40ae0e
+[2026-05-11 18:19:29] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-11 18:19:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 18:27:27] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-11 18:27:27] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 18:28:42] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-11 18:28:42] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 18:28:49] [INFO] [predict] Model Facenet dimuat.
+[2026-05-11 18:28:49] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 18:28:51] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 18:28:58] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.708 | senyum: False | uuid: a9464679-4549-4a11-8b01-223f0c343124
+[2026-05-11 18:29:01] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.754 | senyum: False | uuid: 01ed5ffb-5824-4b63-b00a-0b29d0d265e5
+[2026-05-11 18:29:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.691 | senyum: False | uuid: f230e7eb-0e59-48c5-b2e1-7581fe5f43bc
+[2026-05-11 18:29:09] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.676 | senyum: False | uuid: 6d3324a5-c81d-4d36-8ce1-a19d558dc247
+[2026-05-11 18:29:13] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.800 | senyum: False | uuid: f36eb687-f056-412b-a122-8628b18e9dd2
+[2026-05-11 18:29:17] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.804 | senyum: False | uuid: 539b16e8-c51c-4851-a603-c0378ebaad3a
+[2026-05-11 18:29:19] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.709 | senyum: False | uuid: a7958eda-c76e-447b-a159-c616959d4d68
+[2026-05-11 18:29:21] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.712 | senyum: False | uuid: be21e455-4171-4b47-aedf-86c97dd9b107
+[2026-05-11 18:29:25] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.683 | senyum: False | uuid: edab03d1-bc35-4054-a1d0-fa68078e3ad0
+[2026-05-11 18:29:28] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.584 | senyum: False | uuid: a82f0a94-80ab-42aa-8b36-06c4a7215f95
+[2026-05-11 18:29:29] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.598 | senyum: False | uuid: b4bf3e37-4dc7-4adc-a0a9-4f649d6cfec9
+[2026-05-11 18:29:31] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.812 | senyum: False | uuid: 9773ca44-27d9-49d4-8db2-70545832bffd
+[2026-05-11 19:53:24] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-11 19:53:24] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 19:53:30] [INFO] [predict] Model Facenet dimuat.
+[2026-05-11 19:53:30] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 19:53:31] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 19:53:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.819 | senyum: False | uuid: 7f6f88b6-26f3-4722-9044-9dcb67874da8
+[2026-05-11 19:53:44] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.829 | senyum: True | uuid: b6b7352d-600e-4e95-a09a-5907f2504c1e
+[2026-05-11 19:53:48] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.747 | senyum: True | uuid: d7252695-78e6-4257-9d77-f00287d33b80
+[2026-05-11 20:16:04] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-11 20:16:04] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 20:16:10] [INFO] [predict] Model Facenet dimuat.
+[2026-05-11 20:16:10] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 20:16:12] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 20:16:18] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.728 | senyum: False | uuid: 08bdddfe-ead0-4011-813a-500c3543122d
+[2026-05-11 20:16:37] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.583 | senyum: False | uuid: a0b492e5-fc6a-4277-9b6d-34c3ed631ad9
+[2026-05-11 20:16:39] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.575 | senyum: False | uuid: 103fd4af-1f5e-4121-84dd-575de5c089aa
+[2026-05-11 20:16:43] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.624 | senyum: False | uuid: 9f6618c4-f08c-43aa-b3d3-167bbc722755
+[2026-05-11 20:16:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.797 | senyum: False | uuid: b0bfbe45-7365-4cbe-8288-a2542919af32
+[2026-05-12 17:45:33] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-12 17:45:33] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-12 17:45:41] [INFO] [predict] Model Facenet dimuat.
+[2026-05-12 17:45:41] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-12 17:45:43] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-12 17:45:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.723 | senyum: False | uuid: 41f7594d-892d-484e-9633-4407027c01c4
+[2026-05-12 17:45:54] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.756 | senyum: False | uuid: de0771c6-d700-4c55-b8a3-c07e9fe0b826
+[2026-05-12 17:45:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.750 | senyum: False | uuid: 96231369-262c-4bd7-a43b-f0a0d948d6f5
+[2026-05-12 17:46:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.731 | senyum: False | uuid: d4462351-8f4b-4bd8-a1e5-af8c3618c34a
+[2026-05-12 17:46:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.762 | senyum: False | uuid: 1ce6edab-ba91-4a79-829b-ee61fb979dd5
