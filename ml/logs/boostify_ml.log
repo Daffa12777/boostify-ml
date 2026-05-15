@@ -940,3 +940,452 @@ Mulai training untuk 2 orang ...
 [2026-05-12 17:45:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.750 | senyum: False | uuid: 96231369-262c-4bd7-a43b-f0a0d948d6f5
 [2026-05-12 17:46:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.731 | senyum: False | uuid: d4462351-8f4b-4bd8-a1e5-af8c3618c34a
 [2026-05-12 17:46:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.762 | senyum: False | uuid: 1ce6edab-ba91-4a79-829b-ee61fb979dd5
+[2026-05-12 21:00:28] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-12 21:00:28] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-12 21:00:48] [INFO] [predict] Model Facenet dimuat.
+[2026-05-12 21:00:48] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-12 21:00:50] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-12 21:00:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.655 | senyum: False | uuid: 515ce15c-0220-4e77-9feb-8a749898de54
+[2026-05-12 21:01:01] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.688 | senyum: False | uuid: 260a2611-2e6d-40a7-9b20-00d0dc2e7e90
+[2026-05-12 21:01:04] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.782 | senyum: False | uuid: 91d601c5-a73f-4c0c-aa5e-5c2c526ba7d3
+[2026-05-12 21:01:07] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.575 | senyum: False | uuid: 2fdf3e52-a262-4405-9b62-a7f1e5191a65
+[2026-05-12 21:01:11] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.755 | senyum: False | uuid: e9df6784-3c6c-4142-ab61-5e20cf345406
+[2026-05-12 21:01:17] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.600 | senyum: False | uuid: 83577e96-9f39-4682-93ee-065f87087e36
+[2026-05-13 23:06:48] [INFO] [collect_faces] Mengumpulkan foto untuk: daffaf
+[2026-05-13 23:06:48] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 10
+[2026-05-13 23:06:48] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf
+[2026-05-13 23:06:49] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-13 23:06:49] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-13 23:06:49] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-13 23:06:49] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-13 23:07:10] [INFO] [collect_faces] Auto-capture: ON
+[2026-05-13 23:07:10] [INFO] [collect_faces]   📸 [1/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0001.jpg
+[2026-05-13 23:07:11] [INFO] [collect_faces]   📸 [2/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0002.jpg
+[2026-05-13 23:07:11] [INFO] [collect_faces]   📸 [3/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0003.jpg
+[2026-05-13 23:07:12] [INFO] [collect_faces]   📸 [4/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0004.jpg
+[2026-05-13 23:07:12] [INFO] [collect_faces]   📸 [5/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0005.jpg
+[2026-05-13 23:07:13] [INFO] [collect_faces]   📸 [6/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0006.jpg
+[2026-05-13 23:07:13] [INFO] [collect_faces]   📸 [7/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0007.jpg
+[2026-05-13 23:07:14] [INFO] [collect_faces]   📸 [8/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0008.jpg
+[2026-05-13 23:07:14] [INFO] [collect_faces]   📸 [9/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0009.jpg
+[2026-05-13 23:07:15] [INFO] [collect_faces]   📸 [10/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffaf\img_0010.jpg
+[2026-05-13 23:07:15] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 10
+[2026-05-13 23:07:15] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-13 23:07:15] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-13 23:07:15] [INFO] [collect_faces]   2. python train.py
+[2026-05-13 23:07:35] [INFO] [preprocess] 🚀 Mulai preprocessing dataset Boostify ...
+[2026-05-13 23:07:35] [INFO] [preprocess] Ditemukan 3 orang: ['daffa', 'daffaf', 'Dirgi']
+[2026-05-13 23:07:35] [INFO] [preprocess] [daffa] Memproses 200 foto ...
+[2026-05-13 23:08:11] [INFO] [preprocess]   [daffa] ✅ Tersimpan: 1400 | ❌ Gagal: 0
+[2026-05-13 23:08:11] [INFO] [preprocess] [daffaf] Memproses 10 foto ...
+[2026-05-13 23:08:13] [INFO] [preprocess]   [daffaf] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-13 23:08:13] [INFO] [preprocess] [Dirgi] Memproses 200 foto ...
+[2026-05-13 23:08:20] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0046.jpg
+[2026-05-13 23:08:20] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0047.jpg
+[2026-05-13 23:08:21] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0048.jpg
+[2026-05-13 23:08:21] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0049.jpg
+[2026-05-13 23:08:21] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0050.jpg
+[2026-05-13 23:08:41] [WARNING] [preprocess]   Wajah tidak terdeteksi: img_0186.jpg
+[2026-05-13 23:08:43] [INFO] [preprocess]   [Dirgi] ✅ Tersimpan: 1358 | ❌ Gagal: 6
+[2026-05-13 23:08:43] [INFO] [preprocess] 
+==================================================
+[2026-05-13 23:08:43] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-13 23:08:43] [INFO] [preprocess] Total foto berhasil diproses : 2828
+[2026-05-13 23:08:43] [INFO] [preprocess] Total foto gagal             : 6
+[2026-05-13 23:08:43] [INFO] [preprocess] Output di: E:\RISETCPS\ml_boostify\ml\dataset\processed
+[2026-05-13 23:09:10] [INFO] [train] Mendaftarkan [daffaf] dari 70 foto ...
+[2026-05-13 23:10:12] [INFO] [train] ✅ [daffaf] berhasil didaftarkan!
+[2026-05-13 23:10:12] [INFO] [train] Total terdaftar: 3 orang
+[2026-05-13 23:10:35] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-13 23:10:35] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-13 23:10:42] [INFO] [predict] Model Facenet dimuat.
+[2026-05-13 23:10:42] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-13 23:10:44] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-13 23:10:49] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.788 | senyum: False | uuid: ae3c9ef7-785e-4d57-ac5a-2523ae8cd920
+[2026-05-13 23:10:53] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.779 | senyum: False | uuid: 626c0386-69c9-4ef3-8fa0-cfe4eff02384
+[2026-05-13 23:10:53] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.750 | senyum: False | uuid: 625e7920-d2de-4bcc-bb0d-7cde71cf8a70
+[2026-05-13 23:10:56] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.819 | senyum: False | uuid: ddd71920-1fd3-4f18-9bd4-78d02151cfe4
+[2026-05-13 23:10:59] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.765 | senyum: False | uuid: 4646fcdb-d619-43f0-b6ae-65d7ddfb7d6f
+[2026-05-13 23:11:03] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.828 | senyum: False | uuid: 6f9958f9-8b19-44ca-8443-877d05afe076
+[2026-05-13 23:11:06] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.823 | senyum: False | uuid: a186599d-c9f3-4504-9ec5-bce59a3f31ca
+[2026-05-13 23:11:11] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.692 | senyum: True | uuid: 32794a3a-f618-46ba-b3f4-66113d2ff4d0
+[2026-05-13 23:11:14] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.664 | senyum: True | uuid: 99936dd0-4bd5-41f7-8ce8-bfb5e2f2166a
+[2026-05-13 23:11:18] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.578 | senyum: True | uuid: f59a7b21-3536-4944-8420-676177e09757
+[2026-05-13 23:11:21] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.654 | senyum: True | uuid: 19120551-d466-4ab7-9d13-5b14ce5d0e02
+[2026-05-13 23:11:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.711 | senyum: True | uuid: 64d3d708-e749-472f-a89d-54ce4ed63727
+[2026-05-13 23:11:27] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.666 | senyum: False | uuid: 52164d38-a284-417c-b6a5-41a3a78630de
+[2026-05-13 23:11:29] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.734 | senyum: False | uuid: 9e06b4b8-b8e5-4e1b-90e4-ba9bd095244f
+[2026-05-13 23:11:31] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.704 | senyum: False | uuid: cd875cc4-f689-4487-8cf6-b8394675b7a0
+[2026-05-13 23:11:34] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.675 | senyum: False | uuid: f5ca1800-54aa-4443-b567-9b6f5206c166
+[2026-05-13 23:11:35] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.676 | senyum: False | uuid: 3e6da53c-3793-4261-8495-e40d333132d7
+[2026-05-13 23:11:38] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.594 | senyum: False | uuid: df3584c2-64c1-4f73-a299-ad3ab9ab4348
+[2026-05-13 23:11:42] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.671 | senyum: False | uuid: 679be1ef-ff4b-4936-8949-987ce4693896
+[2026-05-13 23:11:48] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.735 | senyum: False | uuid: 49b0b838-0689-4769-a173-0453fb90c26b
+[2026-05-13 23:14:26] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-13 23:14:26] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-13 23:14:33] [INFO] [predict] Model Facenet dimuat.
+[2026-05-13 23:14:33] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-13 23:14:35] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-13 23:14:42] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.684 | senyum: False | uuid: 08d7bfdb-bcdb-45c4-a7ff-415b70de007a
+[2026-05-13 23:14:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.610 | senyum: False | uuid: c92158ff-cf86-417b-8503-c45f934a64dd
+[2026-05-13 23:14:48] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.768 | senyum: True | uuid: 89222045-5695-431c-8bda-bd09c431f46f
+[2026-05-13 23:14:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.728 | senyum: True | uuid: 81ae08da-8faf-4dc1-b7a6-c4750f645c5e
+[2026-05-13 23:14:55] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.760 | senyum: True | uuid: b67899dc-b695-4c0c-8413-d762df171a72
+[2026-05-13 23:14:58] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.784 | senyum: False | uuid: 88dea581-7aeb-419b-845d-357ffc34415e
+[2026-05-13 23:14:58] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.803 | senyum: False | uuid: 225299ea-d4b7-4ff9-8730-ef15c505b990
+[2026-05-13 23:15:01] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.703 | senyum: True | uuid: ad15c83f-0fbe-4023-a682-bfa45391545d
+[2026-05-13 23:15:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.851 | senyum: True | uuid: 89271035-c045-44b6-8dcd-60a69fc9a4ce
+[2026-05-13 23:15:06] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.788 | senyum: False | uuid: 549bd0a5-44c2-43db-b59c-06a1be342c4f
+[2026-05-13 23:15:08] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.765 | senyum: False | uuid: 055b6443-3db8-40b2-b7c9-22d9e90baa3b
+[2026-05-13 23:15:11] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.796 | senyum: False | uuid: 2f8da780-d1c1-4af9-8f47-78cc7f9d68fd
+[2026-05-13 23:15:13] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.555 | senyum: False | uuid: edf528cc-3699-4589-add7-6bc43a570e97
+[2026-05-13 23:15:17] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.631 | senyum: False | uuid: 7ac66814-0124-4cc7-86e0-8b7e54eb8b6e
+[2026-05-13 23:15:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.852 | senyum: False | uuid: 86aefabb-9f99-4fe9-9816-11822879c4d8
+[2026-05-13 23:15:26] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.636 | senyum: False | uuid: a48c526e-3d70-403b-9f25-ce1e9a08ed95
+[2026-05-13 23:15:29] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.804 | senyum: False | uuid: 307340fb-5e73-4282-9225-058ba2443693
+[2026-05-13 23:15:32] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.799 | senyum: False | uuid: 66ef6f29-9d03-4efa-ba62-630b7a048e9a
+[2026-05-13 23:15:36] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.766 | senyum: False | uuid: fdaf2273-9a06-40d2-984f-01a7a411e138
+[2026-05-13 23:15:37] [INFO] [predict] ABSEN: Dirgi | code: DRG | confidence: 0.644 | senyum: False | uuid: 1c5f7da0-f311-4878-b5e0-db4642d2b77f
+[2026-05-13 23:15:41] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.835 | senyum: False | uuid: 914ca8a9-b92b-4182-a09b-72ab75e9340c
+[2026-05-13 23:49:32] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-13 23:49:32] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-13 23:49:51] [INFO] [predict] Model Facenet dimuat.
+[2026-05-13 23:49:51] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-13 23:49:53] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-13 23:50:13] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.690 | senyum: False | uuid: bfa9592b-711f-46c8-9d85-fe80a4f8199a
+[2026-05-13 23:50:16] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.787 | senyum: False | uuid: 64886666-0ad7-44bb-8c22-7e96eb464c1e
+[2026-05-13 23:50:18] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.709 | senyum: False | uuid: 66d3789b-17d9-442f-be82-5d55a1723f55
+[2026-05-13 23:50:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.800 | senyum: False | uuid: a4cc122e-dec2-4912-b0a3-f76c1a8e9726
+[2026-05-13 23:50:28] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.833 | senyum: False | uuid: 02111ba9-db04-4fba-b796-c3c823c6b3ef
+[2026-05-13 23:50:31] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.754 | senyum: True | uuid: a4cd1195-ad27-4f24-b763-fd108d81ec14
+[2026-05-13 23:50:34] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.714 | senyum: True | uuid: f273f62c-9111-4707-99cc-ea6a958652a1
+[2026-05-13 23:50:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.791 | senyum: False | uuid: ba07968e-76cd-47c3-840b-3089c206ef40
+[2026-05-13 23:50:41] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.774 | senyum: False | uuid: 3df8d62c-d236-455e-9559-75fbcbff4aa1
+[2026-05-13 23:50:41] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.615 | senyum: False | uuid: a70de7be-69a7-45a4-99d9-09c447cb77d8
+[2026-05-13 23:50:45] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.658 | senyum: False | uuid: 39288b61-4819-4c97-bc87-ac4f4c2b40b7
+[2026-05-13 23:50:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.712 | senyum: False | uuid: 24b409db-feec-44cd-a2c9-830ac44df563
+[2026-05-15 09:13:40] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 09:13:40] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 09:14:00] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 09:14:00] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 09:14:02] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 09:14:13] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.580 | senyum: False | uuid: 1bbb513e-a5d8-4e1d-9c5d-48712f96358e
+[2026-05-15 09:14:14] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.864 | senyum: True | uuid: 9adc442f-634d-4b60-87f6-24f8a37d50ed
+[2026-05-15 09:14:18] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.732 | senyum: True | uuid: 28eea0f4-7f84-423d-a267-2c217d141be8
+[2026-05-15 09:14:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.738 | senyum: True | uuid: 0d4707ca-5717-4c88-b993-770852c7b5f0
+[2026-05-15 09:14:26] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.684 | senyum: True | uuid: c493bd3d-a08d-416f-b11b-f85df4dc8a36
+[2026-05-15 09:14:29] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.710 | senyum: True | uuid: a0b28bff-6682-4008-b3ef-68bee8f2d722
+[2026-05-15 09:14:33] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.719 | senyum: True | uuid: 8d470326-1308-4d11-8b94-cb9ed8ee2b34
+[2026-05-15 09:14:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.727 | senyum: True | uuid: eda865ae-5562-47a5-a1b6-71fc33fe2fb2
+[2026-05-15 09:14:40] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.738 | senyum: True | uuid: 4f199695-d804-4f41-8e98-5813c34e39fc
+[2026-05-15 09:17:50] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 09:17:50] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 09:17:57] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 09:17:57] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 09:17:58] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 09:18:09] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.560 | senyum: False | uuid: ee2f13e2-c456-45ad-9cfd-d8720350d03f
+[2026-05-15 09:18:13] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.843 | senyum: False | uuid: 0b3e99af-8d47-4987-bf35-5ee4b43097f9
+[2026-05-15 09:18:19] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.777 | senyum: True | uuid: cf414964-d01e-4332-95a3-9dfda427ffa4
+[2026-05-15 09:18:22] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.797 | senyum: True | uuid: 7597218f-4f2d-4198-ae6e-2f935e78efe3
+[2026-05-15 09:18:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.788 | senyum: True | uuid: 9aa0fd5b-230b-4fe3-bbc4-bcfa7e2f38e1
+[2026-05-15 09:18:28] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.803 | senyum: True | uuid: 4b6eb3b9-9bd4-4c2b-a02d-8dcf5f1510ad
+[2026-05-15 09:18:31] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.794 | senyum: True | uuid: 5e17c421-182e-43c0-98d4-1571372c26db
+[2026-05-15 09:18:35] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.816 | senyum: True | uuid: 46ff0272-95de-4d05-894f-53cff13e82b3
+[2026-05-15 09:18:39] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.817 | senyum: True | uuid: 1a192b75-dd1a-4f88-abf8-064fe50cb0d5
+[2026-05-15 09:18:43] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.798 | senyum: True | uuid: 7362aab5-d480-4a01-a0a7-4ffb61101835
+[2026-05-15 09:18:47] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.809 | senyum: True | uuid: 1e834fa0-a893-4073-b364-13bce1d39396
+[2026-05-15 09:18:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.789 | senyum: True | uuid: 3984ec46-9728-4bb9-aee9-07d34be39536
+[2026-05-15 09:18:54] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.797 | senyum: True | uuid: 183ddf10-b3b3-48d8-b48d-50976d1aaa88
+[2026-05-15 09:22:28] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 09:22:28] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 09:22:33] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 09:22:33] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 09:22:35] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 09:22:45] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.582 | senyum: False | uuid: 12401a61-54fe-4424-8ebc-960bc0d0e8f4
+[2026-05-15 09:22:48] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.789 | senyum: True | uuid: ec3c4e75-e016-430b-89b6-41887160d217
+[2026-05-15 09:22:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.761 | senyum: True | uuid: 4fb296c4-5de9-4cc3-84ed-bef84f1e4c7d
+[2026-05-15 09:22:52] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.615 | senyum: True | uuid: 46f3182d-3a65-456d-a121-1753a4b05eb0
+[2026-05-15 09:22:55] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.743 | senyum: True | uuid: df7e7f26-23f6-480d-be10-7d14f7914b96
+[2026-05-15 09:22:58] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.747 | senyum: True | uuid: 933069b8-b9d7-4ff5-8ffa-89967066971e
+[2026-05-15 09:23:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.662 | senyum: False | uuid: e10f7735-f034-4984-b9e2-a88f11962165
+[2026-05-15 09:23:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.628 | senyum: False | uuid: 03492f40-60e1-4728-8e6c-07aafbb189d9
+[2026-05-15 09:23:09] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.733 | senyum: False | uuid: 3a9041aa-46b1-40f8-a90b-fe21ee5b5361
+[2026-05-15 09:52:22] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 09:52:22] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 09:52:29] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 09:52:29] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 09:52:31] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 09:52:37] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.637 | senyum: False | uuid: 2088f607-6cf2-4a66-ad51-e4209d5544fa
+[2026-05-15 09:52:41] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.624 | senyum: False | uuid: aa1ec801-dcf8-42a5-84a8-54dba8b9a2b7
+[2026-05-15 09:52:42] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.805 | senyum: True | uuid: 4a16495b-80de-4bfd-9f7a-e2367c9d8fc6
+[2026-05-15 09:52:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.741 | senyum: True | uuid: 5f8ce4d3-911f-4eb6-ab38-86b1f7f0147a
+[2026-05-15 09:52:49] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.794 | senyum: True | uuid: a4018e64-0027-4783-8997-7e1abcb50298
+[2026-05-15 09:52:52] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.727 | senyum: True | uuid: 479687de-bd64-4789-83f3-a00f97ac13bf
+[2026-05-15 09:52:55] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.728 | senyum: True | uuid: 4e0874d1-01c7-464e-ade8-6a930f1f9aca
+[2026-05-15 09:52:59] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.809 | senyum: False | uuid: 67618132-d294-401f-85b8-3b374f44e8aa
+[2026-05-15 09:53:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.775 | senyum: False | uuid: cba9be02-9823-4c36-8406-accea4a989ba
+[2026-05-15 11:26:55] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 11:26:55] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 11:27:05] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 11:27:05] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 11:27:07] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 11:27:14] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.598 | senyum: False | uuid: 1825280f-e1e9-40f9-9943-e0a2d1cce471
+[2026-05-15 11:27:18] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.553 | senyum: False | uuid: 35da4968-680d-4896-a707-2a078308008f
+[2026-05-15 11:27:20] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.579 | senyum: False | uuid: a4e02060-60c6-4eb8-916b-91a05293c791
+[2026-05-15 11:27:21] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.561 | senyum: False | uuid: 9f45ae6f-a17f-4b76-b89d-4b0a143db0ad
+[2026-05-15 11:27:25] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.685 | senyum: False | uuid: 384c3123-3c33-40a0-866c-eb80eb9394ef
+[2026-05-15 21:19:29] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:19:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:19:52] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 21:19:52] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 21:19:55] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 21:20:05] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.806 | senyum: False | uuid: 88742abf-2ee7-4e05-8a3a-59aa08c67d9a
+[2026-05-15 21:20:07] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.775 | senyum: False | uuid: 7cdf26ff-8988-4fd2-a0f6-2082f4960fc5
+[2026-05-15 21:20:10] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.770 | senyum: True | uuid: 64c071f1-5214-45d9-9968-d1c67ea6765a
+[2026-05-15 21:20:13] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.861 | senyum: False | uuid: d638807d-e6b6-4aff-8350-098669bfa60a
+[2026-05-15 21:20:17] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.751 | senyum: False | uuid: 2cdcd460-ecf7-470c-8ea2-ebf41e5aa630
+[2026-05-15 21:20:20] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.721 | senyum: True | uuid: 569aa42a-825c-4772-9e9d-42240a18a378
+[2026-05-15 21:21:02] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:21:02] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:21:12] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 21:21:12] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 21:21:14] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 21:21:24] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.701 | senyum: False | uuid: 49ff6ff6-c9eb-488f-9d7e-86c8ad7d0de4
+[2026-05-15 21:21:28] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.802 | senyum: True | uuid: 614a52c5-807d-4e1f-be61-25f786a06b92
+[2026-05-15 21:21:31] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.751 | senyum: True | uuid: 859a4c4f-7571-4426-98a1-f1a67ba25962
+[2026-05-15 21:21:34] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.701 | senyum: True | uuid: 134bf0b4-0772-407a-9ded-656bf502391e
+[2026-05-15 21:21:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.895 | senyum: False | uuid: 68167603-e3c1-4b1d-9f4f-2df267d14d91
+[2026-05-15 21:21:41] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.749 | senyum: False | uuid: d268f5d0-7fd8-4726-9d69-3180bd06818d
+[2026-05-15 21:24:49] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:24:49] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:25:08] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:25:08] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:25:18] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 21:25:18] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'Dirgi', 'daffaf']
+[2026-05-15 21:25:19] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 21:25:27] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.693 | senyum: True | uuid: 0bdc4f12-0fe4-453c-a459-9179c0fc13de
+[2026-05-15 21:42:20] [INFO] [collect_faces] Mengumpulkan foto untuk: rufus
+[2026-05-15 21:42:20] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 10
+[2026-05-15 21:42:20] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus
+[2026-05-15 21:42:21] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-15 21:42:21] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-15 21:42:21] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-15 21:42:21] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-15 21:42:53] [INFO] [collect_faces]   📸 [1/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0001.jpg
+[2026-05-15 21:42:58] [INFO] [collect_faces]   📸 [2/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0002.jpg
+[2026-05-15 21:43:01] [INFO] [collect_faces]   📸 [3/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0003.jpg
+[2026-05-15 21:43:05] [INFO] [collect_faces]   📸 [4/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0004.jpg
+[2026-05-15 21:43:12] [INFO] [collect_faces]   📸 [5/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0005.jpg
+[2026-05-15 21:43:16] [INFO] [collect_faces]   📸 [6/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0006.jpg
+[2026-05-15 21:43:21] [INFO] [collect_faces]   📸 [7/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0007.jpg
+[2026-05-15 21:43:22] [INFO] [collect_faces]   📸 [8/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0008.jpg
+[2026-05-15 21:43:23] [INFO] [collect_faces]   📸 [9/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0009.jpg
+[2026-05-15 21:43:23] [INFO] [collect_faces]   📸 [10/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\rufus\img_0010.jpg
+[2026-05-15 21:43:24] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 10
+[2026-05-15 21:43:24] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-15 21:43:24] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-15 21:43:24] [INFO] [collect_faces]   2. python train.py
+[2026-05-15 21:44:23] [INFO] [collect_faces] Mengumpulkan foto untuk: alif
+[2026-05-15 21:44:23] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 10
+[2026-05-15 21:44:23] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\alif
+[2026-05-15 21:44:24] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-15 21:44:24] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-15 21:44:24] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-15 21:44:24] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-15 21:44:50] [INFO] [collect_faces]   📸 [1/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0001.jpg
+[2026-05-15 21:44:51] [INFO] [collect_faces]   📸 [2/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0002.jpg
+[2026-05-15 21:45:05] [INFO] [collect_faces]   📸 [3/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0003.jpg
+[2026-05-15 21:45:16] [INFO] [collect_faces]   📸 [4/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0004.jpg
+[2026-05-15 21:45:30] [INFO] [collect_faces]   📸 [5/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0005.jpg
+[2026-05-15 21:45:31] [INFO] [collect_faces]   📸 [6/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0006.jpg
+[2026-05-15 21:45:36] [INFO] [collect_faces]   📸 [7/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0007.jpg
+[2026-05-15 21:45:41] [INFO] [collect_faces]   📸 [8/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0008.jpg
+[2026-05-15 21:45:44] [INFO] [collect_faces]   📸 [9/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0009.jpg
+[2026-05-15 21:45:45] [INFO] [collect_faces]   📸 [10/10] E:\RISETCPS\ml_boostify\ml\dataset\raw\alif\img_0010.jpg
+[2026-05-15 21:45:45] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 10
+[2026-05-15 21:45:45] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-15 21:45:45] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-15 21:45:45] [INFO] [collect_faces]   2. python train.py
+[2026-05-15 21:48:29] [INFO] [preprocess] 🚀 Mulai preprocessing dataset Boostify ...
+[2026-05-15 21:48:29] [INFO] [preprocess] Ditemukan 4 orang: ['alif', 'daffa', 'daffaf', 'rufus']
+[2026-05-15 21:48:29] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-15 21:48:33] [INFO] [preprocess]   [alif] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-15 21:48:33] [INFO] [preprocess] [daffa] Memproses 200 foto ...
+[2026-05-15 21:49:05] [INFO] [preprocess]   [daffa] ✅ Tersimpan: 1400 | ❌ Gagal: 0
+[2026-05-15 21:49:05] [INFO] [preprocess] [daffaf] Memproses 10 foto ...
+[2026-05-15 21:49:07] [INFO] [preprocess]   [daffaf] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-15 21:49:07] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-15 21:49:09] [INFO] [preprocess]   [rufus] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-15 21:49:09] [INFO] [preprocess] 
+==================================================
+[2026-05-15 21:49:09] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-15 21:49:09] [INFO] [preprocess] Total foto berhasil diproses : 1610
+[2026-05-15 21:49:09] [INFO] [preprocess] Total foto gagal             : 0
+[2026-05-15 21:49:09] [INFO] [preprocess] Output di: E:\RISETCPS\ml_boostify\ml\dataset\processed
+[2026-05-15 21:49:48] [INFO] [train] Mendaftarkan [rufus] dari 70 foto ...
+[2026-05-15 21:50:41] [INFO] [train] ✅ [rufus] berhasil didaftarkan!
+[2026-05-15 21:50:41] [INFO] [train] Total terdaftar: 4 orang
+[2026-05-15 21:51:04] [INFO] [train] Mendaftarkan [alif] dari 70 foto ...
+[2026-05-15 21:51:52] [INFO] [train] ✅ [alif] berhasil didaftarkan!
+[2026-05-15 21:51:52] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-15 21:54:12] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:54:12] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:54:20] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 21:54:20] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 21:54:21] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 21:54:29] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.604 | senyum: False | uuid: 267b2b96-65fd-4962-8dbd-b6eba34543fc
+[2026-05-15 21:54:39] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.606 | senyum: False | uuid: d9df9c83-aa91-4833-a59d-9247f64580d2
+[2026-05-15 21:54:48] [INFO] [predict] ABSEN: rufus | code: RUF | confidence: 0.880 | senyum: True | uuid: bb7a59aa-7dee-4c27-b281-b6e2ec46953e
+[2026-05-15 21:54:51] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.593 | senyum: False | uuid: 77adf792-5263-4524-9fc7-996f99ab2ea4
+[2026-05-15 21:55:00] [INFO] [predict] ABSEN: rufus | code: RUF | confidence: 0.658 | senyum: False | uuid: 3d0a2d8a-5ceb-4cac-b2fa-60e91e301b1c
+[2026-05-15 21:55:03] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.575 | senyum: False | uuid: 81e235f7-7435-4f32-81bd-74aa6c426cb4
+[2026-05-15 21:55:15] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.751 | senyum: False | uuid: 11f65096-48ca-4fae-b25a-cf8df92d33cd
+[2026-05-15 21:55:17] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.746 | senyum: False | uuid: 3cc301af-7b8b-4159-9ba9-add4b4ff5f31
+[2026-05-15 21:55:26] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.694 | senyum: False | uuid: e2bd4f38-0a55-4d0b-936f-7368670597bb
+[2026-05-15 21:55:31] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.757 | senyum: False | uuid: 0433efa8-fad1-411d-b5e2-4a471c9b966a
+[2026-05-15 21:55:37] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.845 | senyum: False | uuid: 8872f098-c57e-4430-a5bd-b92e93cb34ea
+[2026-05-15 21:55:45] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.593 | senyum: False | uuid: cf19dbc7-b263-42fb-a818-250f2146a2fc
+[2026-05-15 21:56:03] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.630 | senyum: False | uuid: 8cccbc02-5f6d-4837-a69e-5822bedd8953
+[2026-05-15 21:56:07] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.668 | senyum: False | uuid: 7dd0044b-39af-4786-8372-e3841657e575
+[2026-05-15 21:56:14] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.563 | senyum: False | uuid: c035b640-0fd2-4a40-9830-cb67409cf5c1
+[2026-05-15 21:56:25] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.717 | senyum: False | uuid: 47c055b8-2429-43cf-8736-44155ad6f95b
+[2026-05-15 21:56:35] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.777 | senyum: False | uuid: 92eab1c4-e561-452d-947c-626f9f52d923
+[2026-05-15 21:58:16] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 21:58:16] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 21:58:23] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 21:58:23] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 21:58:25] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 21:58:39] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.683 | senyum: False | uuid: bb5ee937-4d64-4fba-bfd2-ced8b51ddda8
+[2026-05-15 21:58:50] [INFO] [predict] ABSEN: alif | code: ALI | confidence: 0.768 | senyum: True | uuid: 5fa6b2ed-06c8-4fc1-90cb-8f1f90d0a358
+[2026-05-15 21:59:00] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.684 | senyum: True | uuid: ab61d195-9c56-4372-9e47-73b98f89a57c
+[2026-05-15 21:59:01] [INFO] [predict] ABSEN: alif | code: ALI | confidence: 0.776 | senyum: False | uuid: b8e0dd7d-6c5b-4a89-b827-d3e6ab4dc03b
+[2026-05-15 21:59:15] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.579 | senyum: False | uuid: 8f7ce884-a173-4b69-890b-ca0ebed08e2b
+[2026-05-15 22:00:06] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 22:00:06] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 22:00:13] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 22:00:13] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 22:00:15] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 22:00:28] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.573 | senyum: False | uuid: 88987f4e-91e2-467f-8aaa-176d5bb8e3a7
+[2026-05-15 22:00:33] [INFO] [predict] ABSEN: rufus | code: RUF | confidence: 0.789 | senyum: False | uuid: 41266ac5-f9b7-4f95-a588-ddff03787bff
+[2026-05-15 22:00:39] [INFO] [predict] ABSEN: daffaf | code: DYR | confidence: 0.569 | senyum: False | uuid: 4f893809-d293-40f3-97f5-ea40cd677c77
+[2026-05-15 22:25:28] [INFO] [train] Mendaftarkan [alif] dari 70 foto ...
+[2026-05-15 22:26:07] [INFO] [train] ✅ [alif] berhasil didaftarkan!
+[2026-05-15 22:26:07] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-15 22:26:09] [INFO] [train] Mendaftarkan [daffa] dari 1400 foto ...
+[2026-05-15 22:40:21] [INFO] [train] ✅ [daffa] berhasil didaftarkan!
+[2026-05-15 22:40:21] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-15 22:40:23] [INFO] [train] Mendaftarkan [rufus] dari 70 foto ...
+[2026-05-15 22:41:14] [INFO] [train] ✅ [rufus] berhasil didaftarkan!
+[2026-05-15 22:41:14] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-15 22:43:48] [INFO] [collect_faces] Mengumpulkan foto untuk: daffa
+[2026-05-15 22:43:48] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 30
+[2026-05-15 22:43:48] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa
+[2026-05-15 22:43:50] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-15 22:43:50] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-15 22:43:50] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-15 22:43:50] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-15 22:44:06] [INFO] [collect_faces]   📸 [1/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0001.jpg
+[2026-05-15 22:44:09] [INFO] [collect_faces]   📸 [2/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0002.jpg
+[2026-05-15 22:44:11] [INFO] [collect_faces]   📸 [3/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0003.jpg
+[2026-05-15 22:44:16] [INFO] [collect_faces]   📸 [4/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0004.jpg
+[2026-05-15 22:44:20] [INFO] [collect_faces]   📸 [5/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0005.jpg
+[2026-05-15 22:44:24] [INFO] [collect_faces]   📸 [6/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0006.jpg
+[2026-05-15 22:44:28] [INFO] [collect_faces]   📸 [7/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0007.jpg
+[2026-05-15 22:44:31] [INFO] [collect_faces]   📸 [8/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0008.jpg
+[2026-05-15 22:44:31] [INFO] [collect_faces]   📸 [9/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0009.jpg
+[2026-05-15 22:44:31] [INFO] [collect_faces]   📸 [10/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0010.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [11/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0011.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [12/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0012.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [13/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0013.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [14/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0014.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [15/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0015.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [16/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0016.jpg
+[2026-05-15 22:44:32] [INFO] [collect_faces]   📸 [17/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0017.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [18/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0018.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [19/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0019.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [20/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0020.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [21/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0021.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [22/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0022.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [23/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0023.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [24/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0024.jpg
+[2026-05-15 22:44:35] [INFO] [collect_faces]   📸 [25/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0025.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces]   📸 [26/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0026.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces]   📸 [27/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0027.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces]   📸 [28/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0028.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces]   📸 [29/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0029.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces]   📸 [30/30] E:\RISETCPS\ml_boostify\ml\dataset\raw\daffa\img_0030.jpg
+[2026-05-15 22:44:36] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 30
+[2026-05-15 22:44:36] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-15 22:44:36] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-15 22:44:36] [INFO] [collect_faces]   2. python train.py
+[2026-05-15 22:44:48] [INFO] [preprocess] 🚀 Mulai preprocessing dataset Boostify ...
+[2026-05-15 22:44:48] [INFO] [preprocess] Ditemukan 3 orang: ['alif', 'daffa', 'rufus']
+[2026-05-15 22:44:48] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-15 22:44:52] [INFO] [preprocess]   [alif] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-15 22:44:52] [INFO] [preprocess] [daffa] Memproses 30 foto ...
+[2026-05-15 22:44:55] [INFO] [preprocess]   [daffa] ✅ Tersimpan: 210 | ❌ Gagal: 0
+[2026-05-15 22:44:55] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-15 22:44:56] [INFO] [preprocess]   [rufus] ✅ Tersimpan: 70 | ❌ Gagal: 0
+[2026-05-15 22:44:56] [INFO] [preprocess] 
+==================================================
+[2026-05-15 22:44:56] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-15 22:44:56] [INFO] [preprocess] Total foto berhasil diproses : 350
+[2026-05-15 22:44:56] [INFO] [preprocess] Total foto gagal             : 0
+[2026-05-15 22:44:56] [INFO] [preprocess] Output di: E:\RISETCPS\ml_boostify\ml\dataset\processed
+[2026-05-15 22:45:09] [INFO] [train] Mendaftarkan [daffa] dari 210 foto ...
+[2026-05-15 22:47:07] [INFO] [train] ✅ [daffa] berhasil didaftarkan!
+[2026-05-15 22:47:07] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-15 22:47:37] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 22:47:37] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 22:47:42] [INFO] [predict] Model Facenet dimuat.
+[2026-05-15 22:47:42] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 22:47:44] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 22:47:51] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.841 | senyum: False | uuid: 7b098a92-b6ad-439f-91cb-7002454f639d
+[2026-05-15 22:48:01] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.875 | senyum: False | uuid: baba5f35-cfde-481d-be10-ddd76ad47b1f
+[2026-05-15 22:48:07] [INFO] [predict] ABSEN: daffaf | code: DAF | confidence: 0.646 | senyum: False | uuid: 5269f205-34cf-4f51-b00a-8e66c0e9dd3e
+[2026-05-15 22:48:12] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.866 | senyum: True | uuid: d912d3ee-c8d7-4237-8df5-4561a422da2a
+[2026-05-15 22:49:41] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 22:49:41] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 22:49:48] [INFO] [predict] Model ArcFace dimuat.
+[2026-05-15 22:49:48] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 22:49:49] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 22:50:16] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 22:50:16] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 22:50:24] [INFO] [predict] Model ArcFace dimuat.
+[2026-05-15 22:50:24] [INFO] [predict] Siap. 5 orang terdaftar: ['daffa', 'Dirgi', 'daffaf', 'rufus', 'alif']
+[2026-05-15 22:50:25] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 22:59:31] [INFO] [train] Mendaftarkan [daffa] dari 210 foto ...
+[2026-05-15 23:01:06] [INFO] [train] ✅ [daffa] berhasil didaftarkan!
+[2026-05-15 23:01:06] [INFO] [train] Total terdaftar: 1 orang
+[2026-05-15 23:01:09] [INFO] [train] Mendaftarkan [alif] dari 70 foto ...
+[2026-05-15 23:01:47] [INFO] [train] ✅ [alif] berhasil didaftarkan!
+[2026-05-15 23:01:47] [INFO] [train] Total terdaftar: 2 orang
+[2026-05-15 23:01:49] [INFO] [train] Mendaftarkan [rufus] dari 70 foto ...
+[2026-05-15 23:02:26] [INFO] [train] ✅ [rufus] berhasil didaftarkan!
+[2026-05-15 23:02:26] [INFO] [train] Total terdaftar: 3 orang
+[2026-05-15 23:03:25] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 23:03:25] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 23:03:33] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-15 23:03:33] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'alif', 'rufus']
+[2026-05-15 23:03:35] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 23:03:43] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.794 | senyum: False | uuid: ee6f72ba-d8f9-437e-94f2-83997a419311
+[2026-05-15 23:04:03] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.685 | senyum: True | uuid: 654b31dc-a0a1-44df-9758-f2241c39d319
+[2026-05-15 23:24:01] [INFO] [predict] Test predict.py — Realtime Recognition + Smile Detection
+[2026-05-15 23:24:01] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-15 23:24:08] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-15 23:24:08] [INFO] [predict] Siap. 3 orang terdaftar: ['daffa', 'alif', 'rufus']
+[2026-05-15 23:24:10] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-15 23:24:17] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.790 | senyum: False | uuid: a9d36987-f904-4f62-bec3-f46cb9866d2f
+[2026-05-15 23:25:19] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.769 | senyum: False | uuid: c68b8746-4271-4554-a6d2-ef6e69a6f158

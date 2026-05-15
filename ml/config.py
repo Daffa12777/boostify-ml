@@ -2,6 +2,11 @@
 config.py — Konfigurasi Global ML Boostify
 Semua nilai threshold, path, dan parameter ada di sini.
 Kalau mau ubah sesuatu, cukup edit file ini saja.
+
+Update:
+- Model: GhostFaceNet (ringan + akurat untuk sedikit foto)
+- Detector: opencv (lebih ringan dari mtcnn)
+- 50 foto + augmentasi 15x = 750 data per orang
 """
 
 import os
@@ -26,7 +31,7 @@ CAMERA_INDEX    = 1          # 0 = kamera default, 1 = USB eksternal
 FRAME_WIDTH     = 640        # resolusi capture
 FRAME_HEIGHT    = 480
 FRAME_SKIP      = 5          # proses 1 dari setiap N frame (hemat CPU Raspi)
-COOLDOWN_SEC    = 3          # jeda detik setelah absen berhasil
+COOLDOWN_SEC    = 60         # jeda detik setelah absen berhasil
 
 # =============================================================
 # PARAMETER PREPROCESSING
@@ -34,23 +39,33 @@ COOLDOWN_SEC    = 3          # jeda detik setelah absen berhasil
 CLAHE_CLIP      = 3.0        # semakin besar = kontras makin kuat
 CLAHE_GRID      = (8, 8)     # ukuran tile CLAHE
 FACE_SIZE       = (160, 160) # ukuran wajah setelah di-crop (input model)
-MIN_FACE_SIZE   = 20         # piksel minimum agar wajah dianggap valid
+MIN_FACE_SIZE   = 15         # piksel minimum agar wajah dianggap valid
 
 # =============================================================
 # PARAMETER RECOGNITION
 # =============================================================
-SIMILARITY_THRESHOLD = 0.55  # cosine similarity >= ini → dikenali
-                              # Naikkan (0.70) = lebih ketat
-                              # Turunkan (0.50) = lebih longgar
-MIN_PHOTOS_PER_PERSON = 10   # minimal foto per orang untuk training
-AUGMENT_PER_IMAGE = 10        # jumlah augmentasi per foto asli
+SIMILARITY_THRESHOLD  = 0.55  # cosine similarity >= ini → dikenali
+                               # Naikkan (0.70) = lebih ketat
+                               # Turunkan (0.50) = lebih longgar
+MIN_PHOTOS_PER_PERSON = 50    # 50 foto per orang (balance kecepatan & akurasi)
+AUGMENT_PER_IMAGE     = 15    # 50 foto × 15 = 750 data per orang
 
-# =====================================
-# ========================
+# =============================================================
 # PARAMETER TRAINING
 # =============================================================
-MODEL_BACKEND   = "Facenet"  # pilihan: "ArcFace", "Facenet", "Facenet512"
-DETECTOR_BACKEND = "mtcnn"   # pilihan: "mtcnn", "retinaface", "opencv"
+# Pilihan model:
+# "GhostFaceNet" → REKOMENDASI: ringan + akurat untuk sedikit foto
+# "ArcFace"      → akurasi tinggi tapi berat di Raspi
+# "Facenet"      → ringan tapi kurang akurat untuk sedikit foto
+# "Facenet512"   → Facenet versi lebih akurat, embedding 512 dim
+
+MODEL_BACKEND    = "GhostFaceNet"  # ← ringan + akurat untuk Raspberry Pi
+
+# Pilihan detector:
+# "opencv"      → REKOMENDASI: paling ringan, cocok untuk Raspi
+# "mtcnn"       → akurat tapi berat
+# "retinaface"  → paling akurat tapi paling berat
+DETECTOR_BACKEND = "opencv"        # ← ringan untuk Raspberry Pi
 
 # =============================================================
 # LOGGING

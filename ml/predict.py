@@ -14,6 +14,7 @@ import numpy as np
 import cv2
 from datetime import datetime, timezone
 from typing import Optional
+import requests
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from config import (
@@ -54,7 +55,7 @@ def get_random_message() -> str:
 KODE_ASISTEN = {
     "daffa" : "FDR",
     "dirgi" : "DRG",
-    "dea"   : "DEA",
+    "rufus" : "RFS",
     # tambah orang baru:
     # "nama" : "KODE",
 }
@@ -84,12 +85,12 @@ face_cascade_smile = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_
 def detect_smile(frame: np.ndarray) -> bool:
     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade_smile.detectMultiScale(
-        gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
+        gray, scaleFactor=1.1, minNeighbors=15, minSize=(30, 30)
     )
     for (x, y, w, h) in faces:
         roi    = gray[y + h//2 : y + h, x : x + w]
         smiles = smile_cascade.detectMultiScale(
-            roi, scaleFactor=1.7, minNeighbors=20, minSize=(25, 25)
+            roi, scaleFactor=1.7, minNeighbors=15, minSize=(25, 25)
         )
         if len(smiles) > 0:
             return True
@@ -262,6 +263,7 @@ class FaceRecognizer:
         logger.info(f"Database diperbarui: {self.labels}")
 
 
+
 # ─────────────────────────────────────────────
 # TEST REALTIME
 # ─────────────────────────────────────────────
@@ -269,65 +271,150 @@ if __name__ == "__main__":
     import json
 
     logger.info("Test predict.py — Realtime Recognition + Smile Detection")
-    recognizer  = FaceRecognizer()
-    cap         = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+
+    recognizer = FaceRecognizer()
+    cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+
     frame_count = 0
     last_result = {}
 
+    # cooldown upload manual
+    last_upload_time = {}
+
     time.sleep(1)
+
     logger.info("Kamera aktif. Tekan Q untuk keluar.")
 
     while True:
+
         ret, frame = cap.read()
+
         if not ret:
             break
 
         frame_count += 1
+
         if frame_count % FRAME_SKIP == 0:
+
             last_result = recognizer.recognize(frame)
 
-            if last_result["status"] == "recognized":
-                print("\n" + "="*50)
-                print("DATA ABSENSI (siap kirim ke API):")
-                print(json.dumps({
-                    "assisstant_code": last_result["assisstant_code"],
-                    "name"           : last_result["name"],
-                    "time"           : last_result["time"],
-                    "uuid"           : last_result["uuid"],
-                    "formattedTime"  : last_result["formattedTime"],
-                    "is_smiling"     : last_result["is_smiling"]
-                }, indent=4))
-                print("="*50)
+            # =========================
+            # CEK COOLDOWN MANUAL
+            # =========================
+            nama = last_result.get("name", "")
+            current_time = time.time()
 
-        # Tampilan kamera
+            if last_result["status"] == "recognized":
+
+                # kalau belum ada
+                if nama not in last_upload_time:
+                    last_upload_time[nama] = 0
+
+                # cek cooldown
+                if current_time - last_upload_time[nama] > COOLDOWN_SEC:
+
+                    print("\n" + "=" * 50)
+                    print("DATA ABSENSI (siap kirim ke API):")
+
+                    print(json.dumps({
+                        "assisstant_code": last_result["assisstant_code"],
+                        "name": last_result["name"],
+                        "time": last_result["time"],
+                        "uuid": last_result["uuid"],
+                        "formattedTime": last_result["formattedTime"],
+                        "is_smiling": last_result["is_smiling"]
+                    }, indent=4))
+
+                    print("=" * 50)
+
+                    try:
+                        response = requests.post(
+                            "http://localhost:3000/api/uploadfromml",
+                            json=last_result
+                        )
+
+                        print("API RESPONSE:", response.text)
+
+                        # update waktu upload terakhir
+                        last_upload_time[nama] = current_time
+
+                    except Exception as e:
+                        print("GAGAL KIRIM KE BACKEND:", e)
+
+        # =========================
+        # TAMPILAN KAMERA
+        # =========================
         display = frame.copy()
+
         if last_result:
-            status     = last_result.get("status", "")
-            nama       = last_result.get("name", "")
-            conf       = last_result.get("confidence", 0.0)
-            code       = last_result.get("assisstant_code", "")
+
+            status = last_result.get("status", "")
+            nama = last_result.get("name", "")
+            conf = last_result.get("confidence", 0.0)
+            code = last_result.get("assisstant_code", "")
             is_smiling = last_result.get("is_smiling", False)
 
-            color = (0, 200, 0)   if status == "recognized" else \
-                    (0, 0, 220)   if status == "unknown"    else \
-                    (180, 180, 0) if status == "cooldown"   else \
-                    (100, 100, 100)
+            color = (
+                (0, 200, 0) if status == "recognized" else
+                (0, 0, 220) if status == "unknown" else
+                (180, 180, 0) if status == "cooldown" else
+                (100, 100, 100)
+            )
 
-            cv2.putText(display, f"{nama} [{code}]",
-                        (20, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.0, color, 2)
-            cv2.putText(display, f"conf: {conf:.2f} | {status}",
-                        (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.65, color, 2)
+            cv2.putText(
+                display,
+                f"{nama} [{code}]",
+                (20, 45),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1.0,
+                color,
+                2
+            )
+
+            cv2.putText(
+                display,
+                f"conf: {conf:.2f} | {status}",
+                (20, 80),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.65,
+                color,
+                2
+            )
 
             if status == "recognized":
-                smile_text = "Senyum: YES :)" if is_smiling else "Senyum: NO"
-                cv2.putText(display, smile_text,
-                            (20, 110), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 220, 255), 2)
-                cv2.putText(display, last_result.get("formattedTime", ""),
-                            (20, 140), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+
+                smile_text = (
+                    "Senyum: YES :)"
+                    if is_smiling
+                    else "Senyum: NO"
+                )
+
+                cv2.putText(
+                    display,
+                    smile_text,
+                    (20, 110),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.65,
+                    (0, 220, 255),
+                    2
+                )
+
+                cv2.putText(
+                    display,
+                    last_result.get("formattedTime", ""),
+                    (20, 140),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    (200, 200, 200),
+                    1
+                )
 
         cv2.imshow("Boostify — Recognition + Smile", display)
+
+        # tekan Q untuk keluar
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv2.destroyAllWindows()
+
