@@ -253,6 +253,386 @@ git push
 
 ---
 
+````md
+# BOOSTIFY — AI Attendance System
+
+Boostify adalah sistem absensi berbasis AI Face Recognition + Smile Detection yang terintegrasi dengan:
+
+- Frontend Next.js
+- Backend Express.js
+- Prisma ORM
+- Supabase PostgreSQL
+- Machine Learning Python (DeepFace + OpenCV)
+
+---
+
+# FITUR
+
+✅ Face Recognition  
+✅ Smile Detection  
+✅ JWT Authentication  
+✅ NextAuth Login  
+✅ Live Attendance  
+✅ Recap Attendance  
+✅ Supabase Integration  
+✅ Cooldown Anti Spam  
+✅ Raspberry Pi Ready  
+
+---
+
+# TECH STACK
+
+## Frontend
+- Next.js
+- React
+- TypeScript
+- NextAuth
+
+## Backend
+- Express.js
+- Prisma ORM
+- JWT
+- bcryptjs
+
+## Machine Learning
+- Python
+- DeepFace
+- OpenCV
+- GhostFaceNet
+
+## Database
+- Supabase PostgreSQL
+
+---
+
+# FLOW SISTEM
+
+Camera ML
+↓
+Face Recognition
+↓
+Smile Detection
+↓
+Send Attendance Data
+↓
+Backend Express API
+↓
+Prisma ORM
+↓
+Supabase Database
+↓
+LiveReport & Recap
+
+---
+
+# STRUKTUR PROJECT
+
+## Frontend
+/pages
+/components
+/styles
+
+## Backend
+/src
+/routes
+/features
+
+## ML
+predict.py
+config.py
+train.py
+
+---
+
+# LOGIN AUTHENTICATION
+
+Menggunakan:
+
+- NextAuth
+- JWT Token
+- Credentials Provider
+
+## File penting
+```bash
+pages/api/auth/[...nextauth].js
+````
+
+---
+
+# SESSION FLOW
+
+## Login berhasil
+
+```js
+return {
+  id: user.payload.id,
+  name: user.payload.name,
+  assistantCode: user.payload.assisstant_code,
+  token: user.token,
+};
+```
+
+## JWT callback
+
+```js
+token.id = user.id;
+token.name = user.name;
+token.assistantCode = user.assistantCode;
+token.token = user.token;
+```
+
+## Session callback
+
+```js
+session.user.id = token.id;
+session.user.name = token.name;
+session.user.assistantCode = token.assistantCode;
+session.user.token = token.token;
+```
+
+---
+
+# MIDDLEWARE PROTECTION
+
+Protected routes:
+
+```js
+const protectedRoutes = [
+  '/HomePage',
+  '/Profile',
+  '/Recap',
+  '/LiveReport'
+];
+```
+
+Middleware menggunakan:
+
+```js
+getToken({ req, secret })
+```
+
+---
+
+# CORS CONFIGURATION
+
+Backend:
+
+```js
+app.use(cors(corsOptions));
+```
+
+Allowed origin:
+
+```js
+origin: [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://boostify-fe.vercel.app"
+]
+```
+
+---
+
+# LIVE REPORT API
+
+Endpoint backend:
+
+```js
+router.get('/attendances')
+```
+
+Frontend fetch:
+
+```ts
+/api/attendances
+```
+
+---
+
+# RECAP API
+
+Endpoint:
+
+```ts
+/api/recap?page=${currentPage}
+```
+
+Authorization:
+
+```ts
+Authorization: `Bearer ${token}`
+```
+
+---
+
+# ML FACE RECOGNITION
+
+Model:
+
+```python
+MODEL_BACKEND = "GhostFaceNet"
+```
+
+Detector:
+
+```python
+DETECTOR_BACKEND = "opencv"
+```
+
+---
+
+# SMILE DETECTION
+
+Menggunakan:
+
+```python
+haarcascade_smile.xml
+```
+
+---
+
+# ANTI SPAM COOLDOWN
+
+Masalah:
+1 wajah upload berkali-kali.
+
+Solusi:
+
+```python
+last_upload_time = {}
+```
+
+Cooldown:
+
+```python
+COOLDOWN_SEC = 60
+```
+
+Logic:
+
+```python
+if current_time - last_upload_time[nama] > COOLDOWN_SEC:
+```
+
+Hasil:
+
+* 1 orang hanya upload 1x tiap 60 detik
+* Supabase tidak spam
+* Recap lebih rapi
+
+---
+
+# INTEGRASI ML → BACKEND
+
+## ML kirim data
+
+```python
+requests.post(
+    "http://localhost:3000/api/uploadfromml",
+    json=last_result
+)
+```
+
+## Backend route
+
+```js
+router.post("/uploadfromml", uploadAttendanceData);
+```
+
+---
+
+# FORMAT DATA ATTENDANCE
+
+```json
+{
+  "assisstant_code": "FDR",
+  "name": "daffa",
+  "time": "2026-05-15T12:00:00Z",
+  "uuid": "xxxx-xxxx",
+  "formattedTime": "Friday, May 15, 2026",
+  "is_smiling": true
+}
+```
+
+---
+
+# FILE PENTING
+
+## Frontend
+
+```bash
+pages/api/auth/[...nextauth].js
+pages/SignIn.tsx
+pages/LiveReport.tsx
+pages/Recap.tsx
+```
+
+## Backend
+
+```bash
+src/index.js
+src/routes/routes.js
+src/features/auth/services/loginService.js
+```
+
+## ML
+
+```bash
+predict.py
+config.py
+train.py
+```
+
+---
+
+# CARA MENJALANKAN
+
+## Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+## Backend
+
+```bash
+npm install
+npm run dev
+```
+
+## ML
+
+```bash
+python predict.py
+```
+
+---
+
+# STATUS PROJECT
+
+✅ Login berhasil
+✅ JWT berhasil
+✅ Middleware berhasil
+✅ Session berhasil
+✅ LiveReport berhasil
+✅ Recap berhasil
+✅ Supabase berhasil
+✅ ML berhasil
+✅ Smile Detection berhasil
+✅ Anti Spam berhasil
+✅ Realtime Attendance berhasil
+
+---
+
+# AUTHOR
+
+Boostify Team
+
+```
+```
+
+
 ## 👤 Tim
 
 **Machine Learning** — Muhammad Daffa  
