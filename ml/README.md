@@ -1,6 +1,32 @@
-# 🧠 Boostify — Tim ML Documentation
+# 🐝 Boostify ML — Face Recognition Attendance System
 
-Sistem absensi wajah berbasis **Face Recognition** menggunakan **DeepFace + ArcFace**.
+Sistem absensi otomatis berbasis **pengenalan wajah** dan **deteksi senyum** yang berjalan di atas **Raspberry Pi 5**.
+
+---
+
+## 📋 Deskripsi
+
+Boostify ML adalah modul machine learning dari project Boostify — sistem absensi mahasiswa berbasis kamera. Sistem ini mampu:
+
+- ✅ Mengenali wajah mahasiswa secara realtime
+- ✅ Mendeteksi senyum/tidak senyum
+- ✅ Mendaftarkan mahasiswa baru tanpa training ulang dari awal
+- ✅ Berjalan ringan di Raspberry Pi 5
+- ✅ Output langsung match dengan API backend `/api/attendances`
+
+---
+
+## 🧠 Teknologi
+
+| Komponen | Teknologi |
+|---|---|
+| Face Recognition | GhostFaceNet (via DeepFace) |
+| Face Detection | OpenCV (ringan untuk Raspi) |
+| Smile Detection | OpenCV Haar Cascade |
+| Preprocessing | CLAHE Enhancement |
+| Augmentasi | Flip, Brightness, Rotasi, Noise (15x) |
+| Similarity | Cosine Similarity |
+| Version Control | Git + GitHub |
 
 ---
 
@@ -9,139 +35,230 @@ Sistem absensi wajah berbasis **Face Recognition** menggunakan **DeepFace + ArcF
 ```
 ml/
 ├── dataset/
-│   ├── raw/              ← foto mentah per orang (INPUT)
-│   │   ├── Andi/
-│   │   │   ├── img_0001.jpg
-│   │   │   └── ...
-│   │   └── Budi/
-│   ├── processed/        ← hasil preprocessing (AUTO-GENERATED)
-│   └── test/             ← foto untuk evaluasi (pisah dari training)
-│       ├── Andi/
-│       └── Budi/
+│   ├── raw/[nama]/         ← foto mentah per orang
+│   ├── processed/[nama]/   ← hasil preprocessing
+│   └── test/[nama]/        ← foto untuk evaluasi
 │
-├── models/               ← output training (dikirim ke Raspi)
-│   ├── embeddings.pkl    ← database embedding semua wajah
-│   └── labels.pkl        ← daftar nama terdaftar
+├── models/
+│   ├── embeddings.pkl      ← database embedding wajah
+│   └── labels.pkl          ← daftar nama terdaftar
 │
 ├── utils/
 │   ├── __init__.py
-│   └── logger.py         ← sistem logging
+│   └── logger.py           ← sistem logging UTF-8
 │
-├── config.py             ← ⚙️ SEMUA konfigurasi di sini
-├── collect_faces.py      ← 📸 Kumpul foto dataset dari kamera
-├── preprocess.py         ← 🔧 CLAHE + crop + augmentasi
-├── train.py              ← 🎓 Training & generate embeddings
-├── predict.py            ← 🎯 Inferensi (dipanggil IoT)
-├── evaluate.py           ← 📊 Uji akurasi model
-├── requirements.txt      ← 📦 Daftar library
-└── setup_raspi.sh        ← 🔨 Setup otomatis di Raspi
+├── config.py               ← ⚙️ semua konfigurasi di sini
+├── collect_faces.py        ← 📸 ambil foto dataset dari kamera
+├── preprocess.py           ← 🔧 CLAHE + crop + augmentasi
+├── train.py                ← 🎓 training & generate embeddings
+├── predict.py              ← 🎯 engine recognition (dipanggil IoT)
+├── evaluate.py             ← 📊 uji akurasi model
+├── requirements.txt        ← 📦 daftar library
+└── setup_raspi.sh          ← 🔨 setup otomatis di Raspi
 ```
 
 ---
 
-## 🚀 Alur Kerja Tim ML
+## ⚙️ Konfigurasi (`config.py`)
 
-```
-STEP 1: Kumpul Data
-  → python collect_faces.py --nama "Nama Orang" --jumlah 80
-
-STEP 2: Preprocessing  
-  → python preprocess.py
-
-STEP 3: Training
-  → python train.py
-
-STEP 4: Evaluasi (wajib sebelum deploy!)
-  → python evaluate.py
-  Target: akurasi ≥ 90%
-
-STEP 5: Deploy ke Raspi
-  → Copy folder models/ ke Raspberry Pi
-  → Tim IoT yang menjalankan main.py
-```
-
----
-
-## ⚙️ Konfigurasi Penting (`config.py`)
-
-| Parameter | Default | Keterangan |
+| Parameter | Value | Keterangan |
 |---|---|---|
-| `SIMILARITY_THRESHOLD` | `0.60` | Threshold kecocokan wajah |
-| `FRAME_SKIP` | `5` | Proses 1 dari setiap N frame |
-| `COOLDOWN_SEC` | `3` | Jeda detik setelah absen |
-| `AUGMENT_PER_IMAGE` | `5` | Jumlah augmentasi per foto |
-| `MODEL_BACKEND` | `ArcFace` | Model recognition |
-| `DETECTOR_BACKEND` | `mtcnn` | Model deteksi wajah |
+| `MODEL_BACKEND` | `GhostFaceNet` | Model ringan + akurat untuk Raspi |
+| `DETECTOR_BACKEND` | `opencv` | Detector ringan |
+| `SIMILARITY_THRESHOLD` | `0.55` | Threshold kecocokan wajah |
+| `MIN_PHOTOS_PER_PERSON` | `50` | Minimal foto per orang |
+| `AUGMENT_PER_IMAGE` | `15` | 50 foto × 15 = 750 data |
+| `FRAME_SKIP` | `5` | Proses 1 dari 5 frame (hemat CPU) |
+| `COOLDOWN_SEC` | `20` | Jeda setelah absen berhasil |
 
 ---
 
-## 📡 Interface dengan Tim IoT
+## 🚀 Cara Pakai
 
-Tim IoT **hanya perlu import 1 class** dari Tim ML:
+### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 1. Kumpulkan Dataset
+```bash
+python collect_faces.py --nama "Nama Mahasiswa" --jumlah 50
+```
+Tekan **A** untuk auto-capture, gerakkan kepala pelan-pelan.
+
+### 2. Preprocessing
+```bash
+python preprocess.py
+```
+
+### 3. Training
+```bash
+# Training pertama kali (semua orang)
+python train.py
+
+# Daftarkan mahasiswa BARU tanpa train ulang semua
+python train.py --register "Nama Mahasiswa Baru"
+```
+
+### 4. Evaluasi
+```bash
+python evaluate.py
+```
+
+### 5. Test Realtime
+```bash
+python predict.py
+```
+
+---
+
+## 📡 Output Format (untuk Tim IoT & Web)
+
+Setiap absen berhasil, `predict.py` mengembalikan:
 
 ```python
-# Di main.py (Tim IoT)
+{
+    "status"          : "recognized",
+    "assisstant_code" : "FDR",        # kode unik max 3 huruf
+    "name"            : "daffa",
+    "confidence"      : 0.877,
+    "time"            : "2026-05-09T14:18:54.737Z",
+    "uuid"            : "5461f949-66a8-4409-bc2f-ef42b6126a5d",
+    "formattedTime"   : "Saturday, May 09, 2026",
+    "is_smiling"      : True,
+    "message"         : "Selamat Datang, daffa! Senyumnya Keren!"
+}
+```
+
+Format ini **langsung match** dengan API `/api/attendances`.
+
+---
+
+## 👥 Cara Integrasi dengan Tim IoT
+
+```python
 from ml.predict import FaceRecognizer
 
-# Inisialisasi SEKALI di awal
+# Load sekali di awal
 recognizer = FaceRecognizer()
 
 # Panggil tiap frame
 result = recognizer.recognize(frame)
 
-# Format return:
-# {
-#   "status"    : "recognized" | "unknown" | "no_face" | "cooldown",
-#   "nama"      : "Andi Pratama",
-#   "confidence": 0.92,
-#   "message"   : "Selamat Datang, Andi! Semangat! 💪"
-# }
+if result["status"] == "recognized":
+    print(result["name"])      # nama mahasiswa
+    print(result["message"])   # pesan untuk LCD
+    print(result["is_smiling"])# status senyum
 ```
 
 ---
 
-## 💡 Tips Dataset yang Baik
+## ➕ Daftarkan Mahasiswa Baru
 
-- **Minimal 50 foto per orang** (80+ lebih baik)
-- Variasikan **sudut**: lurus, kiri 30°, kanan 30°, atas, bawah
-- Variasikan **pencahayaan**: terang, sedang, agak gelap
-- Variasikan **ekspresi**: netral, senyum, serius
-- Jarak kamera: **30–80 cm** dari wajah
-- Pisahkan **10–20 foto** untuk folder `dataset/test/` (jangan dipakai training)
+Tidak perlu training ulang semua data!
+
+```bash
+# 1. Ambil foto
+python collect_faces.py --nama "Mahasiswa Baru" --jumlah 50
+
+# 2. Preprocessing
+python preprocess.py
+
+# 3. Register saja (± 30 detik)
+python train.py --register "Mahasiswa Baru"
+```
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 Kode Asisten Custom
 
-**Model tidak mengenali wajah:**
-- Turunkan `SIMILARITY_THRESHOLD` di config.py (misal dari 0.60 ke 0.50)
-- Tambah lebih banyak foto training
-- Pastikan pencahayaan saat training mirip dengan kondisi real
+Edit `KODE_ASISTEN` di `predict.py`:
 
-**Raspi terlalu panas:**
-- Naikkan `FRAME_SKIP` (misal dari 5 ke 10)
-- Pastikan kipas terpasang dan heatsink ada
-- Buat lubang ventilasi di casing akrilik
+```python
+KODE_ASISTEN = {
+    "daffa" : "FDR",
+    "alif"  : "ALF",
+    "rufus" : "RFS",
+    # tambah mahasiswa baru:
+    # "nama" : "KOD",  ← max 3 huruf!
+}
+```
 
-**Wajah tidak terdeteksi di kondisi gelap:**
-- CLAHE sudah diaplikasikan secara otomatis
-- Tambah lampu tambahan di sekitar kamera
-- Pertimbangkan kamera NoIR + IR LED
+---
 
+## 📊 Hasil Evaluasi
 
+| Metrik | Nilai |
+|---|---|
+| Model | GhostFaceNet |
+| Akurasi | 90-94% |
+| Confidence Score | 0.8 – 0.9 |
+| Threshold | 0.55 |
+| Dataset | 50 foto × 15 aug = 750 data/orang |
+| Waktu daftar | ~2 menit/mahasiswa |
+| Status | ✅ Siap Deploy ke Raspberry Pi |
 
+---
 
-# Hapus semua dataset lama
-Remove-Item -Recurse -Force dataset\raw\*
-Remove-Item -Recurse -Force dataset\processed\*
+## 🔄 Perbandingan Model
 
-# Hapus model lama juga
-Remove-Item -Force models\embeddings.pkl
-Remove-Item -Force models\labels.pkl
+| Aspek | Facenet (Lama) | GhostFaceNet (Baru) |
+|---|---|---|
+| Akurasi (50 foto) | 85-90% | 90-94% ✅ |
+| Kecepatan Raspi | ~80ms | ~60ms ✅ |
+| Ukuran model | ~90MB | ~20MB ✅ |
+| Foto per orang | 200 foto | 50 foto ✅ |
+| Waktu/mahasiswa | ~6 menit | ~2 menit ✅ |
+| 100 mahasiswa | ~10 jam | ~3.5 jam ✅ |
 
-python collect_faces.py --nama "Nama Orang" --jumlah 80
-python preprocess.py
-python train.py
+---
 
-python evaluate.py
-python predict.py
+## 💡 Solusi Masalah Umum
+
+| Masalah | Solusi |
+|---|---|
+| Kamera tidak terbuka | Tambahkan `cv2.CAP_DSHOW` (Windows) |
+| Error `/tmp/` di Windows | Sudah difix pakai `tempfile.gettempdir()` |
+| Wajah tidak terdeteksi | Pastikan pencahayaan cukup, CLAHE aktif |
+| Raspi kepanasan | Naikkan `FRAME_SKIP` di config.py |
+| Shapes not aligned | Hapus `.pkl` lama, register ulang |
+
+---
+
+## 🔗 Deploy ke Raspberry Pi
+
+```bash
+# Di Raspberry Pi
+git clone https://github.com/Daffa12777/boostify-ml.git
+cd boostify-ml
+chmod +x ml/setup_raspi.sh
+./ml/setup_raspi.sh
+```
+
+---
+
+## 📦 Update ke GitHub
+
+```bash
+# Setiap ada perubahan kode
+git add .
+git commit -m "keterangan perubahan"
+git push
+
+# Setelah daftar mahasiswa baru
+git add ml/models/
+git commit -m "tambah mahasiswa baru - retrain"
+git push
+```
+
+---
+
+## 👤 Tim
+
+**Machine Learning** — Muhammad Daffa  
+**Repository** — [github.com/Daffa12777/boostify-ml](https://github.com/Daffa12777/boostify-ml)  
+**Project** — Boostify Face Recognition Attendance System
+
+---
+
+*Boostify ML — Smart Attendance for Smart Campus* 🐝
