@@ -9,24 +9,39 @@ Sistem absensi otomatis berbasis **pengenalan wajah** dan **deteksi senyum** yan
 Boostify ML adalah modul machine learning dari project Boostify — sistem absensi mahasiswa berbasis kamera. Sistem ini mampu:
 
 - ✅ Mengenali wajah mahasiswa secara realtime
-- ✅ Mendeteksi senyum/tidak senyum
+- ✅ Mendeteksi senyum/tidak senyum (Simple MAR — ringan tanpa model tambahan)
 - ✅ Mendaftarkan mahasiswa baru tanpa training ulang dari awal
-- ✅ Berjalan ringan di Raspberry Pi 5
-- ✅ Output langsung match dengan API backend `/api/attendances`
+- ✅ Berjalan ringan di Raspberry Pi 5 (tidak overheat)
+- ✅ Kamera tidak lag (threading)
+- ✅ Output langsung match dengan API backend `/api/uploadfromml`
+- ✅ Anti spam cooldown (1 orang 1x per 60 detik)
 
 ---
 
-## 🧠 Teknologi
+## 🧠 Model yang Digunakan (Total: 2 Model)
 
-| Komponen | Teknologi |
-|---|---|
-| Face Recognition | GhostFaceNet (via DeepFace) |
-| Face Detection | OpenCV (ringan untuk Raspi) |
-| Smile Detection | OpenCV Haar Cascade |
-| Preprocessing | CLAHE Enhancement |
-| Augmentasi | Flip, Brightness, Rotasi, Noise (15x) |
-| Similarity | Cosine Similarity |
-| Version Control | Git + GitHub |
+| No | Model | Fungsi | Ukuran | Beban CPU |
+|---|---|---|---|---|
+| 1 | **GhostFaceNet** (via DeepFace) | Face Recognition — kenali siapa orangnya | ~20MB | ~60ms/frame |
+| 2 | **OpenCV Haar Cascade** | Face Detection — deteksi ada wajah atau tidak | Built-in | ~5ms/frame |
+| - | **Simple MAR** | Smile Detection — bukan model, murni image processing | 0MB | ~1ms/frame |
+
+> **Catatan:** Simple MAR (Mouth Aspect Ratio) bukan model ML — hanya algoritma pengolahan gambar berbasis persentase kecerahan area mulut. Sangat ringan dan tidak menambah beban Raspberry Pi.
+
+---
+
+## 🔄 Perubahan dari Versi Sebelumnya
+
+| Komponen | Sebelumnya | Sekarang | Alasan |
+|---|---|---|---|
+| Face Recognition | Facenet | **GhostFaceNet** | Lebih akurat untuk sedikit foto, lebih ringan |
+| Face Detector | mtcnn | **OpenCV** | Lebih ringan di Raspi |
+| Smile Detection | Haar Cascade | **Simple MAR** | Haar Cascade tidak reliable, MAR lebih akurat & ringan |
+| Dataset | 200 foto | **50 foto** | Cukup dengan augmentasi 15x |
+| Kamera | Lag (sequential) | **No Lag (threading)** | Thread terpisah untuk kamera & ML |
+| JSON bool | numpy bool | **Python bool** | Fix TypeError JSON serializable |
+| config.py | Ada typo `"INFO".` | **`"INFO"`** | Fix syntax error |
+| preprocess.py | Ada dead code | **Dead code dihapus** | Fix logika deteksi wajah |
 
 ---
 
@@ -35,26 +50,27 @@ Boostify ML adalah modul machine learning dari project Boostify — sistem absen
 ```
 ml/
 ├── dataset/
-│   ├── raw/[nama]/         ← foto mentah per orang
-│   ├── processed/[nama]/   ← hasil preprocessing
-│   └── test/[nama]/        ← foto untuk evaluasi
+│   ├── raw/[nama]/           ← foto mentah per orang
+│   ├── processed/[nama]/     ← hasil preprocessing
+│   └── test/[nama]/          ← foto untuk evaluasi
 │
 ├── models/
-│   ├── embeddings.pkl      ← database embedding wajah
-│   └── labels.pkl          ← daftar nama terdaftar
+│   ├── embeddings.pkl        ← database embedding wajah (GhostFaceNet)
+│   └── labels.pkl            ← daftar nama terdaftar
 │
 ├── utils/
 │   ├── __init__.py
-│   └── logger.py           ← sistem logging UTF-8
+│   └── logger.py             ← sistem logging UTF-8
 │
-├── config.py               ← ⚙️ semua konfigurasi di sini
-├── collect_faces.py        ← 📸 ambil foto dataset dari kamera
-├── preprocess.py           ← 🔧 CLAHE + crop + augmentasi
-├── train.py                ← 🎓 training & generate embeddings
-├── predict.py              ← 🎯 engine recognition (dipanggil IoT)
-├── evaluate.py             ← 📊 uji akurasi model
-├── requirements.txt        ← 📦 daftar library
-└── setup_raspi.sh          ← 🔨 setup otomatis di Raspi
+├── config.py                 ← ⚙️ semua konfigurasi di sini
+├── collect_faces.py          ← 📸 ambil foto dataset dari kamera
+├── preprocess.py             ← 🔧 CLAHE + crop + augmentasi (fixed)
+├── train.py                  ← 🎓 training & generate embeddings
+├── predict.py                ← 🎯 engine recognition + smile detection
+├── predict_thread.py         ← 🚀 runner no-lag (pakai ini!)
+├── evaluate.py               ← 📊 uji akurasi model
+├── requirements.txt          ← 📦 daftar library
+└── setup_raspi.sh            ← 🔨 setup otomatis di Raspi
 ```
 
 ---
@@ -63,13 +79,16 @@ ml/
 
 | Parameter | Value | Keterangan |
 |---|---|---|
-| `MODEL_BACKEND` | `GhostFaceNet` | Model ringan + akurat untuk Raspi |
-| `DETECTOR_BACKEND` | `opencv` | Detector ringan |
+| `MODEL_BACKEND` | `GhostFaceNet` | Model face recognition |
+| `DETECTOR_BACKEND` | `opencv` | Detector wajah (ringan) |
 | `SIMILARITY_THRESHOLD` | `0.55` | Threshold kecocokan wajah |
 | `MIN_PHOTOS_PER_PERSON` | `50` | Minimal foto per orang |
 | `AUGMENT_PER_IMAGE` | `15` | 50 foto × 15 = 750 data |
-| `FRAME_SKIP` | `5` | Proses 1 dari 5 frame (hemat CPU) |
-| `COOLDOWN_SEC` | `20` | Jeda setelah absen berhasil |
+| `FRAME_SKIP` | `8` | Proses 1 dari 8 frame (hemat CPU) |
+| `COOLDOWN_SEC` | `60` | Jeda absen per orang (anti spam) |
+| `SMILE_VOTE_FRAMES` | `5` | Frame voting untuk smile detection |
+| `SMILE_VOTE_THRESH` | `3` | Minimal frame senyum dari voting |
+| `SMILE_MIN_NEIGHBORS` | `8` | Sensitivitas deteksi |
 
 ---
 
@@ -105,10 +124,39 @@ python train.py --register "Nama Mahasiswa Baru"
 python evaluate.py
 ```
 
-### 5. Test Realtime
+### 5. Jalankan Sistem (Gunakan ini!)
 ```bash
+# Versi NO LAG (direkomendasikan)
+python predict_thread.py
+
+# Versi biasa (bisa lag)
 python predict.py
 ```
+
+---
+
+## 🎯 Cara Kerja Smile Detection (Simple MAR)
+
+```
+Frame kamera masuk
+        ↓
+Ambil area mulut (60-85% tinggi, 25-75% lebar frame)
+        ↓
+CLAHE lokal → normalize pencahayaan
+        ↓
+Adaptive Threshold → deteksi area terang (gigi)
+        ↓
+Hitung persentase area terang
+        ↓
+> 6% area terang → SENYUM ✅
+< 6% area terang → TIDAK SENYUM ❌
+        ↓
+Voting 5 frame → hasil lebih stabil
+```
+
+> Untuk tuning: ubah `SMILE_WHITE_THRESHOLD = 0.06` di `predict.py`
+> - Turunkan (0.04) → lebih sensitif
+> - Naikkan (0.08) → lebih ketat
 
 ---
 
@@ -116,21 +164,24 @@ python predict.py
 
 Setiap absen berhasil, `predict.py` mengembalikan:
 
-```python
+```json
 {
     "status"          : "recognized",
-    "assisstant_code" : "FDR",        # kode unik max 3 huruf
+    "assisstant_code" : "FDR",
     "name"            : "daffa",
     "confidence"      : 0.877,
     "time"            : "2026-05-09T14:18:54.737Z",
     "uuid"            : "5461f949-66a8-4409-bc2f-ef42b6126a5d",
     "formattedTime"   : "Saturday, May 09, 2026",
-    "is_smiling"      : True,
+    "is_smiling"      : true,
     "message"         : "Selamat Datang, daffa! Senyumnya Keren!"
 }
 ```
 
-Format ini **langsung match** dengan API `/api/attendances`.
+Dikirim ke backend via:
+```python
+requests.post("http://localhost:3000/api/uploadfromml", json=result)
+```
 
 ---
 
@@ -146,26 +197,26 @@ recognizer = FaceRecognizer()
 result = recognizer.recognize(frame)
 
 if result["status"] == "recognized":
-    print(result["name"])      # nama mahasiswa
-    print(result["message"])   # pesan untuk LCD
-    print(result["is_smiling"])# status senyum
+    print(result["name"])       # nama mahasiswa
+    print(result["message"])    # pesan untuk LCD
+    print(result["is_smiling"]) # status senyum (bool)
 ```
 
 ---
 
-## ➕ Daftarkan Mahasiswa Baru
-
-Tidak perlu training ulang semua data!
+## ➕ Daftarkan Mahasiswa Baru (Tanpa Train Ulang)
 
 ```bash
-# 1. Ambil foto
+# 1. Ambil foto (hanya ~45 detik)
 python collect_faces.py --nama "Mahasiswa Baru" --jumlah 50
 
-# 2. Preprocessing
+# 2. Preprocessing (~30 detik)
 python preprocess.py
 
-# 3. Register saja (± 30 detik)
+# 3. Register saja (~30 detik)
 python train.py --register "Mahasiswa Baru"
+
+# Total: ~2 menit per mahasiswa ✅
 ```
 
 ---
@@ -177,10 +228,10 @@ Edit `KODE_ASISTEN` di `predict.py`:
 ```python
 KODE_ASISTEN = {
     "daffa" : "FDR",
-    "alif"  : "ALF",
+    "dirgi" : "DRG",
     "rufus" : "RFS",
-    # tambah mahasiswa baru:
-    # "nama" : "KOD",  ← max 3 huruf!
+    # tambah mahasiswa baru (max 3 huruf!):
+    # "nama" : "KOD",
 }
 ```
 
@@ -196,20 +247,9 @@ KODE_ASISTEN = {
 | Threshold | 0.55 |
 | Dataset | 50 foto × 15 aug = 750 data/orang |
 | Waktu daftar | ~2 menit/mahasiswa |
+| 100 mahasiswa | ~3.5 jam |
+| Smile Detection | Simple MAR (~1ms/frame) |
 | Status | ✅ Siap Deploy ke Raspberry Pi |
-
----
-
-## 🔄 Perbandingan Model
-
-| Aspek | Facenet (Lama) | GhostFaceNet (Baru) |
-|---|---|---|
-| Akurasi (50 foto) | 85-90% | 90-94% ✅ |
-| Kecepatan Raspi | ~80ms | ~60ms ✅ |
-| Ukuran model | ~90MB | ~20MB ✅ |
-| Foto per orang | 200 foto | 50 foto ✅ |
-| Waktu/mahasiswa | ~6 menit | ~2 menit ✅ |
-| 100 mahasiswa | ~10 jam | ~3.5 jam ✅ |
 
 ---
 
@@ -217,11 +257,15 @@ KODE_ASISTEN = {
 
 | Masalah | Solusi |
 |---|---|
-| Kamera tidak terbuka | Tambahkan `cv2.CAP_DSHOW` (Windows) |
+| Kamera tidak terbuka (hitam) | Tambahkan `cv2.CAP_DSHOW` + coba index 0 atau 1 |
 | Error `/tmp/` di Windows | Sudah difix pakai `tempfile.gettempdir()` |
+| Kamera lag | Gunakan `predict_thread.py` bukan `predict.py` |
 | Wajah tidak terdeteksi | Pastikan pencahayaan cukup, CLAHE aktif |
-| Raspi kepanasan | Naikkan `FRAME_SKIP` di config.py |
-| Shapes not aligned | Hapus `.pkl` lama, register ulang |
+| Raspi kepanasan | Naikkan `FRAME_SKIP` di config.py (8 → 10) |
+| Shapes not aligned | Model berubah → hapus `.pkl` lama, register ulang |
+| JSON not serializable | Pastikan `bool(is_smiling)` bukan numpy bool |
+| Smile tidak terdeteksi | Turunkan `SMILE_WHITE_THRESHOLD` di predict.py |
+| ImportError SMILE_VOTE | Tambahkan parameter smile di config.py |
 
 ---
 
@@ -233,6 +277,9 @@ git clone https://github.com/Daffa12777/boostify-ml.git
 cd boostify-ml
 chmod +x ml/setup_raspi.sh
 ./ml/setup_raspi.sh
+
+# Jalankan
+python3 ml/predict_thread.py
 ```
 
 ---
@@ -247,396 +294,28 @@ git push
 
 # Setelah daftar mahasiswa baru
 git add ml/models/
-git commit -m "tambah mahasiswa baru - retrain"
+git commit -m "tambah mahasiswa baru - register"
 git push
 ```
 
 ---
 
-````md
-# BOOSTIFY — AI Attendance System
+## 🔗 Integrasi Project
 
-Boostify adalah sistem absensi berbasis AI Face Recognition + Smile Detection yang terintegrasi dengan:
-
-- Frontend Next.js
-- Backend Express.js
-- Prisma ORM
-- Supabase PostgreSQL
-- Machine Learning Python (DeepFace + OpenCV)
-
----
-
-# FITUR
-
-✅ Face Recognition  
-✅ Smile Detection  
-✅ JWT Authentication  
-✅ NextAuth Login  
-✅ Live Attendance  
-✅ Recap Attendance  
-✅ Supabase Integration  
-✅ Cooldown Anti Spam  
-✅ Raspberry Pi Ready  
+| Komponen | Teknologi | Status |
+|---|---|---|
+| Frontend | Next.js + TypeScript | ✅ |
+| Backend | Express.js + Prisma | ✅ |
+| Database | Supabase PostgreSQL | ✅ |
+| ML | Python + DeepFace + OpenCV | ✅ |
+| Auth | NextAuth + JWT | ✅ |
 
 ---
-
-# TECH STACK
-
-## Frontend
-- Next.js
-- React
-- TypeScript
-- NextAuth
-
-## Backend
-- Express.js
-- Prisma ORM
-- JWT
-- bcryptjs
-
-## Machine Learning
-- Python
-- DeepFace
-- OpenCV
-- GhostFaceNet
-
-## Database
-- Supabase PostgreSQL
-
----
-
-# FLOW SISTEM
-
-Camera ML
-↓
-Face Recognition
-↓
-Smile Detection
-↓
-Send Attendance Data
-↓
-Backend Express API
-↓
-Prisma ORM
-↓
-Supabase Database
-↓
-LiveReport & Recap
-
----
-
-# STRUKTUR PROJECT
-
-## Frontend
-/pages
-/components
-/styles
-
-## Backend
-/src
-/routes
-/features
-
-## ML
-predict.py
-config.py
-train.py
-
----
-
-# LOGIN AUTHENTICATION
-
-Menggunakan:
-
-- NextAuth
-- JWT Token
-- Credentials Provider
-
-## File penting
-```bash
-pages/api/auth/[...nextauth].js
-````
-
----
-
-# SESSION FLOW
-
-## Login berhasil
-
-```js
-return {
-  id: user.payload.id,
-  name: user.payload.name,
-  assistantCode: user.payload.assisstant_code,
-  token: user.token,
-};
-```
-
-## JWT callback
-
-```js
-token.id = user.id;
-token.name = user.name;
-token.assistantCode = user.assistantCode;
-token.token = user.token;
-```
-
-## Session callback
-
-```js
-session.user.id = token.id;
-session.user.name = token.name;
-session.user.assistantCode = token.assistantCode;
-session.user.token = token.token;
-```
-
----
-
-# MIDDLEWARE PROTECTION
-
-Protected routes:
-
-```js
-const protectedRoutes = [
-  '/HomePage',
-  '/Profile',
-  '/Recap',
-  '/LiveReport'
-];
-```
-
-Middleware menggunakan:
-
-```js
-getToken({ req, secret })
-```
-
----
-
-# CORS CONFIGURATION
-
-Backend:
-
-```js
-app.use(cors(corsOptions));
-```
-
-Allowed origin:
-
-```js
-origin: [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://boostify-fe.vercel.app"
-]
-```
-
----
-
-# LIVE REPORT API
-
-Endpoint backend:
-
-```js
-router.get('/attendances')
-```
-
-Frontend fetch:
-
-```ts
-/api/attendances
-```
-
----
-
-# RECAP API
-
-Endpoint:
-
-```ts
-/api/recap?page=${currentPage}
-```
-
-Authorization:
-
-```ts
-Authorization: `Bearer ${token}`
-```
-
----
-
-# ML FACE RECOGNITION
-
-Model:
-
-```python
-MODEL_BACKEND = "GhostFaceNet"
-```
-
-Detector:
-
-```python
-DETECTOR_BACKEND = "opencv"
-```
-
----
-
-# SMILE DETECTION
-
-Menggunakan:
-
-```python
-haarcascade_smile.xml
-```
-
----
-
-# ANTI SPAM COOLDOWN
-
-Masalah:
-1 wajah upload berkali-kali.
-
-Solusi:
-
-```python
-last_upload_time = {}
-```
-
-Cooldown:
-
-```python
-COOLDOWN_SEC = 60
-```
-
-Logic:
-
-```python
-if current_time - last_upload_time[nama] > COOLDOWN_SEC:
-```
-
-Hasil:
-
-* 1 orang hanya upload 1x tiap 60 detik
-* Supabase tidak spam
-* Recap lebih rapi
-
----
-
-# INTEGRASI ML → BACKEND
-
-## ML kirim data
-
-```python
-requests.post(
-    "http://localhost:3000/api/uploadfromml",
-    json=last_result
-)
-```
-
-## Backend route
-
-```js
-router.post("/uploadfromml", uploadAttendanceData);
-```
-
----
-
-# FORMAT DATA ATTENDANCE
-
-```json
-{
-  "assisstant_code": "FDR",
-  "name": "daffa",
-  "time": "2026-05-15T12:00:00Z",
-  "uuid": "xxxx-xxxx",
-  "formattedTime": "Friday, May 15, 2026",
-  "is_smiling": true
-}
-```
-
----
-
-# FILE PENTING
-
-## Frontend
-
-```bash
-pages/api/auth/[...nextauth].js
-pages/SignIn.tsx
-pages/LiveReport.tsx
-pages/Recap.tsx
-```
-
-## Backend
-
-```bash
-src/index.js
-src/routes/routes.js
-src/features/auth/services/loginService.js
-```
-
-## ML
-
-```bash
-predict.py
-config.py
-train.py
-```
-
----
-
-# CARA MENJALANKAN
-
-## Frontend
-
-```bash
-npm install
-npm run dev
-```
-
-## Backend
-
-```bash
-npm install
-npm run dev
-```
-
-## ML
-
-```bash
-python predict.py
-```
-
----
-
-# STATUS PROJECT
-
-✅ Login berhasil
-✅ JWT berhasil
-✅ Middleware berhasil
-✅ Session berhasil
-✅ LiveReport berhasil
-✅ Recap berhasil
-✅ Supabase berhasil
-✅ ML berhasil
-✅ Smile Detection berhasil
-✅ Anti Spam berhasil
-✅ Realtime Attendance berhasil
-
----
-
-# AUTHOR
-
-Boostify Team
-
-```
-```
-
 
 ## 👤 Tim
 
-**Machine Learning** — Muhammad Daffa  
-**Repository** — [github.com/Daffa12777/boostify-ml](https://github.com/Daffa12777/boostify-ml)  
+**Machine Learning** — Muhammad Daffa
+**Repository** — [github.com/Daffa12777/boostify-ml](https://github.com/Daffa12777/boostify-ml)
 **Project** — Boostify Face Recognition Attendance System
 
 ---

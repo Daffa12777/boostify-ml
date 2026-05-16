@@ -12,6 +12,13 @@ Update:
 import os
 
 # =============================================================
+# PARAMETER SMILE DETECTION — TAMBAHKAN INI
+# =============================================================
+SMILE_VOTE_FRAMES   = 5    # jumlah frame untuk voting
+SMILE_VOTE_THRESH   = 3    # minimal frame senyum → dianggap senyum
+SMILE_MIN_NEIGHBORS = 8    # sensitivitas deteksi
+
+# =============================================================
 # PATH DATASET & MODEL
 # =============================================================
 BASE_DIR        = os.path.dirname(os.path.abspath(__file__))
@@ -28,9 +35,9 @@ LABEL_FILE      = os.path.join(MODEL_DIR, "labels.pkl")
 # PARAMETER KAMERA & FRAME
 # =============================================================
 CAMERA_INDEX    = 1          # 0 = kamera default, 1 = USB eksternal
-FRAME_WIDTH     = 640        # resolusi capture
-FRAME_HEIGHT    = 480
-FRAME_SKIP      = 5          # proses 1 dari setiap N frame (hemat CPU Raspi)
+FRAME_WIDTH     = 320        # resolusi capture
+FRAME_HEIGHT    = 240
+FRAME_SKIP      = 8          # proses 1 dari setiap N frame (hemat CPU Raspi)
 COOLDOWN_SEC    = 60         # jeda detik setelah absen berhasil
 
 # =============================================================
