@@ -299,6 +299,225 @@ git push
 ```
 
 ---
+# 🔗 Integrasi ML ke Web — Boostify
+
+## 📌 Metode Integrasi yang Dipakai
+
+Boostify menggunakan:
+
+* REST API
+* HTTP Request
+* JSON
+* Express.js API
+* Python `requests.post()`
+* Frontend `fetch()`
+
+Bukan:
+
+* MQTT
+* WebSocket
+* SocketIO
+
+---
+
+# 🧠 Alur Integrasi
+
+```txt id="4j9u1y"
+Camera
+↓
+ML Python (Face Recognition)
+↓
+POST Attendance
+↓
+Backend Express API
+↓
+Supabase Database
+↓
+Frontend Next.js
+↓
+LiveReport & Recap
+```
+
+---
+
+# 🌐 PORT YANG DIPAKAI
+
+| Service          | Port                 |
+| ---------------- | -------------------- |
+| Backend Express  | 3000                 |
+| Frontend Next.js | 3001                 |
+| ML Python        | local python process |
+
+---
+
+# 📡 STEP INTEGRASI ML → WEB
+
+## 1. ML Mengirim Data ke Backend
+
+File:
+
+```bash id="l6dj5n"
+predict.py
+```
+
+Tambahkan:
+
+```python id="7tt8oz"
+requests.post(
+    "http://localhost:3000/api/uploadfromml",
+    json=last_result
+)
+```
+
+---
+
+## 2. Backend Menyediakan Endpoint
+
+File:
+
+```bash id="hl9qqm"
+src/routes/routes.js
+```
+
+Tambahkan:
+
+```js id="67wv9u"
+router.post("/uploadfromml", uploadAttendanceData);
+```
+
+---
+
+## 3. Backend Menyimpan ke Supabase
+
+File:
+
+```bash id="bm29sk"
+sendDataController.js
+```
+
+Gunakan Prisma:
+
+```js id="p6s6lc"
+await prisma.attendance.create({
+  data: {
+    assistant_code,
+    name,
+    time
+  }
+})
+```
+
+---
+
+## 4. Frontend Mengambil Data Attendance
+
+File:
+
+```bash id="jxf9ks"
+LiveReport.tsx
+```
+
+Gunakan:
+
+```ts id="s8gcxk"
+fetch("http://localhost:3000/api/attendances")
+```
+
+---
+
+## 5. Frontend Menampilkan Data
+
+Data dari backend otomatis muncul di:
+
+* LiveReport
+* Recap
+
+---
+
+# 🔐 AUTHENTICATION
+
+Frontend memakai:
+
+```txt id="d9jlwm"
+JWT + NextAuth
+```
+
+Token dikirim ke backend:
+
+```ts id="rshk8f"
+Authorization: `Bearer ${token}`
+```
+
+---
+
+# 🛡️ ANTI SPAM
+
+File:
+
+```bash id="y97i8o"
+config.py
+```
+
+```python id="st3n3m"
+COOLDOWN_SEC = 60
+```
+
+Tujuan:
+
+* 1 orang tidak spam attendance
+* Supabase tetap bersih
+
+---
+
+# 🚀 SAAT DEPLOY
+
+## Local Development
+
+| Service  | URL            |
+| -------- | -------------- |
+| Backend  | localhost:3000 |
+| Frontend | localhost:3001 |
+
+---
+
+## Production
+
+| Service  | URL          |
+| -------- | ------------ |
+| Backend  | Vercel       |
+| Frontend | Vercel       |
+| Database | Supabase     |
+| ML       | Raspberry Pi |
+
+---
+
+# 📌 FINAL FLOW
+
+```txt id="f3n7mi"
+ML Python
+↓
+POST /api/uploadfromml
+↓
+Backend Express
+↓
+Supabase
+↓
+Frontend Fetch API
+↓
+LiveReport & Recap
+```
+
+---
+
+# ✅ HASIL
+
+✅ Attendance realtime
+✅ Data otomatis masuk Supabase
+✅ LiveReport realtime
+✅ Recap realtime
+✅ Anti spam aktif
+✅ Siap deploy Raspberry Pi
+
 
 ## 🔗 Integrasi Project
 
@@ -314,7 +533,7 @@ git push
 
 ## 👤 Tim
 
-**Machine Learning** — Muhammad Daffa
+
 **Repository** — [github.com/Daffa12777/boostify-ml](https://github.com/Daffa12777/boostify-ml)
 **Project** — Boostify Face Recognition Attendance System
 
