@@ -8,22 +8,22 @@
 # ============================================================
 
 # Core ML
-deepface==0.0.93
-tensorflow==2.15.0       # untuk laptop/PC
-# tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
+deepface
+#tensorflow==2.15.0       # untuk laptop/PC
+#tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
 
 # Computer Vision
-opencv-python==4.9.0.80
-opencv-python-headless==4.9.0.80  # untuk Raspi (tanpa GUI)
+
+opencv-python-headless  # untuk Raspi (tanpa GUI)
 
 # Numerik
-numpy==1.26.4
-scikit-learn==1.4.0
+numpy
+scikit-learn
 
 # Utilitas
-Pillow==10.2.0
-tqdm==4.66.2
-matplotlib==3.8.3
+Pillow
+tqdm
+matplotlib
 
 # Penyimpanan embedding
 # (pickle sudah built-in Python, tidak perlu install)

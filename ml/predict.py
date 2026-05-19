@@ -156,9 +156,8 @@ class FaceRecognizer:
             self.labels = pickle.load(f)
 
     def _load_model(self):
-        from deepface import DeepFace
-        self.deepface = DeepFace
-        logger.info(f"Model {MODEL_BACKEND} dimuat.")
+        logger.info("DeepFace sementara dinonaktifkan")
+        self.deepface = None
 
     def _extract_embedding(self, face_img: np.ndarray) -> Optional[np.ndarray]:
         try:
@@ -293,7 +292,7 @@ if __name__ == "__main__":
 
     logger.info("Test predict.py — Realtime Recognition")
     recognizer  = FaceRecognizer()
-    cap         = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
     frame_count = 0
     last_result = {}
 
@@ -302,6 +301,7 @@ if __name__ == "__main__":
 
     while True:
         ret, frame = cap.read()
+        print("Frame terbaca")
         if not ret:
             break
 

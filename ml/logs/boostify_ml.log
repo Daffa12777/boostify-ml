@@ -840,3 +840,30 @@ Mulai training untuk 2 orang ...
 [2026-05-09 18:10:52] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.807 | uuid: 4eceee48-1447-449f-b48e-9953058a19e0
 [2026-05-09 18:10:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.773 | uuid: f830d048-bfc2-4270-81b0-3ad7f7c8b6d8
 [2026-05-09 18:11:02] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.675 | uuid: 0c511e3b-d21e-4caf-b08b-101656184965
+[2026-05-11 19:42:47] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-11 19:42:47] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 19:49:03] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-11 19:49:03] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 19:49:03] [INFO] [predict] DeepFace sementara dinonaktifkan
+[2026-05-11 19:49:03] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 19:49:04] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 19:50:22] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-11 19:50:22] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 19:50:22] [INFO] [predict] DeepFace sementara dinonaktifkan
+[2026-05-11 19:50:22] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 19:50:24] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 19:52:42] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-11 19:52:42] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 19:52:42] [INFO] [predict] DeepFace sementara dinonaktifkan
+[2026-05-11 19:52:42] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 19:52:43] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-11 20:10:08] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-11 20:10:08] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-11 20:10:08] [INFO] [predict] DeepFace sementara dinonaktifkan
+[2026-05-11 20:10:08] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-11 20:10:09] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-16 16:08:39] [INFO] [predict] Test predict.py — Realtime Recognition
+[2026-05-16 16:08:39] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-16 16:08:39] [INFO] [predict] DeepFace sementara dinonaktifkan
+[2026-05-16 16:08:39] [INFO] [predict] Siap. 2 orang terdaftar: ['daffa', 'Dirgi']
+[2026-05-16 16:08:40] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
