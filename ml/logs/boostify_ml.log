@@ -1529,3 +1529,8 @@ Kontrol:
 [2026-05-17 22:56:34] [INFO] [predict] Model GhostFaceNet dimuat.
 [2026-05-17 22:56:34] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
 [2026-05-17 22:56:57] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.594 | senyum: True | uuid: 3412a399-e4fb-40a1-abd4-0d64fc83332a
+[2026-05-19 17:46:41] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-19 17:47:10] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-19 17:47:10] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
+[2026-05-19 17:47:29] [INFO] [predict] ABSEN: dirgi | code: DRG | confidence: 0.611 | senyum: True | uuid: 50721d7c-5f87-47ad-9cad-c25194efb655
+[2026-05-19 17:47:32] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.621 | senyum: True | uuid: 041f991e-a270-4d05-900b-7b8cc9f5858f

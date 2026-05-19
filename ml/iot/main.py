@@ -1,19 +1,7 @@
+
 """
-main.py — File Utama Boostify di Raspberry Pi 5
-================================================
-Hardware (sesuai skematik):
-  - Raspberry Pi 5
-  - USB WebCam
-  - LCD 3.5" TFT 480x320 (ILI9486) via SPI
-  - USB Speaker
-  - Cooling Fan
-
-Cara jalankan:
-  python3 main.py
-
-Auto-start saat boot:
-  crontab -e
-  @reboot sleep 15 && python3 /home/pi/boostify-ml/ml/iot/main.py
+main.py — BOOSTIFY FINAL VERSION
+Raspberry Pi 5 + ML + LCD + Speaker + Web Integration
 """
 
 import sys
@@ -22,125 +10,88 @@ import time
 import signal
 import requests
 import json
+import random
+from datetime import datetime
 
-# ── Path ke folder ml/ (parent dari iot/)
+# =========================================================
+# PATH ML
+# =========================================================
 ML_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ML_PATH)
 
 from predict import FaceRecognizer
-from config  import COOLDOWN_SEC, CAMERA_INDEX, FRAME_SKIP
+from config import (
+    COOLDOWN_SEC,
+    CAMERA_INDEX,
+    FRAME_SKIP
+)
 
 import cv2
+import pygame
 
-# ─────────────────────────────────────────────
-# KONFIGURASI
-# ─────────────────────────────────────────────
+# =========================================================
+# CONFIG
+# =========================================================
+API_URL = "http://localhost:3000/api/uploadfromml"
+IDLE_TIMEOUT = 10
 
-# URL Backend — ganti dengan URL dari Tim Web Dev
-API_URL      = "http://localhost:3000/api/uploadfromml"
-IDLE_TIMEOUT = 10   # detik sebelum LCD kembali idle
+# =========================================================
+# INIT PYGAME LCD
+# =========================================================
+pygame.init()
 
-print("=" * 50)
-print("  🐝  BOOSTIFY — Sistem Absensi Wajah")
-print("  Raspberry Pi 5 + LCD 480x320")
-print("=" * 50)
+LCD_W = 480
+LCD_H = 320
 
+screen = pygame.display.set_mode((LCD_W, LCD_H))
+pygame.display.set_caption("BOOSTIFY")
 
-# ─────────────────────────────────────────────
-# IMPORT KOMPONEN IoT
-# Pakai try/except supaya tidak error di laptop
-# ─────────────────────────────────────────────
+font_nama  = pygame.font.SysFont("Arial", 38, bold=True)
+font_pesan = pygame.font.SysFont("Arial", 26)
+font_kecil = pygame.font.SysFont("Arial", 18)
 
-# ── LCD ──
-try:
-    from PIL import Image, ImageDraw, ImageFont
-    PIL_OK = True
-except ImportError:
-    PIL_OK = False
-    print("[lcd] Pillow tidak ada. pip install Pillow")
+# =========================================================
+# PESAN MOTIVASI
+# =========================================================
+PESAN = {
+    "Pagi": [
+        "Semangat kuliahnya! ☀️",
+        "Hari ini pasti produktif!",
+        "Jangan lupa sarapan!"
+    ],
 
-try:
-    from luma.lcd.device import ili9486
-    from luma.core.interface.serial import spi
-    serial = spi(port=0, device=0, gpio_DC=25, gpio_RST=24)
-    lcd = ili9486(serial, rotate=1)
-    LCD_OK = True
-    print("[lcd] ✅ LCD ILI9486 siap.")
-except Exception:
-    LCD_OK = False
-    print("[lcd] LCD tidak tersedia (normal di laptop).")
+    "Siang": [
+        "Jangan lupa makan siang!",
+        "Tetap fokus ya 😄",
+        "Semangat terus!"
+    ],
 
-# ── Audio ──
+    "Sore": [
+        "Good job hari ini 💪",
+        "Hampir selesai!",
+        "Tetap semangat!"
+    ],
+
+    "Malam": [
+        "Jangan begadang 🌙",
+        "Istirahat yang cukup!",
+        "Kerja keras terbayar!"
+    ]
+}
+
+# =========================================================
+# AUDIO
+# =========================================================
 try:
     import subprocess
     AUDIO_OK = True
-    print("[audio] ✅ USB Speaker siap.")
 except Exception:
     AUDIO_OK = False
 
-
-# ─────────────────────────────────────────────
-# FUNGSI LCD
-# ─────────────────────────────────────────────
-LCD_W, LCD_H = 480, 320
-
-def _get_font(size):
-    paths = [
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
-    ]
-    for p in paths:
-        try:
-            return ImageFont.truetype(p, size)
-        except Exception:
-            pass
-    return ImageFont.load_default()
-
-def _tampil_lcd(baris1, baris2, baris3="", bg=(0,0,0)):
-    if not PIL_OK:
-        return
-    img  = Image.new('RGB', (LCD_W, LCD_H), color=bg)
-    draw = ImageDraw.Draw(img)
-    cx   = LCD_W // 2
-
-    # Garis dekorasi
-    draw.rectangle([(0,0),(LCD_W,6)],   fill=(245,197,24))
-    draw.rectangle([(0,LCD_H-6),(LCD_W,LCD_H)], fill=(245,197,24))
-
-    if baris1:
-        draw.text((cx, 80),  baris1, font=_get_font(24), fill=(255,220,0),   anchor="mm")
-    if baris2:
-        draw.text((cx, 160), baris2, font=_get_font(36), fill=(255,255,255), anchor="mm")
-    if baris3:
-        draw.text((cx, 240), baris3, font=_get_font(22), fill=(0,220,255),   anchor="mm")
-
-    if LCD_OK:
-        lcd.display(img)
-
-def tampil_idle():
-    print("[lcd] 💤 Idle")
-    _tampil_lcd("🐝 BOOSTIFY", "Silakan Absen", "Hadapkan wajah ke kamera", (10,10,30))
-
-def tampil_berhasil(nama, pesan, is_smiling):
-    print(f"[lcd] ✅ {nama} — {pesan}")
-    _tampil_lcd("Selamat Datang!", nama, pesan, (0,120,50))
-
-def tampil_gagal():
-    print("[lcd] ❌ Tidak dikenal")
-    _tampil_lcd("Tidak Dikenal", "Coba Lagi", "", (180,0,0))
-
-def tampil_loading(pesan="Memuat sistem..."):
-    print(f"[lcd] ⏳ {pesan}")
-    _tampil_lcd("Boostify", pesan, "Mohon tunggu...", (0,50,100))
-
-
-# ─────────────────────────────────────────────
-# FUNGSI AUDIO
-# ─────────────────────────────────────────────
 def putar_suara(teks):
-    """Text-to-speech pakai espeak."""
     if not AUDIO_OK:
         return
+
     try:
         subprocess.Popen(
             ["espeak", "-v", "id", "-s", "140", teks],
@@ -150,100 +101,205 @@ def putar_suara(teks):
     except Exception:
         pass
 
+# =========================================================
+# WAKTU
+# =========================================================
+def get_waktu():
+    hour = datetime.now().hour
 
-# ─────────────────────────────────────────────
-# FUNGSI KIRIM KE BACKEND
-# ─────────────────────────────────────────────
+    if 5 <= hour < 12:
+        return "Pagi"
+
+    elif 12 <= hour < 15:
+        return "Siang"
+
+    elif 15 <= hour < 18:
+        return "Sore"
+
+    else:
+        return "Malam"
+
+# =========================================================
+# LCD UI
+# =========================================================
+def tampilkan_standby():
+
+    screen.fill((10, 10, 20))
+
+    pygame.draw.circle(screen, (40, 40, 90), (240, 90), 60)
+
+    title = font_nama.render("BOOSTIFY", True, (255, 220, 50))
+    screen.blit(title, title.get_rect(center=(240, 90)))
+
+    text = font_pesan.render(
+        "Arahkan wajah ke kamera...",
+        True,
+        (180, 180, 255)
+    )
+
+    screen.blit(text, text.get_rect(center=(240, 200)))
+
+    pygame.display.flip()
+
+def tampilkan_greeting(name, confidence, is_smiling):
+
+    waktu = get_waktu()
+
+    motivasi = random.choice(PESAN[waktu])
+
+    nama_display = name.capitalize()
+
+    screen.fill((20, 20, 40))
+
+    pygame.draw.circle(screen, (50, 50, 100), (240, 80), 60)
+
+    sapaan = f"Selamat {waktu},"
+
+    t1 = font_pesan.render(
+        sapaan,
+        True,
+        (180, 180, 255)
+    )
+
+    screen.blit(t1, t1.get_rect(center=(240, 150)))
+
+    t2 = font_nama.render(
+        nama_display + "!",
+        True,
+        (255, 220, 50)
+    )
+
+    screen.blit(t2, t2.get_rect(center=(240, 195)))
+
+    pesan = (
+        "Senyumnya Keren 😄"
+        if is_smiling
+        else motivasi
+    )
+
+    t3 = font_pesan.render(
+        pesan,
+        True,
+        (150, 255, 150)
+    )
+
+    screen.blit(t3, t3.get_rect(center=(240, 245)))
+
+    conf_text = f"Confidence: {confidence*100:.1f}%"
+
+    t4 = font_kecil.render(
+        conf_text,
+        True,
+        (120, 120, 120)
+    )
+
+    screen.blit(t4, t4.get_rect(center=(240, 295)))
+
+    pygame.display.flip()
+
+def tampilkan_unknown():
+
+    screen.fill((70, 0, 0))
+
+    text1 = font_nama.render(
+        "Tidak Dikenal",
+        True,
+        (255, 255, 255)
+    )
+
+    screen.blit(text1, text1.get_rect(center=(240, 140)))
+
+    text2 = font_pesan.render(
+        "Coba Lagi",
+        True,
+        (255, 180, 180)
+    )
+
+    screen.blit(text2, text2.get_rect(center=(240, 210)))
+
+    pygame.display.flip()
+
+# =========================================================
+# API ATTENDANCE
+# =========================================================
 last_upload_time = {}
 
-def kirim_absen(result: dict):
-    """Kirim data absensi ke backend → Supabase."""
-    nama         = result.get("name", "")
+def kirim_absen(result):
+
+    nama = result.get("name", "")
+
     current_time = time.time()
 
     if nama not in last_upload_time:
         last_upload_time[nama] = 0
 
-    # Cek cooldown anti spam
     if current_time - last_upload_time[nama] <= COOLDOWN_SEC:
         return
 
-    print("\n" + "=" * 50)
-    print("DATA ABSENSI:")
-    print(json.dumps({
-        "assisstant_code": result["assisstant_code"],
-        "name"           : result["name"],
-        "time"           : result["time"],
-        "uuid"           : result["uuid"],
-        "formattedTime"  : result["formattedTime"],
-        "is_smiling"     : result["is_smiling"]
-    }, indent=4))
-    print("=" * 50)
-
     try:
+
         response = requests.post(
             API_URL,
-            json    = result,
-            timeout = 5
+            json=result,
+            timeout=5
         )
-        print(f"[api] ✅ Terkirim! Response: {response.status_code}")
+
+        print(f"[API] {response.status_code}")
+
         last_upload_time[nama] = current_time
+
     except Exception as e:
-        print(f"[api] ❌ Gagal kirim: {e}")
+        print(f"[API ERROR] {e}")
 
-
-# ─────────────────────────────────────────────
+# =========================================================
 # MAIN
-# ─────────────────────────────────────────────
+# =========================================================
 def main():
-    # Startup
-    tampil_loading("Memuat model ML...")
 
-    # Load model
-    print("[main] Loading model ML ...")
-    try:
-        recognizer = FaceRecognizer()
-    except FileNotFoundError:
-        print("[main] ❌ Model tidak ditemukan! Jalankan train.py dulu.")
-        tampil_loading("ERROR: Model tidak ada!")
-        return
+    print("=" * 50)
+    print("BOOSTIFY FINAL SYSTEM")
+    print("=" * 50)
 
-    # Buka kamera
-    print("[main] Membuka kamera ...")
+    recognizer = FaceRecognizer()
+
     cap = cv2.VideoCapture(CAMERA_INDEX)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH,  640)
+
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    cap.set(cv2.CAP_PROP_BUFFERSIZE,   1)
+
     time.sleep(1)
 
     if not cap.isOpened():
-        print("[main] ❌ Kamera tidak bisa dibuka!")
-        tampil_loading("ERROR: Kamera gagal!")
+        print("Kamera gagal dibuka")
         return
 
-    tampil_idle()
-    putar_suara("Boostify siap, silakan absen")
-    print("[main] ✅ Sistem siap!\n")
+    tampilkan_standby()
 
-    frame_count      = 0
-    last_status      = ""
+    putar_suara("Boostify siap digunakan")
+
+    frame_count = 0
+
     last_action_time = time.time()
 
-    # Handle Ctrl+C
     def handle_exit(sig, frame):
-        print("\n[main] Menghentikan sistem ...")
+
         cap.release()
-        print("[main] Sampai jumpa! 🐝")
+
+        pygame.quit()
+
         sys.exit(0)
 
-    signal.signal(signal.SIGINT,  handle_exit)
-    signal.signal(signal.SIGTERM, handle_exit)
+    signal.signal(signal.SIGINT, handle_exit)
 
-    # ── Loop Utama ──
     while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                handle_exit(None, None)
+
         ret, frame = cap.read()
+
         if not ret:
-            time.sleep(0.1)
             continue
 
         frame_count += 1
@@ -251,48 +307,59 @@ def main():
         if frame_count % FRAME_SKIP != 0:
             continue
 
-        # Proses ML
         result = recognizer.recognize(frame)
+
         status = result.get("status", "no_face")
 
-        # ── Handle hasil ──
+        # =================================================
+        # RECOGNIZED
+        # =================================================
         if status == "recognized":
+
             nama       = result["name"]
+            confidence = result["confidence"]
+
             is_smiling = result.get("is_smiling", False)
-            pesan      = "Senyumnya Keren!" if is_smiling else "Semangat!"
 
-            print(f"[main] ✅ ABSEN: {nama} | conf: {result['confidence']} | senyum: {is_smiling}")
+            tampilkan_greeting(
+                nama,
+                confidence,
+                is_smiling
+            )
 
-            # Tampil LCD
-            tampil_berhasil(nama, pesan, is_smiling)
+            pesan_audio = (
+                f"Selamat datang {nama}, senyumnya keren"
+                if is_smiling
+                else f"Selamat datang {nama}"
+            )
 
-            # Suara
-            putar_suara(f"Selamat datang {nama}, {pesan}")
+            putar_suara(pesan_audio)
 
-            # Kirim ke Supabase
             kirim_absen(result)
 
             last_action_time = time.time()
-            last_status      = "recognized"
 
+            print(f"[ABSEN] {nama}")
+
+        # =================================================
+        # UNKNOWN
+        # =================================================
         elif status == "unknown":
-            print(f"[main] ❌ Tidak dikenal | conf: {result['confidence']}")
-            if last_status != "unknown":
-                tampil_gagal()
-                putar_suara("Wajah tidak dikenal, coba lagi")
-            last_status = "unknown"
 
-        elif status == "cooldown":
-            if last_status != "cooldown":
-                print(f"[main] ⏳ {result['name']} sudah absen.")
-            last_status = "cooldown"
+            tampilkan_unknown()
 
+            putar_suara("Wajah tidak dikenal")
+
+            print("[UNKNOWN FACE]")
+
+        # =================================================
+        # IDLE
+        # =================================================
         elif status == "no_face":
-            if time.time() - last_action_time > IDLE_TIMEOUT:
-                if last_status != "idle":
-                    tampil_idle()
-                    last_status = "idle"
 
+            if time.time() - last_action_time > IDLE_TIMEOUT:
+                tampilkan_standby()
 
 if __name__ == "__main__":
     main()
+
