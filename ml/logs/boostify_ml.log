@@ -1543,3 +1543,372 @@ Kontrol:
 [2026-05-20 16:09:51] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
 [2026-05-20 16:10:06] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.710 | senyum: True | uuid: e9a00e3b-378a-468c-80ee-3b9c0d273600
 [2026-05-20 16:10:15] [INFO] [predict] ABSEN: dirgi | code: DRG | confidence: 0.598 | senyum: True | uuid: 06c1942e-2a13-42db-a676-3a94a1f0a819
+[2026-05-20 19:09:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-20 19:09:52] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-20 19:09:52] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
+[2026-05-20 19:10:04] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.701 | senyum: True | uuid: b2d66ae2-73b0-423d-80be-9558810ad18c
+[2026-05-26 18:03:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 18:03:51] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 18:03:51] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
+[2026-05-26 18:04:05] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.625 | senyum: True | uuid: b751cabd-0d03-4e57-a3e1-1919821e6f8e
+[2026-05-26 18:55:47] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 18:55:56] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 18:55:56] [INFO] [predict] Siap. 4 orang terdaftar: ['daffa', 'alif', 'rufus', 'dirgi']
+[2026-05-26 19:10:29] [INFO] [predict] Test predict.py — Simple MAR Smile Detection
+[2026-05-26 19:10:29] [INFO] [predict] Smile threshold: 0.06 | Vote: 3/5
+[2026-05-26 19:10:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:12:35] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:12:58] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:13:10] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:13:29] [INFO] [predict] Test predict.py — Simple MAR Smile Detection
+[2026-05-26 19:13:29] [INFO] [predict] Smile threshold: 0.06 | Vote: 3/5
+[2026-05-26 19:13:29] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:14:14] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:17:43] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:19:22] [INFO] [train] Loading model LBPH ...
+[2026-05-26 19:19:32] [INFO] [train] Training untuk 4 orang ...
+
+[2026-05-26 19:19:32] [INFO] [train] [alif] Ekstrak embedding dari 70 foto ...
+[2026-05-26 19:19:32] [WARNING] [train] [alif] Semua foto gagal, dilewati.
+[2026-05-26 19:19:32] [INFO] [train] [daffa] Ekstrak embedding dari 210 foto ...
+[2026-05-26 19:19:32] [WARNING] [train] [daffa] Semua foto gagal, dilewati.
+[2026-05-26 19:19:32] [INFO] [train] [dirgi] Ekstrak embedding dari 350 foto ...
+[2026-05-26 19:19:32] [WARNING] [train] [dirgi] Semua foto gagal, dilewati.
+[2026-05-26 19:19:32] [INFO] [train] [rufus] Ekstrak embedding dari 70 foto ...
+[2026-05-26 19:19:32] [WARNING] [train] [rufus] Semua foto gagal, dilewati.
+[2026-05-26 19:19:32] [ERROR] [train] Tidak ada embedding yang berhasil dibuat.
+[2026-05-26 19:19:41] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:21:02] [INFO] [preprocess] Mulai preprocessing dataset Boostify ...
+[2026-05-26 19:21:02] [INFO] [preprocess] Ditemukan 4 orang: ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:21:02] [WARNING] [preprocess] [alif] hanya 10 foto (min: 50)
+[2026-05-26 19:21:02] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-26 19:21:05] [INFO] [preprocess]   [alif] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:21:05] [WARNING] [preprocess] [daffa] hanya 30 foto (min: 50)
+[2026-05-26 19:21:05] [INFO] [preprocess] [daffa] Memproses 30 foto ...
+[2026-05-26 19:21:10] [INFO] [preprocess]   [daffa] Tersimpan: 270 | Gagal: 0
+[2026-05-26 19:21:10] [INFO] [preprocess] [dirgi] Memproses 50 foto ...
+[2026-05-26 19:21:16] [INFO] [preprocess]   [dirgi] Tersimpan: 450 | Gagal: 0
+[2026-05-26 19:21:16] [WARNING] [preprocess] [rufus] hanya 10 foto (min: 50)
+[2026-05-26 19:21:16] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-26 19:21:17] [INFO] [preprocess]   [rufus] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:21:17] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-26 19:21:17] [INFO] [preprocess] Total berhasil : 900
+[2026-05-26 19:21:17] [INFO] [preprocess] Total gagal    : 0
+[2026-05-26 19:21:23] [INFO] [train] Loading model LBPH ...
+[2026-05-26 19:21:31] [INFO] [train] Training untuk 4 orang ...
+
+[2026-05-26 19:21:31] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:21:31] [WARNING] [train] [alif] Semua foto gagal, dilewati.
+[2026-05-26 19:21:31] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-26 19:21:31] [WARNING] [train] [daffa] Semua foto gagal, dilewati.
+[2026-05-26 19:21:31] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-26 19:21:31] [WARNING] [train] [dirgi] Semua foto gagal, dilewati.
+[2026-05-26 19:21:31] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:21:31] [WARNING] [train] [rufus] Semua foto gagal, dilewati.
+[2026-05-26 19:21:31] [ERROR] [train] Tidak ada embedding yang berhasil dibuat.
+[2026-05-26 19:23:08] [INFO] [train] Loading model GhostFaceNet ...
+[2026-05-26 19:23:16] [INFO] [train] Training untuk 4 orang ...
+
+[2026-05-26 19:23:16] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:23:49] [INFO] [train]   [alif] ✅ 90 embedding | shape: (512,)
+[2026-05-26 19:23:49] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-26 19:25:11] [INFO] [train]   [daffa] ✅ 270 embedding | shape: (512,)
+[2026-05-26 19:25:11] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-26 19:27:35] [INFO] [train]   [dirgi] ✅ 450 embedding | shape: (512,)
+[2026-05-26 19:27:35] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:28:20] [INFO] [train]   [rufus] ✅ 90 embedding | shape: (512,)
+[2026-05-26 19:28:20] [INFO] [train] 
+==================================================
+[2026-05-26 19:28:20] [INFO] [train] ✅ TRAINING SELESAI
+[2026-05-26 19:28:20] [INFO] [train] Total orang  : 4
+[2026-05-26 19:28:20] [INFO] [train] Terdaftar    : ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:28:20] [INFO] [train] Embedding    : E:\RISETCPS\ml_boostify\ml\models\embeddings.pkl
+[2026-05-26 19:28:20] [INFO] [train] Labels       : E:\RISETCPS\ml_boostify\ml\models\labels.pkl
+[2026-05-26 19:28:20] [INFO] [train] ==================================================
+[2026-05-26 19:28:37] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:28:45] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:28:45] [INFO] [predict] Siap. 4 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:31:33] [INFO] [preprocess] Mulai preprocessing dataset Boostify ...
+[2026-05-26 19:31:33] [INFO] [preprocess] Ditemukan 4 orang: ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:31:33] [WARNING] [preprocess] [alif] hanya 10 foto (min: 50)
+[2026-05-26 19:31:33] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-26 19:31:37] [INFO] [preprocess]   [alif] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:31:37] [WARNING] [preprocess] [daffa] hanya 30 foto (min: 50)
+[2026-05-26 19:31:37] [INFO] [preprocess] [daffa] Memproses 30 foto ...
+[2026-05-26 19:31:41] [INFO] [preprocess]   [daffa] Tersimpan: 270 | Gagal: 0
+[2026-05-26 19:31:41] [INFO] [preprocess] [dirgi] Memproses 50 foto ...
+[2026-05-26 19:31:48] [INFO] [preprocess]   [dirgi] Tersimpan: 450 | Gagal: 0
+[2026-05-26 19:31:48] [WARNING] [preprocess] [rufus] hanya 10 foto (min: 50)
+[2026-05-26 19:31:48] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-26 19:31:49] [INFO] [preprocess]   [rufus] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:31:49] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-26 19:31:49] [INFO] [preprocess] Total berhasil : 900
+[2026-05-26 19:31:49] [INFO] [preprocess] Total gagal    : 0
+[2026-05-26 19:31:54] [INFO] [train] Loading model GhostFaceNet ...
+[2026-05-26 19:32:02] [INFO] [train] Training untuk 4 orang ...
+
+[2026-05-26 19:32:02] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:32:44] [INFO] [train]   [alif] ✅ 90 embedding | shape: (512,)
+[2026-05-26 19:32:44] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-26 19:34:26] [INFO] [train]   [daffa] ✅ 270 embedding | shape: (512,)
+[2026-05-26 19:34:26] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-26 19:36:42] [INFO] [train]   [dirgi] ✅ 450 embedding | shape: (512,)
+[2026-05-26 19:36:42] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-26 19:37:08] [INFO] [train]   [rufus] ✅ 90 embedding | shape: (512,)
+[2026-05-26 19:37:08] [INFO] [train] 
+==================================================
+[2026-05-26 19:37:08] [INFO] [train] ✅ TRAINING SELESAI
+[2026-05-26 19:37:08] [INFO] [train] Total orang  : 4
+[2026-05-26 19:37:08] [INFO] [train] Terdaftar    : ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:37:08] [INFO] [train] Embedding    : E:\RISETCPS\ml_boostify\ml\models\embeddings.pkl
+[2026-05-26 19:37:08] [INFO] [train] Labels       : E:\RISETCPS\ml_boostify\ml\models\labels.pkl
+[2026-05-26 19:37:08] [INFO] [train] ==================================================
+[2026-05-26 19:37:39] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:37:46] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:37:46] [INFO] [predict] Siap. 4 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:38:22] [INFO] [predict] Test predict.py — Simple MAR Smile Detection
+[2026-05-26 19:38:22] [INFO] [predict] Smile threshold: 0.06 | Vote: 3/5
+[2026-05-26 19:38:22] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:38:30] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:38:30] [INFO] [predict] Siap. 4 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus']
+[2026-05-26 19:38:31] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-26 19:42:00] [INFO] [collect_faces] Mengumpulkan foto untuk: DAFFAFR
+[2026-05-26 19:42:00] [INFO] [collect_faces] Foto sudah ada: 0 | Target: 50
+[2026-05-26 19:42:00] [INFO] [collect_faces] Simpan ke: E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR
+[2026-05-26 19:42:01] [INFO] [collect_faces] 
+Kontrol:
+[2026-05-26 19:42:01] [INFO] [collect_faces]   SPACE → Ambil foto
+[2026-05-26 19:42:01] [INFO] [collect_faces]   A     → Toggle auto-capture
+[2026-05-26 19:42:01] [INFO] [collect_faces]   Q     → Selesai
+
+[2026-05-26 19:42:13] [INFO] [collect_faces] Auto-capture: ON
+[2026-05-26 19:42:13] [INFO] [collect_faces]   📸 [1/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0001.jpg
+[2026-05-26 19:42:13] [INFO] [collect_faces]   📸 [2/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0002.jpg
+[2026-05-26 19:42:14] [INFO] [collect_faces]   📸 [3/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0003.jpg
+[2026-05-26 19:42:14] [INFO] [collect_faces]   📸 [4/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0004.jpg
+[2026-05-26 19:42:15] [INFO] [collect_faces]   📸 [5/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0005.jpg
+[2026-05-26 19:42:15] [INFO] [collect_faces]   📸 [6/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0006.jpg
+[2026-05-26 19:42:16] [INFO] [collect_faces]   📸 [7/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0007.jpg
+[2026-05-26 19:42:16] [INFO] [collect_faces]   📸 [8/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0008.jpg
+[2026-05-26 19:42:17] [INFO] [collect_faces]   📸 [9/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0009.jpg
+[2026-05-26 19:42:17] [INFO] [collect_faces]   📸 [10/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0010.jpg
+[2026-05-26 19:42:18] [INFO] [collect_faces]   📸 [11/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0011.jpg
+[2026-05-26 19:42:18] [INFO] [collect_faces]   📸 [12/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0012.jpg
+[2026-05-26 19:42:19] [INFO] [collect_faces]   📸 [13/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0013.jpg
+[2026-05-26 19:42:19] [INFO] [collect_faces]   📸 [14/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0014.jpg
+[2026-05-26 19:42:20] [INFO] [collect_faces]   📸 [15/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0015.jpg
+[2026-05-26 19:42:20] [INFO] [collect_faces]   📸 [16/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0016.jpg
+[2026-05-26 19:42:21] [INFO] [collect_faces]   📸 [17/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0017.jpg
+[2026-05-26 19:42:21] [INFO] [collect_faces]   📸 [18/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0018.jpg
+[2026-05-26 19:42:22] [INFO] [collect_faces]   📸 [19/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0019.jpg
+[2026-05-26 19:42:23] [INFO] [collect_faces]   📸 [20/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0020.jpg
+[2026-05-26 19:42:23] [INFO] [collect_faces]   📸 [21/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0021.jpg
+[2026-05-26 19:42:24] [INFO] [collect_faces]   📸 [22/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0022.jpg
+[2026-05-26 19:42:24] [INFO] [collect_faces]   📸 [23/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0023.jpg
+[2026-05-26 19:42:25] [INFO] [collect_faces]   📸 [24/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0024.jpg
+[2026-05-26 19:42:25] [INFO] [collect_faces]   📸 [25/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0025.jpg
+[2026-05-26 19:42:26] [INFO] [collect_faces]   📸 [26/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0026.jpg
+[2026-05-26 19:42:26] [INFO] [collect_faces]   📸 [27/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0027.jpg
+[2026-05-26 19:42:27] [INFO] [collect_faces]   📸 [28/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0028.jpg
+[2026-05-26 19:42:27] [INFO] [collect_faces]   📸 [29/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0029.jpg
+[2026-05-26 19:42:28] [INFO] [collect_faces]   📸 [30/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0030.jpg
+[2026-05-26 19:42:28] [INFO] [collect_faces]   📸 [31/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0031.jpg
+[2026-05-26 19:42:29] [INFO] [collect_faces]   📸 [32/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0032.jpg
+[2026-05-26 19:42:29] [INFO] [collect_faces]   📸 [33/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0033.jpg
+[2026-05-26 19:42:30] [INFO] [collect_faces]   📸 [34/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0034.jpg
+[2026-05-26 19:42:30] [INFO] [collect_faces]   📸 [35/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0035.jpg
+[2026-05-26 19:42:31] [INFO] [collect_faces]   📸 [36/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0036.jpg
+[2026-05-26 19:42:31] [INFO] [collect_faces]   📸 [37/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0037.jpg
+[2026-05-26 19:42:32] [INFO] [collect_faces]   📸 [38/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0038.jpg
+[2026-05-26 19:42:33] [INFO] [collect_faces]   📸 [39/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0039.jpg
+[2026-05-26 19:42:33] [INFO] [collect_faces]   📸 [40/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0040.jpg
+[2026-05-26 19:42:34] [INFO] [collect_faces]   📸 [41/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0041.jpg
+[2026-05-26 19:42:34] [INFO] [collect_faces]   📸 [42/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0042.jpg
+[2026-05-26 19:42:35] [INFO] [collect_faces]   📸 [43/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0043.jpg
+[2026-05-26 19:42:35] [INFO] [collect_faces]   📸 [44/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0044.jpg
+[2026-05-26 19:42:36] [INFO] [collect_faces]   📸 [45/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0045.jpg
+[2026-05-26 19:42:36] [INFO] [collect_faces]   📸 [46/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0046.jpg
+[2026-05-26 19:42:37] [INFO] [collect_faces]   📸 [47/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0047.jpg
+[2026-05-26 19:42:37] [INFO] [collect_faces]   📸 [48/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0048.jpg
+[2026-05-26 19:42:38] [INFO] [collect_faces]   📸 [49/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0049.jpg
+[2026-05-26 19:42:38] [INFO] [collect_faces]   📸 [50/50] E:\RISETCPS\ml_boostify\ml\dataset\raw\DAFFAFR\img_0050.jpg
+[2026-05-26 19:42:39] [INFO] [collect_faces] 
+✅ Selesai! Total foto terkumpul: 50
+[2026-05-26 19:42:39] [INFO] [collect_faces] Foto sudah cukup. Sekarang jalankan:
+[2026-05-26 19:42:39] [INFO] [collect_faces]   1. python preprocess.py
+[2026-05-26 19:42:39] [INFO] [collect_faces]   2. python train.py
+[2026-05-26 19:42:57] [INFO] [preprocess] Mulai preprocessing dataset Boostify ...
+[2026-05-26 19:42:57] [INFO] [preprocess] Ditemukan 5 orang: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-26 19:42:57] [WARNING] [preprocess] [alif] hanya 10 foto (min: 50)
+[2026-05-26 19:42:57] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-26 19:43:01] [INFO] [preprocess]   [alif] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:43:01] [WARNING] [preprocess] [daffa] hanya 30 foto (min: 50)
+[2026-05-26 19:43:01] [INFO] [preprocess] [daffa] Memproses 30 foto ...
+[2026-05-26 19:43:05] [INFO] [preprocess]   [daffa] Tersimpan: 270 | Gagal: 0
+[2026-05-26 19:43:05] [INFO] [preprocess] [DAFFAFR] Memproses 50 foto ...
+[2026-05-26 19:43:13] [INFO] [preprocess]   [DAFFAFR] Tersimpan: 450 | Gagal: 0
+[2026-05-26 19:43:13] [INFO] [preprocess] [dirgi] Memproses 50 foto ...
+[2026-05-26 19:43:19] [INFO] [preprocess]   [dirgi] Tersimpan: 450 | Gagal: 0
+[2026-05-26 19:43:19] [WARNING] [preprocess] [rufus] hanya 10 foto (min: 50)
+[2026-05-26 19:43:19] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-26 19:43:21] [INFO] [preprocess]   [rufus] Tersimpan: 90 | Gagal: 0
+[2026-05-26 19:43:21] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-26 19:43:21] [INFO] [preprocess] Total berhasil : 1350
+[2026-05-26 19:43:21] [INFO] [preprocess] Total gagal    : 0
+[2026-05-26 19:43:51] [INFO] [train] Register [DAFFAFR] dari 450 foto ...
+[2026-05-26 19:46:33] [INFO] [train] ✅ [DAFFAFR] berhasil didaftarkan!
+[2026-05-26 19:46:33] [INFO] [train] Total terdaftar: 5 orang
+[2026-05-26 19:46:43] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:46:50] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:46:50] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 19:49:14] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:49:21] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:49:21] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 19:52:13] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 19:52:21] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 19:52:21] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 19:52:32] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.362 | senyum: True | uuid: f651ab4d-8ed7-45e2-9907-78c0b57fca3d
+[2026-05-26 19:52:33] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.329 | senyum: True | uuid: 491ddce0-5b61-4e7d-b628-3dfe18c45ae1
+[2026-05-26 19:52:42] [INFO] [predict] ABSEN: rufus | code: RFS | confidence: 0.261 | senyum: True | uuid: 486bc6af-f87f-4452-86f7-1420d462511d
+[2026-05-26 19:52:44] [INFO] [predict] ABSEN: dirgi | code: DRG | confidence: 0.337 | senyum: True | uuid: abc5abe5-2e9f-4e0a-9a43-446a24decf15
+[2026-05-26 20:07:08] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:07:17] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:07:17] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:09:27] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:09:34] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:09:34] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:09:56] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:10:04] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:10:04] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:11:16] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:11:24] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:11:24] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:11:33] [INFO] [predict] ABSEN: alif | code: ALI | confidence: 0.098 | senyum: False | uuid: 18938cae-22b3-45ec-9629-a5b819ca4d65
+[2026-05-26 20:14:48] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:14:56] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:14:56] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:15:34] [INFO] [predict] ABSEN: alif | code: ALI | confidence: 0.098 | senyum: False | uuid: b716f204-a912-46ad-8952-5095f358d5e4
+[2026-05-26 20:16:09] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:16:16] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:16:16] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:20:16] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:20:24] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:20:24] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:21:33] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-26 20:21:41] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-26 20:21:41] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-26 20:21:52] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.319 | senyum: True | uuid: edffb59e-964e-40cf-b917-eabf139ef698
+[2026-05-26 20:21:59] [INFO] [predict] ABSEN: rufus | code: RFS | confidence: 0.349 | senyum: True | uuid: 9868d32b-2fd6-40a4-adc9-2689c1df7435
+[2026-05-26 20:22:01] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.282 | senyum: True | uuid: 3fed9de3-38c3-4d40-a2fc-87f5b187ad05
+[2026-05-27 22:57:31] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-27 22:57:57] [INFO] [predict] Model GhostFaceNet dimuat.
+[2026-05-27 22:57:57] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'dirgi', 'rufus', 'DAFFAFR']
+[2026-05-27 22:58:06] [INFO] [predict] ABSEN: alif | code: ALI | confidence: 0.274 | senyum: False | uuid: 770093e0-b472-409e-a2e2-0ed1bd625d7f
+[2026-05-27 22:58:14] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.304 | senyum: False | uuid: 26affc45-9d5f-4d71-b735-08c1da5898fc
+[2026-05-27 22:58:19] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.251 | senyum: False | uuid: 7c5a4e51-79de-43bf-bdca-def227c4100c
+[2026-05-27 22:58:24] [INFO] [predict] ABSEN: rufus | code: RFS | confidence: 0.315 | senyum: True | uuid: 53448368-3ced-4b44-b76f-4ffa1baeeee1
+[2026-05-27 23:02:02] [INFO] [train] Loading model dlib_resnet ...
+[2026-05-27 23:02:14] [INFO] [train] Training untuk 5 orang ...
+
+[2026-05-27 23:02:14] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:02:14] [WARNING] [train] [alif] Semua foto gagal, dilewati.
+[2026-05-27 23:02:14] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-27 23:02:14] [WARNING] [train] [daffa] Semua foto gagal, dilewati.
+[2026-05-27 23:02:14] [INFO] [train] [DAFFAFR] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:02:14] [WARNING] [train] [DAFFAFR] Semua foto gagal, dilewati.
+[2026-05-27 23:02:14] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:02:14] [WARNING] [train] [dirgi] Semua foto gagal, dilewati.
+[2026-05-27 23:02:14] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:02:14] [WARNING] [train] [rufus] Semua foto gagal, dilewati.
+[2026-05-27 23:02:14] [ERROR] [train] Tidak ada embedding yang berhasil dibuat.
+[2026-05-27 23:06:12] [INFO] [preprocess] Mulai preprocessing dataset Boostify ...
+[2026-05-27 23:06:12] [INFO] [preprocess] Ditemukan 5 orang: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-27 23:06:12] [WARNING] [preprocess] [alif] hanya 10 foto (min: 50)
+[2026-05-27 23:06:12] [INFO] [preprocess] [alif] Memproses 10 foto ...
+[2026-05-27 23:06:17] [INFO] [preprocess]   [alif] Tersimpan: 90 | Gagal: 0
+[2026-05-27 23:06:17] [WARNING] [preprocess] [daffa] hanya 30 foto (min: 50)
+[2026-05-27 23:06:17] [INFO] [preprocess] [daffa] Memproses 30 foto ...
+[2026-05-27 23:06:28] [INFO] [preprocess]   [daffa] Tersimpan: 270 | Gagal: 0
+[2026-05-27 23:06:28] [INFO] [preprocess] [DAFFAFR] Memproses 50 foto ...
+[2026-05-27 23:06:49] [INFO] [preprocess]   [DAFFAFR] Tersimpan: 450 | Gagal: 0
+[2026-05-27 23:06:49] [INFO] [preprocess] [dirgi] Memproses 50 foto ...
+[2026-05-27 23:07:06] [INFO] [preprocess]   [dirgi] Tersimpan: 450 | Gagal: 0
+[2026-05-27 23:07:06] [WARNING] [preprocess] [rufus] hanya 10 foto (min: 50)
+[2026-05-27 23:07:06] [INFO] [preprocess] [rufus] Memproses 10 foto ...
+[2026-05-27 23:07:12] [INFO] [preprocess]   [rufus] Tersimpan: 90 | Gagal: 0
+[2026-05-27 23:07:12] [INFO] [preprocess] PREPROCESSING SELESAI
+[2026-05-27 23:07:12] [INFO] [preprocess] Total berhasil : 1350
+[2026-05-27 23:07:12] [INFO] [preprocess] Total gagal    : 0
+[2026-05-27 23:07:50] [INFO] [train] Loading model dlib_resnet ...
+[2026-05-27 23:08:02] [INFO] [train] Training untuk 5 orang ...
+
+[2026-05-27 23:08:02] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:08:02] [WARNING] [train] [alif] Semua foto gagal, dilewati.
+[2026-05-27 23:08:02] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-27 23:08:02] [WARNING] [train] [daffa] Semua foto gagal, dilewati.
+[2026-05-27 23:08:02] [INFO] [train] [DAFFAFR] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:08:02] [WARNING] [train] [DAFFAFR] Semua foto gagal, dilewati.
+[2026-05-27 23:08:02] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:08:02] [WARNING] [train] [dirgi] Semua foto gagal, dilewati.
+[2026-05-27 23:08:02] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:08:02] [WARNING] [train] [rufus] Semua foto gagal, dilewati.
+[2026-05-27 23:08:02] [ERROR] [train] Tidak ada embedding yang berhasil dibuat.
+[2026-05-27 23:11:26] [INFO] [train] Loading model dlib_resnet ...
+[2026-05-27 23:11:43] [INFO] [train] Training untuk 5 orang ...
+
+[2026-05-27 23:11:43] [INFO] [train] [alif] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:11:43] [WARNING] [train] [alif] Semua foto gagal, dilewati.
+[2026-05-27 23:11:43] [INFO] [train] [daffa] Ekstrak embedding dari 270 foto ...
+[2026-05-27 23:11:44] [WARNING] [train] [daffa] Semua foto gagal, dilewati.
+[2026-05-27 23:11:44] [INFO] [train] [DAFFAFR] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:11:44] [WARNING] [train] [DAFFAFR] Semua foto gagal, dilewati.
+[2026-05-27 23:11:44] [INFO] [train] [dirgi] Ekstrak embedding dari 450 foto ...
+[2026-05-27 23:11:44] [WARNING] [train] [dirgi] Semua foto gagal, dilewati.
+[2026-05-27 23:11:44] [INFO] [train] [rufus] Ekstrak embedding dari 90 foto ...
+[2026-05-27 23:11:44] [WARNING] [train] [rufus] Semua foto gagal, dilewati.
+[2026-05-27 23:11:44] [ERROR] [train] Tidak ada embedding yang berhasil dibuat.
+[2026-05-27 23:16:01] [INFO] [train] Loading model dlib ResNet (face_recognition) ...
+[2026-05-27 23:16:01] [INFO] [train] Detector: hog | num_jitters: 1
+[2026-05-27 23:16:01] [INFO] [train] Training untuk 5 orang ...
+
+[2026-05-27 23:16:01] [INFO] [train] [alif] Ekstrak encoding dari 90 foto ...
+[2026-05-27 23:16:40] [INFO] [train]   [alif] ✅ 90 encoding | shape: (128,)
+[2026-05-27 23:16:40] [INFO] [train] [daffa] Ekstrak encoding dari 270 foto ...
+[2026-05-27 23:18:28] [INFO] [train]   [daffa] ✅ 270 encoding | shape: (128,)
+[2026-05-27 23:18:28] [INFO] [train] [DAFFAFR] Ekstrak encoding dari 450 foto ...
+[2026-05-27 23:21:46] [INFO] [train]   [DAFFAFR] ✅ 450 encoding | shape: (128,)
+[2026-05-27 23:21:46] [INFO] [train] [dirgi] Ekstrak encoding dari 450 foto ...
+[2026-05-27 23:24:52] [INFO] [train]   [dirgi] ✅ 450 encoding | shape: (128,)
+[2026-05-27 23:24:52] [INFO] [train] [rufus] Ekstrak encoding dari 90 foto ...
+[2026-05-27 23:25:28] [INFO] [train]   [rufus] ✅ 90 encoding | shape: (128,)
+[2026-05-27 23:25:28] [INFO] [train] 
+==================================================
+[2026-05-27 23:25:28] [INFO] [train] ✅ TRAINING SELESAI
+[2026-05-27 23:25:28] [INFO] [train] Total orang  : 5
+[2026-05-27 23:25:28] [INFO] [train] Terdaftar    : ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-27 23:25:28] [INFO] [train] Embedding    : E:\RISETCPS\ml_boostify\ml\models\embeddings.pkl
+[2026-05-27 23:25:28] [INFO] [train] Labels       : E:\RISETCPS\ml_boostify\ml\models\labels.pkl
+[2026-05-27 23:25:28] [INFO] [train] ==================================================
+[2026-05-27 23:26:19] [INFO] [predict] Inisialisasi FaceRecognizer ...
+[2026-05-27 23:26:42] [INFO] [predict] Model dlib_resnet dimuat.
+[2026-05-27 23:26:42] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-27 23:27:26] [INFO] [predict] Test predict.py — dlib ResNet + Simple MAR Smile Detection
+[2026-05-27 23:27:26] [INFO] [predict] Detector: hog | Threshold: 0.4
+[2026-05-27 23:27:26] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-27 23:27:26] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-27 23:27:28] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-27 23:27:29] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.634 | senyum: False | uuid: c6b03cb7-ef40-44f0-b3b4-3b2225ecfa28
+[2026-05-27 23:27:47] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.649 | senyum: False | uuid: 14d67cef-7293-41d8-9b79-d58c9f7e9b46
+[2026-05-28 00:02:42] [INFO] [predict] Test predict.py — dlib ResNet + Simple MAR Smile Detection
+[2026-05-28 00:02:42] [INFO] [predict] Detector: hog | Threshold: 0.4
+[2026-05-28 00:02:42] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-28 00:02:42] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-28 00:02:44] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-28 00:02:45] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.670 | senyum: False | uuid: 7ed7fdf3-c3df-4ad9-9a96-7344bb18c7b7
+[2026-05-28 00:04:23] [INFO] [predict] Test predict.py — dlib ResNet + Simple MAR Smile Detection
+[2026-05-28 00:04:23] [INFO] [predict] Detector: hog | Threshold: 0.4
+[2026-05-28 00:04:23] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-28 00:04:23] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-28 00:04:24] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-28 00:04:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.603 | senyum: False | uuid: 00fefabe-5d79-4e95-94e0-6679c521611d
+[2026-05-28 00:04:32] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.609 | senyum: False | uuid: 8dfb3e35-4b83-45c0-9b56-8c184ce82cb0

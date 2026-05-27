@@ -1,244 +1,217 @@
 """
-train.py — Boostify Face Recognition Trainer (LBPH Version)
-===========================================================
+train.py — Training & Generate Embeddings Boostify
+Model: dlib ResNet via library face_recognition (128-dim)
+Output: models/embeddings.pkl + models/labels.pkl
 
-VERSI:
-✅ Ringan untuk Raspberry Pi 5
-✅ Tanpa DeepFace
-✅ Tanpa TensorFlow
-✅ Compatible Python 3.13
-✅ Bisa recognize wajah
-✅ Bisa tampil kode asisten
-✅ Bisa connect Supabase
-✅ Cepat realtime
-
-OUTPUT:
-models/trainer.yml
-models/labels.pkl
-
-STRUKTUR DATASET:
-dataset/raw/
-    Daffa/
-        1.jpg
-        2.jpg
-    Nabila/
-        1.jpg
-        2.jpg
-
-CARA TRAIN:
-python3 train.py
+Format output SAMA dengan versi GhostFaceNet:
+  embeddings.pkl → dict {nama: mean_encoding_128d}
+  labels.pkl     → list nama
+Jadi predict.py & predict_thread.py tidak perlu diubah strukturnya.
 """
 
 import os
-import cv2
+import sys
 import pickle
 import numpy as np
-from datetime import datetime
+from tqdm import tqdm
+import cv2
+import face_recognition
 
-# =========================================================
-# CONFIG PATH
-# =========================================================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-DATASET_DIR = os.path.join(BASE_DIR, "dataset", "raw")
-MODEL_DIR   = os.path.join(BASE_DIR, "models")
-LOG_DIR     = os.path.join(BASE_DIR, "logs")
-
-TRAINER_FILE = os.path.join(MODEL_DIR, "trainer.yml")
-LABEL_FILE   = os.path.join(MODEL_DIR, "labels.pkl")
-
-# =========================================================
-# BUAT FOLDER JIKA BELUM ADA
-# =========================================================
-os.makedirs(MODEL_DIR, exist_ok=True)
-os.makedirs(LOG_DIR, exist_ok=True)
-
-# =========================================================
-# LOGGER SEDERHANA
-# =========================================================
-def log(message):
-    waktu = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{waktu}] {message}")
-
-# =========================================================
-# LOAD FACE DETECTOR
-# =========================================================
-log("Loading Haarcascade Face Detector...")
-
-face_detector = cv2.CascadeClassifier(
-    cv2.data.haarcascades +
-    "haarcascade_frontalface_default.xml"
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from config import (
+    DATASET_PROC, MODEL_DIR,
+    EMBEDDING_FILE, LABEL_FILE,
+    MIN_PHOTOS_PER_PERSON,
+    FR_DETECTOR, FR_NUM_JITTERS
 )
+from utils.logger import get_logger
 
-if face_detector.empty():
-    log("ERROR: Haarcascade gagal dimuat!")
-    exit()
+logger = get_logger("train")
 
-# =========================================================
-# INIT LBPH RECOGNIZER
-# =========================================================
-log("Membuat LBPH Face Recognizer...")
 
-recognizer = cv2.face.LBPHFaceRecognizer_create(
-    radius=1,
-    neighbors=8,
-    grid_x=8,
-    grid_y=8
-)
+# ─────────────────────────────────────────────
+# EXTRACT EMBEDDING (dlib ResNet via face_recognition)
+# ─────────────────────────────────────────────
+def extract_embedding(image_path: str):
+    """
+    Load gambar, deteksi wajah pakai HOG, ekstrak encoding 128-d.
+    Fallback: kalau HOG gagal deteksi (umum di crop ketat hasil preprocess),
+    pakai seluruh gambar sebagai bbox wajah → encoding tetap bisa diambil.
+    """
+    img = cv2.imread(image_path)
+    if img is None:
+        return None
 
-# =========================================================
-# STORAGE TRAINING
-# =========================================================
-faces = []
-labels = []
-label_map = {}
+    # face_recognition butuh RGB
+    rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-current_id = 0
+    # Coba deteksi pakai HOG dulu
+    locations = face_recognition.face_locations(rgb, model=FR_DETECTOR)
 
-# =========================================================
-# VALIDASI DATASET
-# =========================================================
-if not os.path.exists(DATASET_DIR):
-    log(f"ERROR: Folder dataset tidak ditemukan!")
-    log(DATASET_DIR)
-    exit()
+    # Fallback: kalau nggak ada wajah terdeteksi, anggap seluruh gambar = wajah
+    # (works karena preprocess sudah crop ketat ke area wajah)
+    if not locations:
+        h, w = rgb.shape[:2]
+        locations = [(0, w, h, 0)]   # format face_recognition: (top, right, bottom, left)
 
-persons = [
-    d for d in os.listdir(DATASET_DIR)
-    if os.path.isdir(os.path.join(DATASET_DIR, d))
-]
-
-if len(persons) == 0:
-    log("ERROR: Tidak ada folder orang di dataset/raw/")
-    exit()
-
-# =========================================================
-# MULAI TRAINING
-# =========================================================
-log("=" * 50)
-log("BOOSTIFY LBPH TRAINING")
-log("=" * 50)
-
-for person_name in persons:
-
-    person_dir = os.path.join(DATASET_DIR, person_name)
-
-    log(f"\n📂 Processing: {person_name}")
-
-    # Mapping ID → Nama
-    label_map[current_id] = person_name
-
-    image_files = [
-        f for f in os.listdir(person_dir)
-        if f.lower().endswith((".jpg", ".jpeg", ".png"))
-    ]
-
-    if len(image_files) == 0:
-        log(f"WARNING: Tidak ada foto untuk {person_name}")
-        current_id += 1
-        continue
-
-    success_count = 0
-    failed_count  = 0
-
-    for image_name in image_files:
-
-        image_path = os.path.join(person_dir, image_name)
-
-        img = cv2.imread(image_path)
-
-        if img is None:
-            failed_count += 1
-            continue
-
-        # Convert ke grayscale
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        # Detect wajah
-        detected_faces = face_detector.detectMultiScale(
-            gray,
-            scaleFactor=1.2,
-            minNeighbors=5,
-            minSize=(60, 60)
-        )
-
-        if len(detected_faces) == 0:
-            failed_count += 1
-            continue
-
-        # Ambil wajah terbesar
-        largest_face = max(
-            detected_faces,
-            key=lambda rect: rect[2] * rect[3]
-        )
-
-        (x, y, w, h) = largest_face
-
-        face_crop = gray[y:y+h, x:x+w]
-
-        # Resize standar
-        face_crop = cv2.resize(face_crop, (200, 200))
-
-        # Histogram Equalization
-        face_crop = cv2.equalizeHist(face_crop)
-
-        # Simpan face dan label
-        faces.append(face_crop)
-        labels.append(current_id)
-
-        success_count += 1
-
-    log(
-        f"✅ Success: {success_count} | "
-        f"❌ Failed: {failed_count}"
+    # Pilih wajah terbesar
+    locations = sorted(
+        locations,
+        key=lambda loc: (loc[2] - loc[0]) * (loc[1] - loc[3]),
+        reverse=True
     )
 
-    current_id += 1
+    encodings = face_recognition.face_encodings(
+        rgb,
+        known_face_locations=locations[:1],
+        num_jitters=FR_NUM_JITTERS
+    )
 
-# =========================================================
-# VALIDASI HASIL
-# =========================================================
-if len(faces) == 0:
-    log("ERROR: Tidak ada wajah berhasil diproses!")
-    exit()
+    if not encodings:
+        return None
 
-# =========================================================
-# TRAIN MODEL
-# =========================================================
-log("\n🧠 Training model LBPH...")
+    return encodings[0]   # 128-d numpy array
 
-recognizer.train(
-    faces,
-    np.array(labels)
-)
 
-# =========================================================
-# SAVE MODEL
-# =========================================================
-log("💾 Menyimpan model...")
+# ─────────────────────────────────────────────
+# TRAIN — full retrain
+# ─────────────────────────────────────────────
+def train():
+    if not os.path.exists(DATASET_PROC):
+        logger.error(f"Folder processed tidak ditemukan: {DATASET_PROC}")
+        logger.info("Jalankan dulu: python preprocess.py")
+        return
 
-recognizer.save(TRAINER_FILE)
+    persons = [d for d in os.listdir(DATASET_PROC)
+               if os.path.isdir(os.path.join(DATASET_PROC, d))]
 
-with open(LABEL_FILE, "wb") as f:
-    pickle.dump(label_map, f)
+    if not persons:
+        logger.error("Tidak ada data di dataset/processed/")
+        return
 
-# =========================================================
-# SUMMARY
-# =========================================================
-log("\n" + "=" * 50)
-log("✅ TRAINING SELESAI")
-log("=" * 50)
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    logger.info(f"Loading model dlib ResNet (face_recognition) ...")
+    logger.info(f"Detector: {FR_DETECTOR} | num_jitters: {FR_NUM_JITTERS}")
 
-log(f"👥 Total orang   : {len(label_map)}")
-log(f"📸 Total wajah   : {len(faces)}")
-log(f"💾 Trainer saved : {TRAINER_FILE}")
-log(f"💾 Labels saved  : {LABEL_FILE}")
+    embeddings_db = {}
+    labels        = []
 
-log("\n📋 LABEL MAP:")
+    logger.info(f"Training untuk {len(persons)} orang ...\n")
 
-for idx, name in label_map.items():
-    log(f"   {idx} → {name}")
+    for person in persons:
+        proc_dir    = os.path.join(DATASET_PROC, person)
+        photo_files = [
+            os.path.join(proc_dir, f)
+            for f in os.listdir(proc_dir)
+            if f.lower().endswith(('.jpg', '.jpeg', '.png'))
+        ]
 
-log("=" * 50)
-log("BOOSTIFY TRAINING BERHASIL 🔥")
-log("=" * 50)
+        if len(photo_files) < MIN_PHOTOS_PER_PERSON:
+            logger.warning(f"[{person}] Foto kurang ({len(photo_files)}), dilewati.")
+            continue
+
+        logger.info(f"[{person}] Ekstrak encoding dari {len(photo_files)} foto ...")
+
+        all_embeddings = []
+
+        for fpath in tqdm(photo_files, desc=f"  {person}"):
+            emb = extract_embedding(fpath)
+            if emb is not None:
+                all_embeddings.append(emb)
+
+        if not all_embeddings:
+            logger.warning(f"[{person}] Semua foto gagal, dilewati.")
+            continue
+
+        # Rata-rata encoding → jadi 1 representasi per orang
+        # (Tidak di-L2-normalize karena dlib pakai Euclidean, bukan cosine)
+        mean_embedding = np.mean(all_embeddings, axis=0)
+
+        embeddings_db[person] = mean_embedding
+        labels.append(person)
+
+        logger.info(f"  [{person}] ✅ {len(all_embeddings)} encoding | shape: {mean_embedding.shape}")
+
+    if not embeddings_db:
+        logger.error("Tidak ada embedding yang berhasil dibuat.")
+        return
+
+    with open(EMBEDDING_FILE, "wb") as f:
+        pickle.dump(embeddings_db, f)
+
+    with open(LABEL_FILE, "wb") as f:
+        pickle.dump(labels, f)
+
+    logger.info(f"\n{'='*50}")
+    logger.info(f"✅ TRAINING SELESAI")
+    logger.info(f"Total orang  : {len(labels)}")
+    logger.info(f"Terdaftar    : {labels}")
+    logger.info(f"Embedding    : {EMBEDDING_FILE}")
+    logger.info(f"Labels       : {LABEL_FILE}")
+    logger.info(f"{'='*50}")
+
+
+# ─────────────────────────────────────────────
+# REGISTER — tambah 1 orang baru tanpa retrain semua
+# ─────────────────────────────────────────────
+def register_new_person(nama: str):
+    proc_dir = os.path.join(DATASET_PROC, nama)
+    if not os.path.exists(proc_dir):
+        logger.error(f"Folder tidak ditemukan: {proc_dir}")
+        return
+
+    # Load DB yang ada (kalau belum ada, mulai kosong)
+    if os.path.exists(EMBEDDING_FILE):
+        with open(EMBEDDING_FILE, "rb") as f:
+            embeddings_db = pickle.load(f)
+        with open(LABEL_FILE, "rb") as f:
+            labels = pickle.load(f)
+    else:
+        embeddings_db = {}
+        labels        = []
+
+    photo_files = [
+        os.path.join(proc_dir, f)
+        for f in os.listdir(proc_dir)
+        if f.lower().endswith(('.jpg', '.jpeg', '.png'))
+    ]
+
+    logger.info(f"Register [{nama}] dari {len(photo_files)} foto ...")
+
+    all_embeddings = []
+    for fpath in tqdm(photo_files, desc=f"  {nama}"):
+        emb = extract_embedding(fpath)
+        if emb is not None:
+            all_embeddings.append(emb)
+
+    if not all_embeddings:
+        logger.error(f"Tidak ada embedding untuk {nama}.")
+        return
+
+    mean_embedding = np.mean(all_embeddings, axis=0)
+
+    embeddings_db[nama] = mean_embedding
+    if nama not in labels:
+        labels.append(nama)
+
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    with open(EMBEDDING_FILE, "wb") as f:
+        pickle.dump(embeddings_db, f)
+    with open(LABEL_FILE, "wb") as f:
+        pickle.dump(labels, f)
+
+    logger.info(f"✅ [{nama}] berhasil didaftarkan!")
+    logger.info(f"Total terdaftar: {len(labels)} orang")
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--register", type=str, default=None,
+                        help="Nama orang baru (tambah ke DB tanpa retrain semua)")
+    args = parser.parse_args()
+
+    if args.register:
+        register_new_person(args.register)
+    else:
+        train()

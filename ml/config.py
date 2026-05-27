@@ -4,15 +4,15 @@ Semua nilai threshold, path, dan parameter ada di sini.
 Kalau mau ubah sesuatu, cukup edit file ini saja.
 
 Update:
-- Model: GhostFaceNet (ringan + akurat untuk sedikit foto)
-- Detector: opencv (lebih ringan dari mtcnn)
+- Model: dlib ResNet (via library face_recognition) — ringan, stabil di Raspi
+- Detector: HOG (paling ringan, tanpa GPU)
 - 50 foto + augmentasi 15x = 750 data per orang
 """
 
 import os
 
 # =============================================================
-# PARAMETER SMILE DETECTION — TAMBAHKAN INI
+# PARAMETER SMILE DETECTION
 # =============================================================
 SMILE_VOTE_FRAMES   = 5    # jumlah frame untuk voting
 SMILE_VOTE_THRESH   = 3    # minimal frame senyum → dianggap senyum
@@ -45,34 +45,38 @@ COOLDOWN_SEC    = 60         # jeda detik setelah absen berhasil
 # =============================================================
 CLAHE_CLIP      = 3.0        # semakin besar = kontras makin kuat
 CLAHE_GRID      = (8, 8)     # ukuran tile CLAHE
-FACE_SIZE       = (160, 160) # ukuran wajah setelah di-crop (input model)
+FACE_SIZE       = (160, 160) # ukuran wajah setelah di-crop preprocess
 MIN_FACE_SIZE   = 15         # piksel minimum agar wajah dianggap valid
 
 # =============================================================
-# PARAMETER RECOGNITION
+# PARAMETER RECOGNITION (dlib ResNet via face_recognition)
 # =============================================================
-SIMILARITY_THRESHOLD  = 0.55  # cosine similarity >= ini → dikenali
-                               # Naikkan (0.70) = lebih ketat
-                               # Turunkan (0.50) = lebih longgar
+# CATATAN: SEMANTIK BERUBAH!
+# Sekarang confidence dihitung dari Euclidean distance dlib:
+#   confidence = 1 - distance
+# Jadi:
+#   distance 0.0  → confidence 1.0 (sangat mirip)
+#   distance 0.6  → confidence 0.4 (batas tolerance default dlib)
+#   distance 1.0+ → confidence 0.0 (beda orang)
+SIMILARITY_THRESHOLD  = 0.4   # confidence >= 0.4 → dikenali (distance <= 0.6)
+                               # Naikkan (0.5) = lebih ketat
+                               # Turunkan (0.3) = lebih longgar
+
 MIN_PHOTOS_PER_PERSON = 50    # 50 foto per orang (balance kecepatan & akurasi)
 AUGMENT_PER_IMAGE     = 15    # 50 foto × 15 = 750 data per orang
 
 # =============================================================
-# PARAMETER TRAINING
+# PARAMETER MODEL face_recognition
 # =============================================================
-# Pilihan model:
-# "GhostFaceNet" → REKOMENDASI: ringan + akurat untuk sedikit foto
-# "ArcFace"      → akurasi tinggi tapi berat di Raspi
-# "Facenet"      → ringan tapi kurang akurat untuk sedikit foto
-# "Facenet512"   → Facenet versi lebih akurat, embedding 512 dim
+# Model recognition: dlib ResNet (built-in face_recognition library, 128-dim)
+MODEL_BACKEND    = "dlib_resnet"    # informasional saja, library cuma punya 1 model
 
-MODEL_BACKEND    = "GhostFaceNet"  # ← ringan + akurat untuk Raspberry Pi
-
-# Pilihan detector:
-# "opencv"      → REKOMENDASI: paling ringan, cocok untuk Raspi
-# "mtcnn"       → akurat tapi berat
-# "retinaface"  → paling akurat tapi paling berat
-DETECTOR_BACKEND = "opencv"        # ← ringan untuk Raspberry Pi
+# Detector face_recognition:
+# "hog" → REKOMENDASI: ringan, CPU-only, cocok untuk Raspi
+# "cnn" → lebih akurat tapi butuh GPU / lebih berat
+DETECTOR_BACKEND = "hog"
+FR_DETECTOR      = "hog"            # alias yg dipakai train.py & predict.py
+FR_NUM_JITTERS   = 1                # 1 = cepat & cukup akurat; 10 = paling akurat tapi lambat
 
 # =============================================================
 # LOGGING

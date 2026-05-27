@@ -1,8 +1,12 @@
 """
 predict.py — Face Recognition Engine Boostify
+Model: dlib ResNet (via library face_recognition, 128-dim)
 + Smile Detection: Simple MAR (Mouth Aspect Ratio)
   → Paling ringan, tanpa model tambahan
   → Tidak tambah beban CPU Raspberry Pi
+
+Interface (recognize → dict) DIBUAT SAMA PERSIS dengan versi lama,
+jadi predict_thread.py & LCD tidak perlu diubah.
 """
 
 import os
@@ -10,9 +14,9 @@ import sys
 import pickle
 import time
 import uuid
-import tempfile
 import numpy as np
 import cv2
+import face_recognition
 from datetime import datetime, timezone
 from typing import Optional
 from collections import deque
@@ -22,19 +26,15 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from config import (
     EMBEDDING_FILE, LABEL_FILE,
     SIMILARITY_THRESHOLD,
-    MODEL_BACKEND,
-    FACE_SIZE,
     CLAHE_CLIP, CLAHE_GRID,
     COOLDOWN_SEC,
     CAMERA_INDEX, FRAME_SKIP,
-    SMILE_VOTE_FRAMES, SMILE_VOTE_THRESH
+    SMILE_VOTE_FRAMES, SMILE_VOTE_THRESH,
+    FR_DETECTOR, FR_NUM_JITTERS
 )
 from utils.logger import get_logger
 
 logger = get_logger("predict")
-
-TMP_DETECT = os.path.join(tempfile.gettempdir(), "boostify_detect.jpg")
-TMP_FACE   = os.path.join(tempfile.gettempdir(), "boostify_face.jpg")
 
 MOTIVASI_MESSAGES = [
     "Semangat Hari Ini!",
@@ -56,11 +56,11 @@ def get_random_message() -> str:
 # KODE CUSTOM PER ORANG — EDIT DI SINI
 # ─────────────────────────────────────────────
 KODE_ASISTEN = {
-    "daffa" : "FDR",
-    "dirgi" : "DRG",
-    "rufus" : "RFS",
-    # tambah orang baru:
-    # "nama" : "KODE",
+    "daffa"   : "FDR",
+    "dirgi"   : "DRG",
+    "rufus"   : "RFS",
+    "DAFFAFR" : "FDL",
+    # "nama"  : "KODE",
 }
 
 def generate_code(nama: str) -> str:
@@ -79,57 +79,28 @@ def get_time_data() -> dict:
 
 
 # ─────────────────────────────────────────────
-# SMILE DETECTION — Simple MAR
-# Mouth Aspect Ratio: Ringan, tanpa model tambahan
-# Beban CPU: ~1ms/frame (hampir nol!)
+# SMILE DETECTION — Simple MAR  (TIDAK DIUBAH)
 # ─────────────────────────────────────────────
-
-# Buffer voting multi-frame
 _smile_votes = deque(maxlen=SMILE_VOTE_FRAMES)
-
-# Threshold deteksi gigi/senyum
-# Turunkan → lebih sensitif (deteksi senyum tipis)
-# Naikkan  → lebih ketat (hanya senyum lebar)
 SMILE_WHITE_THRESHOLD = 0.06
 
 
 def _deteksi_senyum_mar(frame: np.ndarray) -> bool:
-    """
-    Deteksi senyum menggunakan Mouth Aspect Ratio (MAR).
-
-    Cara kerja:
-    1. Ambil area mulut dari frame (1/3 bawah tengah)
-    2. Convert ke grayscale
-    3. Threshold → deteksi area terang (gigi)
-    4. Hitung persentase area terang
-    5. Kalau > threshold → senyum (gigi terlihat)
-
-    Kenapa efektif:
-    → Saat senyum: gigi terlihat → area terang banyak
-    → Saat tidak senyum: mulut tertutup → area terang sedikit
-
-    Beban CPU: ~1ms/frame ✅
-    Model tambahan: Tidak ada ✅
-    """
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape
 
-    # Area mulut: 60-85% tinggi, 25-75% lebar frame
     y1 = int(h * 0.60)
     y2 = int(h * 0.85)
     x1 = int(w * 0.25)
     x2 = int(w * 0.75)
 
     mouth_roi = gray[y1:y2, x1:x2]
-
     if mouth_roi.size == 0:
         return False
 
-    # CLAHE lokal untuk normalize pencahayaan
-    clahe     = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(4, 4))
-    mouth_eq  = clahe.apply(mouth_roi)
+    clahe    = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(4, 4))
+    mouth_eq = clahe.apply(mouth_roi)
 
-    # Threshold adaptif → lebih robust terhadap cahaya
     thresh = cv2.adaptiveThreshold(
         mouth_eq, 255,
         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
@@ -137,34 +108,21 @@ def _deteksi_senyum_mar(frame: np.ndarray) -> bool:
         11, -5
     )
 
-    # Hitung persentase area terang (gigi)
     white_ratio = np.sum(thresh == 255) / thresh.size
-
     return white_ratio > SMILE_WHITE_THRESHOLD
 
 
 def detect_smile(frame: np.ndarray) -> bool:
-    """
-    Deteksi senyum dengan voting multi-frame.
-    Voting membuat hasil lebih stabil & tidak flickering.
-
-    Contoh (SMILE_VOTE_FRAMES=5, SMILE_VOTE_THRESH=3):
-    [True, True, False, True, True] → 4/5 → SENYUM ✅
-    [False, True, False, False, True] → 2/5 → TIDAK ❌
-    """
     hasil = _deteksi_senyum_mar(frame)
     _smile_votes.append(hasil)
 
     jumlah_senyum = sum(_smile_votes)
-
     if len(_smile_votes) >= SMILE_VOTE_FRAMES:
         return jumlah_senyum >= SMILE_VOTE_THRESH
-
     return hasil
 
 
 def reset_smile_buffer():
-    """Reset buffer voting setelah absen berhasil."""
     _smile_votes.clear()
 
 
@@ -180,52 +138,16 @@ def apply_clahe(image: np.ndarray) -> np.ndarray:
 
 
 # ─────────────────────────────────────────────
-# CROP WAJAH
-# ─────────────────────────────────────────────
-def get_face_crop(image: np.ndarray, DeepFace) -> np.ndarray:
-    try:
-        cv2.imwrite(TMP_DETECT, image)
-        faces = DeepFace.extract_faces(
-            img_path=TMP_DETECT, detector_backend="opencv",
-            enforce_detection=False, align=True
-        )
-        if faces and len(faces) > 0:
-            face_data = faces[0]["face"]
-            if face_data.max() <= 1.0:
-                face_data = (face_data * 255).astype(np.uint8)
-            return cv2.resize(face_data, FACE_SIZE)
-    except Exception as e:
-        logger.debug(f"DeepFace detect gagal: {e}")
-
-    h, w = image.shape[:2]
-    size = min(h, w)
-    y1   = (h - size) // 2
-    x1   = (w - size) // 2
-    return cv2.resize(image[y1:y1+size, x1:x1+size], FACE_SIZE)
-
-
-# ─────────────────────────────────────────────
-# COSINE SIMILARITY
-# ─────────────────────────────────────────────
-def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
-    na = np.linalg.norm(a)
-    nb = np.linalg.norm(b)
-    return float(np.dot(a, b) / (na * nb)) if na > 0 and nb > 0 else 0.0
-
-
-# ─────────────────────────────────────────────
-# CLASS FACE RECOGNIZER
+# CLASS FACE RECOGNIZER (dlib ResNet)
 # ─────────────────────────────────────────────
 class FaceRecognizer:
 
     def __init__(self):
-        logger.info("Inisialisasi FaceRecognizer ...")
+        logger.info("Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...")
         self.embeddings_db       = {}
         self.labels              = []
-        self.deepface            = None
         self._last_detected_time = {}
         self._load_database()
-        self._load_model()
         logger.info(f"Siap. {len(self.labels)} orang terdaftar: {self.labels}")
 
     def _load_database(self):
@@ -236,48 +158,65 @@ class FaceRecognizer:
         with open(LABEL_FILE, "rb") as f:
             self.labels = pickle.load(f)
 
-    def _load_model(self):
-        from deepface import DeepFace
-        self.deepface = DeepFace
-        logger.info(f"Model {MODEL_BACKEND} dimuat.")
+    # ─────────────────────────────────────────
+    # DETECT + EXTRACT ENCODING dari frame kamera
+    # ─────────────────────────────────────────
+    def _detect_and_encode(self, frame_bgr: np.ndarray) -> Optional[np.ndarray]:
+        """
+        Return encoding 128-d dari wajah TERBESAR di frame, atau None.
+        """
+        enhanced = apply_clahe(frame_bgr)
+        rgb      = cv2.cvtColor(enhanced, cv2.COLOR_BGR2RGB)
 
-    def _extract_embedding(self, face_img: np.ndarray) -> Optional[np.ndarray]:
-        try:
-            cv2.imwrite(TMP_FACE, face_img)
-            result = self.deepface.represent(
-                img_path=TMP_FACE, model_name=MODEL_BACKEND,
-                detector_backend="skip", enforce_detection=False, align=False
-            )
-            if result:
-                emb  = np.array(result[0]["embedding"])
-                norm = np.linalg.norm(emb)
-                return emb / norm if norm > 0 else emb
-        except Exception as e:
-            logger.debug(f"Extract embedding gagal: {e}")
-        return None
+        locations = face_recognition.face_locations(rgb, model=FR_DETECTOR)
+        if not locations:
+            return None
 
+        # Pilih wajah terbesar
+        locations = sorted(
+            locations,
+            key=lambda loc: (loc[2] - loc[0]) * (loc[1] - loc[3]),
+            reverse=True
+        )
+
+        encodings = face_recognition.face_encodings(
+            rgb,
+            known_face_locations=locations[:1],
+            num_jitters=FR_NUM_JITTERS
+        )
+
+        if not encodings:
+            return None
+
+        return encodings[0]
+
+    # ─────────────────────────────────────────
+    # FIND BEST MATCH — Euclidean distance (native dlib)
+    # confidence = 1 - distance (clamped to 0..1)
+    # ─────────────────────────────────────────
     def _find_best_match(self, emb: np.ndarray) -> tuple:
-        best_name, best_score = "Unknown", 0.0
+        best_name     = "Unknown"
+        best_distance = float("inf")
+
         for nama, db_emb in self.embeddings_db.items():
-            score = cosine_similarity(emb, db_emb)
-            if score > best_score:
-                best_score = score
-                best_name  = nama
-        return best_name, best_score
+            d = float(np.linalg.norm(emb - db_emb))
+            if d < best_distance:
+                best_distance = d
+                best_name     = nama
+
+        confidence = max(0.0, 1.0 - best_distance)
+        return best_name, confidence
 
     def _on_cooldown(self, nama: str) -> bool:
         return (time.time() - self._last_detected_time.get(nama, 0)) < COOLDOWN_SEC
 
     # ─────────────────────────────────────────
     # FUNGSI UTAMA — dipanggil IoT/predict_thread
+    # Output dict DIBUAT SAMA PERSIS dengan versi lama.
     # ─────────────────────────────────────────
     def recognize(self, frame: np.ndarray) -> dict:
-        # Step 1: enhance + crop
-        enhanced = apply_clahe(frame)
-        face     = get_face_crop(enhanced, self.deepface)
-
-        # Step 2: extract embedding
-        emb = self._extract_embedding(face)
+        # Step 1: deteksi + ekstrak encoding
+        emb = self._detect_and_encode(frame)
         if emb is None:
             detect_smile(frame)
             return {
@@ -287,10 +226,10 @@ class FaceRecognizer:
                 "is_smiling": False, "message": ""
             }
 
-        # Step 3: cari kecocokan
+        # Step 2: cari kecocokan
         nama, confidence = self._find_best_match(emb)
 
-        # Step 4: cek threshold
+        # Step 3: cek threshold
         if confidence < SIMILARITY_THRESHOLD:
             detect_smile(frame)
             return {
@@ -300,7 +239,7 @@ class FaceRecognizer:
                 "is_smiling": False, "message": "Wajah tidak dikenal"
             }
 
-        # Step 5: cek cooldown
+        # Step 4: cek cooldown
         if self._on_cooldown(nama):
             detect_smile(frame)
             return {
@@ -310,7 +249,7 @@ class FaceRecognizer:
                 "is_smiling": False, "message": f"Hai, {nama}! Sudah absen."
             }
 
-        # Step 6: sukses
+        # Step 5: sukses
         self._last_detected_time[nama] = time.time()
         time_data  = get_time_data()
         is_smiling = bool(detect_smile(frame))
@@ -342,13 +281,13 @@ class FaceRecognizer:
 
 
 # ─────────────────────────────────────────────
-# TEST REALTIME
+# TEST REALTIME (kalau dijalanin langsung)
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
     import json
 
-    logger.info("Test predict.py — Simple MAR Smile Detection")
-    logger.info(f"Smile threshold: {SMILE_WHITE_THRESHOLD} | Vote: {SMILE_VOTE_THRESH}/{SMILE_VOTE_FRAMES}")
+    logger.info("Test predict.py — dlib ResNet + Simple MAR Smile Detection")
+    logger.info(f"Detector: {FR_DETECTOR} | Threshold: {SIMILARITY_THRESHOLD}")
 
     recognizer       = FaceRecognizer()
     cap              = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
@@ -402,7 +341,7 @@ if __name__ == "__main__":
         # ── Tampilan kamera ──
         display = frame.copy()
 
-        # Visualisasi area mulut yang dianalisis
+        # Visualisasi area mulut yang dianalisis (smile MAR)
         h, w = display.shape[:2]
         y1m = int(h * 0.60)
         y2m = int(h * 0.85)
@@ -440,13 +379,12 @@ if __name__ == "__main__":
                             (20, 140), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (200, 200, 200), 1)
 
-        # Info metode & beban
-        cv2.putText(display, "Smile: Simple MAR | CPU: ~1ms",
+        cv2.putText(display, "Model: dlib ResNet | Smile: Simple MAR",
                     (20, display.shape[0] - 15),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45,
                     (100, 200, 100), 1)
 
-        cv2.imshow("Boostify — Simple MAR Smile", display)
+        cv2.imshow("Boostify — dlib ResNet + MAR Smile", display)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
