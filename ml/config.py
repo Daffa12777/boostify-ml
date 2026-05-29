@@ -17,6 +17,7 @@ import os
 SMILE_VOTE_FRAMES   = 5    # jumlah frame untuk voting
 SMILE_VOTE_THRESH   = 3    # minimal frame senyum → dianggap senyum
 SMILE_MIN_NEIGHBORS = 8    # sensitivitas deteksi
+DETECT_SCALE = 0.5   # deteksi di frame 50% → HOG jauh lebih cepat di Pi
 
 # =============================================================
 # PATH DATASET & MODEL

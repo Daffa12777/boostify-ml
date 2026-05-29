@@ -1912,3 +1912,20 @@ Kontrol:
 [2026-05-28 00:04:24] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
 [2026-05-28 00:04:25] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.603 | senyum: False | uuid: 00fefabe-5d79-4e95-94e0-6679c521611d
 [2026-05-28 00:04:32] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.609 | senyum: False | uuid: 8dfb3e35-4b83-45c0-9b56-8c184ce82cb0
+[2026-05-28 11:20:12] [INFO] [predict] Test predict.py — dlib ResNet + Simple MAR Smile Detection
+[2026-05-28 11:20:12] [INFO] [predict] Detector: hog | Threshold: 0.4
+[2026-05-28 11:20:12] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-28 11:20:12] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-28 11:20:14] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-28 11:20:20] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.526 | senyum: False | uuid: 9bb0ee4c-4e50-4288-9143-f2210181d375
+[2026-05-28 11:20:26] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.583 | senyum: False | uuid: 984c8b55-e431-4def-b441-588ee9ea4d11
+[2026-05-28 11:28:06] [INFO] [predict] Test predict.py — dlib ResNet + Smile Landmark
+[2026-05-28 11:28:06] [INFO] [predict] Detector: hog | Threshold: 0.4 | SmileRatio: 0.42
+[2026-05-28 11:28:06] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-28 11:28:06] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']
+[2026-05-28 11:28:07] [INFO] [predict] Kamera aktif. Tekan Q untuk keluar.
+[2026-05-28 11:28:10] [INFO] [predict] ABSEN: daffa | code: FDR | confidence: 0.580 | senyum: False | uuid: 6345a122-a8b3-4070-839a-22043fbbb95e
+[2026-05-28 11:28:20] [INFO] [predict] ABSEN: DAFFAFR | code: DAF | confidence: 0.642 | senyum: False | uuid: 01541296-e537-41b4-99ea-f62f7b0b1a43
+[2026-05-28 11:28:33] [INFO] [predict] ABSEN: dirgi | code: DRG | confidence: 0.596 | senyum: True | uuid: a23caf6a-b8b4-4189-8430-556f71ba0ab2
+[2026-05-28 11:38:11] [INFO] [predict] Inisialisasi FaceRecognizer (dlib ResNet / face_recognition) ...
+[2026-05-28 11:38:11] [INFO] [predict] Siap. 5 orang terdaftar: ['alif', 'daffa', 'DAFFAFR', 'dirgi', 'rufus']

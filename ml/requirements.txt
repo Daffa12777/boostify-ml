@@ -1,36 +1,21 @@
 # ============================================================
-# requirements.txt — Boostify ML Dependencies
-# ============================================================
-# Install semua: pip install -r requirements.txt
-#
-# Untuk Raspberry Pi, tambahkan flag:
-# pip install -r requirements.txt --break-system-packages
+# requirements.txt — Boostify ML (dlib / face_recognition)
+# Install: pip install -r requirements.txt
+# Raspi : pip install -r requirements.txt --extra-index-url https://www.piwheels.org/simple
 # ============================================================
 
-# Core ML
-deepface==0.0.93
-tensorflow==2.15.0       # untuk laptop/PC
-#tflite-runtime==2.14.0 # untuk Raspberry Pi (uncomment ini, comment tensorflow)
+# Face recognition engine (dlib ResNet 128-d)
+# → otomatis nyeret dlib + Pillow
+face_recognition==1.3.0
 
 # Computer Vision
 opencv-python==4.9.0.80
-opencv-python-headless==4.9.0.80  # untuk Raspi (tanpa GUI)
 
 # Numerik
 numpy==1.26.4
-scikit-learn==1.4.0
 
-# Utilitas
-Pillow==10.2.0
+# Kirim absen ke backend
+requests==2.31.0
+
+# Progress bar (cuma kepake pas train.py)
 tqdm==4.66.2
-matplotlib==3.8.3
-
-# Penyimpanan embedding
-# (pickle sudah built-in Python, tidak perlu install)
-
-# ============================================================
-# Catatan untuk Raspberry Pi:
-# - Ganti tensorflow → tflite-runtime
-# - Ganti opencv-python → opencv-python-headless
-# - Tambahkan flag --break-system-packages
-# ============================================================
