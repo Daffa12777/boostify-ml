@@ -51,22 +51,22 @@ Sistem terbagi dua tahap: **enrollment** (offline, dijalankan sekali per orang u
 
 ```mermaid
 flowchart TD
-    subgraph ENROLL["1 · Enrollment — offline, sekali per orang"]
-        A["collect_faces_video.py<br/>rekam wajah dari video"]
-        B["preprocess.py<br/>crop · align · CLAHE · augmentasi"]
-        C["train.py<br/>encode 128-dim, rata-rata per orang"]
-        D[("models/<br/>embeddings.pkl + labels.pkl")]
+    subgraph ENROLL["1 - Enrollment (offline, sekali per orang)"]
+        A["collect_faces_video.py<br>rekam wajah dari video"]
+        B["preprocess.py<br>crop, align, CLAHE, augmentasi"]
+        C["train.py<br>encode 128-dim, rata-rata per orang"]
+        D[("models/<br>embeddings.pkl + labels.pkl")]
         A --> B --> C --> D
     end
 
-    subgraph RUNTIME["2 · Runtime presensi — Raspberry Pi 5"]
-        E["iot/main.py<br/>stream USB webcam"]
-        F["deteksi wajah<br/>HOG, CPU-only"]
-        G["encode wajah<br/>dlib ResNet 128-dim"]
-        H{"match Euclidean<br/>confidence ≥ 0.7?"}
-        I["kenali + deteksi senyum<br/>landmark 68-titik"]
-        J["layar 'Tidak Dikenal'"]
-        K["LCD greeting + espeak<br/>POST /api/uploadfromml"]
+    subgraph RUNTIME["2 - Runtime presensi (Raspberry Pi 5)"]
+        E["iot/main.py<br>stream USB webcam"]
+        F["deteksi wajah<br>HOG, CPU-only"]
+        G["encode wajah<br>dlib ResNet 128-dim"]
+        H{"match Euclidean<br>confidence >= 0.7?"}
+        I["kenali + deteksi senyum<br>landmark 68-titik"]
+        J["layar Tidak Dikenal"]
+        K["LCD greeting + espeak<br>POST /api/uploadfromml"]
         E --> F --> G --> H
         H -->|ya| I --> K
         H -->|tidak| J
