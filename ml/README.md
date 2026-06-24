@@ -1,542 +1,346 @@
-# 🐝 Boostify ML — Face Recognition Attendance System
+# Boostify — ML & IoT (Face Recognition Attendance)
 
-Sistem absensi otomatis berbasis **pengenalan wajah** dan **deteksi senyum** yang berjalan di atas **Raspberry Pi 5**.
+Sistem presensi berbasis **pengenalan wajah** untuk lab (CPS Laboratory). Modul ML
+ini berjalan di **Raspberry Pi 5** dengan USB webcam, LCD SPI 3.5", dan speaker.
+Wajah yang dikenali otomatis tercatat ke backend, lengkap dengan deteksi senyum
+dan sapaan personal di LCD + suara.
 
----
-
-## 📋 Deskripsi
-
-Boostify ML adalah modul machine learning dari project Boostify — sistem absensi mahasiswa berbasis kamera. Sistem ini mampu:
-
-- ✅ Mengenali wajah mahasiswa secara realtime
-- ✅ Mendeteksi senyum/tidak senyum (Simple MAR — ringan tanpa model tambahan)
-- ✅ Mendaftarkan mahasiswa baru tanpa training ulang dari awal
-- ✅ Berjalan ringan di Raspberry Pi 5 (tidak overheat)
-- ✅ Kamera tidak lag (threading)
-- ✅ Output langsung match dengan API backend `/api/uploadfromml`
-- ✅ Anti spam cooldown (1 orang 1x per 60 detik)
+> Repo ini **khusus layer ML/IoT**. Backend (Node/Express) & frontend (Next.js)
+> ada di repo terpisah. Modul ini cuma mengirim hasil presensi ke API backend.
 
 ---
 
-## 🧠 Model yang Digunakan (Total: 2 Model)
+## Fitur
 
-| No | Model | Fungsi | Ukuran | Beban CPU |
-|---|---|---|---|---|
-| 1 | **GhostFaceNet** (via DeepFace) | Face Recognition — kenali siapa orangnya | ~20MB | ~60ms/frame |
-| 2 | **OpenCV Haar Cascade** | Face Detection — deteksi ada wajah atau tidak | Built-in | ~5ms/frame |
-| - | **Simple MAR** | Smile Detection — bukan model, murni image processing | 0MB | ~1ms/frame |
-
-> **Catatan:** Simple MAR (Mouth Aspect Ratio) bukan model ML — hanya algoritma pengolahan gambar berbasis persentase kecerahan area mulut. Sangat ringan dan tidak menambah beban Raspberry Pi.
-
----
-
-## 🔄 Perubahan dari Versi Sebelumnya
-
-| Komponen | Sebelumnya | Sekarang | Alasan |
-|---|---|---|---|
-| Face Recognition | Facenet | **GhostFaceNet** | Lebih akurat untuk sedikit foto, lebih ringan |
-| Face Detector | mtcnn | **OpenCV** | Lebih ringan di Raspi |
-| Smile Detection | Haar Cascade | **Simple MAR** | Haar Cascade tidak reliable, MAR lebih akurat & ringan |
-| Dataset | 200 foto | **50 foto** | Cukup dengan augmentasi 15x |
-| Kamera | Lag (sequential) | **No Lag (threading)** | Thread terpisah untuk kamera & ML |
-| JSON bool | numpy bool | **Python bool** | Fix TypeError JSON serializable |
-| config.py | Ada typo `"INFO".` | **`"INFO"`** | Fix syntax error |
-| preprocess.py | Ada dead code | **Dead code dihapus** | Fix logika deteksi wajah |
+- **Face recognition** pakai dlib ResNet (128-dim) lewat library `face_recognition`
+- **Deteksi senyum** berbasis landmark (rasio lebar mulut : lebar wajah) — tanpa model tambahan, tahan cahaya, kebaca senyum tertutup & terbuka
+- **CLAHE enhancement** biar stabil di kondisi cahaya kurang
+- **Anti-flicker senyum** lewat voting multi-frame
+- **Cooldown** per orang biar nggak dobel-absen
+- **LCD UI** (pygame, 480×320): standby, greeting personal, layar "tidak dikenal"
+- **Suara** sapaan via `espeak` (pesan menyesuaikan waktu: Pagi/Siang/Sore/Malam)
+- **Integrasi backend** otomatis (`POST /api/uploadfromml`)
+- **Collect dataset dari video** (rekam orang noleh pelan, frame difilter otomatis)
+- **Crowd prediction** (opsional): prediksi jam ramai/sepi lab via RandomForest
 
 ---
 
-## 📁 Struktur File
+## Tech Stack
+
+| Komponen | Detail |
+|----------|--------|
+| Model recognition | dlib ResNet 128-dim (`face_recognition`) |
+| Detektor wajah | HOG (CPU-only, ringan untuk Pi) |
+| Matching | Euclidean distance — `confidence = 1 - distance` |
+| Smile detection | 68-point landmark dlib, rasio mulut:wajah |
+| Preprocessing | CLAHE + augmentasi |
+| Display | pygame (LCD SPI `/dev/fb1`) |
+| Audio | espeak |
+| Bahasa | Python 3 |
+| Hardware | Raspberry Pi 5 + USB webcam + LCD 3.5" + speaker |
+
+---
+
+## Struktur Folder
 
 ```
 ml/
+├── config.py                 # SEMUA parameter (threshold, path, kamera) di sini
+├── collect_faces.py          # ambil dataset foto satu-satu (versi original)
+├── collect_faces_video.py    # ambil dataset dari VIDEO (rekomendasi, lebih cepat)
+├── preprocess.py             # crop/align wajah + CLAHE + augmentasi → dataset/processed
+├── train.py                  # enrollment: bikin embeddings.pkl + labels.pkl
+├── predict.py                # engine recognition (FaceRecognizer) + smile
+├── evaluate.py               # evaluasi akurasi  ⚠️ WIP — lihat Known Issues
+├── predict_crowd.py          # prediksi keramaian lab (opsional)
+├── requirements.txt
 ├── dataset/
-│   ├── raw/[nama]/           ← foto mentah per orang
-│   ├── processed/[nama]/     ← hasil preprocessing
-│   └── test/[nama]/          ← foto untuk evaluasi
-│
+│   ├── raw/<nama>/           # foto/full-frame mentah hasil collect
+│   ├── processed/<nama>/     # hasil preprocess (siap train)
+│   └── test/<nama>/          # foto buat evaluate
 ├── models/
-│   ├── embeddings.pkl        ← database embedding wajah (GhostFaceNet)
-│   └── labels.pkl            ← daftar nama terdaftar
-│
+│   ├── embeddings.pkl        # dict {nama: mean_encoding_128d}
+│   └── labels.pkl            # list nama terdaftar
+├── logs/
+│   └── boostify_ml.log
 ├── utils/
-│   ├── __init__.py
-│   └── logger.py             ← sistem logging UTF-8
-│
-├── config.py                 ← ⚙️ semua konfigurasi di sini
-├── collect_faces.py          ← 📸 ambil foto dataset dari kamera
-├── preprocess.py             ← 🔧 CLAHE + crop + augmentasi (fixed)
-├── train.py                  ← 🎓 training & generate embeddings
-├── predict.py                ← 🎯 engine recognition + smile detection
-├── predict_thread.py         ← 🚀 runner no-lag (pakai ini!)
-├── evaluate.py               ← 📊 uji akurasi model
-├── requirements.txt          ← 📦 daftar library
-└── setup_raspi.sh            ← 🔨 setup otomatis di Raspi
+│   └── logger.py
+└── iot/
+    └── main.py               # ENTRY POINT di Pi (LCD + speaker + API)
 ```
 
 ---
 
-## ⚙️ Konfigurasi (`config.py`)
+## Prasyarat
 
-| Parameter | Value | Keterangan |
-|---|---|---|
-| `MODEL_BACKEND` | `GhostFaceNet` | Model face recognition |
-| `DETECTOR_BACKEND` | `opencv` | Detector wajah (ringan) |
-| `SIMILARITY_THRESHOLD` | `0.55` | Threshold kecocokan wajah |
-| `MIN_PHOTOS_PER_PERSON` | `50` | Minimal foto per orang |
-| `AUGMENT_PER_IMAGE` | `15` | 50 foto × 15 = 750 data |
-| `FRAME_SKIP` | `8` | Proses 1 dari 8 frame (hemat CPU) |
-| `COOLDOWN_SEC` | `60` | Jeda absen per orang (anti spam) |
-| `SMILE_VOTE_FRAMES` | `5` | Frame voting untuk smile detection |
-| `SMILE_VOTE_THRESH` | `3` | Minimal frame senyum dari voting |
-| `SMILE_MIN_NEIGHBORS` | `8` | Sensitivitas deteksi |
+| Komponen | Kebutuhan |
+|----------|-----------|
+| Python | 3.9+ |
+| OS Pi | Raspberry Pi OS Bookworm 64-bit |
+| Hardware | Pi 5, USB webcam, LCD SPI 3.5" (480×320), speaker |
+| Dev (opsional) | Windows + webcam buat tes sebelum deploy |
 
 ---
 
-## 🚀 Cara Pakai
+## Instalasi
 
-### Install Dependencies
-```bash
+### Windows (development)
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 1. Kumpulkan Dataset
-```bash
-python collect_faces.py --nama "Nama Mahasiswa" --jumlah 50
-```
-Tekan **A** untuk auto-capture, gerakkan kepala pelan-pelan.
+### Raspberry Pi 5 (deploy)
 
-### 2. Preprocessing
+Pakai piwheels biar dlib nggak compile dari nol (lama banget kalau dari source):
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt --extra-index-url https://www.piwheels.org/simple
+
+# espeak untuk suara
+sudo apt install espeak
+```
+
+> **Catatan dlib di Pi:** kalau piwheels nggak nyediain wheel yang cocok, dlib akan
+> compile dari source dan butuh `cmake` + build tools. Pasang dulu:
+> `sudo apt install cmake build-essential`.
+
+---
+
+## Konfigurasi (`config.py`)
+
+Semua nilai penting ada di satu file. Yang paling sering disentuh:
+
+| Parameter | Default | Fungsi |
+|-----------|---------|--------|
+| `CAMERA_INDEX` | `1` | 0 = kamera default, 1 = USB eksternal |
+| `SIMILARITY_THRESHOLD` | `0.7` | `confidence ≥ 0.7` → dikenali (lihat catatan di bawah) |
+| `FR_DETECTOR` | `"hog"` | `hog` (ringan, CPU) atau `cnn` (akurat, butuh GPU) |
+| `FR_NUM_JITTERS` | `1` | 1 = cepat; 10 = paling akurat tapi lambat |
+| `DETECT_SCALE` | `0.5` | deteksi di frame 50% → HOG lebih ngebut di Pi |
+| `FRAME_SKIP` | `8` | proses 1 dari tiap N frame (hemat CPU) |
+| `COOLDOWN_SEC` | `60` | jeda detik setelah absen sukses |
+| `MIN_PHOTOS_PER_PERSON` | `50` | minimal foto per orang |
+| `AUGMENT_PER_IMAGE` | `15` | 50 foto × 15 = 750 data per orang |
+| `CLAHE_CLIP` | `3.0` | makin besar = kontras makin kuat |
+| `SMILE_RATIO_THRESHOLD` | `0.42` | threshold rasio senyum (di `predict.py`) |
+
+### Cara kerja threshold (PENTING)
+
+Matching pakai **Euclidean distance** dlib, lalu dikonversi:
+
+```
+confidence = max(0, 1 - distance)
+```
+
+- `distance 0.0` → `confidence 1.0` (identik)
+- `distance 0.3` → `confidence 0.7` (batas dikenali saat ini)
+- `distance 0.6` → `confidence 0.4` (toleransi default dlib)
+- `distance 1.0+` → `confidence 0.0` (beda orang)
+
+Dengan `SIMILARITY_THRESHOLD = 0.7`, wajah baru dianggap dikenali kalau
+**distance ≤ 0.3** — ini cukup **ketat**. Kalau banyak wajah valid malah jadi
+"Unknown", turunkan threshold (mis. `0.4`–`0.5`). Kalau ada salah-orang
+(cross-match), naikkan.
+
+> Akar masalah ketidakstabilan biasanya **kualitas data (pencahayaan saat collect)**,
+> bukan threshold. Re-record di cahaya bagus lebih ampuh daripada nurunin threshold,
+> karena nurunin threshold rawan bikin salah-kenal antar orang.
+
+---
+
+## Alur Kerja (Pipeline)
+
+```
+collect → preprocess → train → run (predict di Pi)
+```
+
+1. **Collect** — kumpulkan dataset wajah (`collect_faces_video.py`)
+2. **Preprocess** — crop/align + CLAHE + augmentasi (`preprocess.py`)
+3. **Train** — bikin `embeddings.pkl` + `labels.pkl` (`train.py`)
+4. **Run** — jalankan presensi di Pi (`iot/main.py`)
+
+### 1. Collect dataset (dari video — rekomendasi)
+
+Rekam orang noleh pelan kiri/kanan/atas/bawah (mirip daftar Face ID), script
+ambil frame yang bersih (buang blur, wajib 1 wajah, buang frame mirip).
+
+```bash
+# dari file video
+python collect_faces_video.py --nama "DAFFAFR" --video rekaman.mp4
+
+# rekam langsung dari webcam (di Pi WAJIB --headless, LCD-nya hitam)
+python collect_faces_video.py --nama "DAFFAFR" --record --durasi 6 --headless
+
+# langsung sampai siap dikenali (collect → preprocess → register)
+python collect_faces_video.py --nama "DAFFAFR" --video rekaman.mp4 --auto
+
+# sekalian jalanin presensi setelah selesai
+python collect_faces_video.py --nama "DAFFAFR" --video rekaman.mp4 --auto --run iot/main.py
+```
+
+Opsi filter dataset:
+
+| Flag | Default | Fungsi |
+|------|---------|--------|
+| `--skip` | `5` | ambil 1 dari tiap N frame |
+| `--blur` | `60.0` | buang frame goyang (makin tinggi makin ketat) |
+| `--max` | `60` | batas jumlah foto disimpan |
+| `--diversity` | `0.35` | buang frame mirip (makin kecil makin variatif) |
+
+### 2. Preprocess
+
 ```bash
 python preprocess.py
 ```
 
-### 3. Training
+Crop/align wajah dari `dataset/raw/` → `dataset/processed/`, plus CLAHE &
+augmentasi. (Dipanggil otomatis kalau pakai `--auto` di langkah collect.)
+
+### 3. Train / Enrollment
+
 ```bash
-# Training pertama kali (semua orang)
+# train ulang semua orang
 python train.py
 
-# Daftarkan mahasiswa BARU tanpa train ulang semua
-python train.py --register "Nama Mahasiswa Baru"
+# tambah 1 orang baru tanpa retrain semua (lebih cepat)
+python train.py --register "DAFFAFR"
 ```
 
-### 4. Evaluasi
+> `train.py` itu **enrollment**, bukan training model dari nol. Dia pakai dlib
+> ResNet yang sudah pretrained, lalu rata-ratakan encoding tiap orang jadi 1
+> representasi. `--register` dengan nama yang **sudah ada akan menimpa**, bukan
+> menambah.
+
+### 4. Jalankan presensi (di Pi)
+
 ```bash
-python evaluate.py
+python iot/main.py
 ```
 
-### 5. Jalankan Sistem (Gunakan ini!)
-```bash
-# Versi NO LAG (direkomendasikan)
-python predict_thread.py
+Yang terjadi: kamera nyala → standby di LCD → begitu wajah dikenali → LCD nampilin
+sapaan + confidence, speaker bunyi, data dikirim ke backend. Kalau nggak dikenali →
+layar "Tidak Dikenal".
 
-# Versi biasa (bisa lag)
+### Tes cepat tanpa LCD (Windows/dev)
+
+```bash
 python predict.py
 ```
 
----
-
-## 🎯 Cara Kerja Smile Detection (Simple MAR)
-
-```
-Frame kamera masuk
-        ↓
-Ambil area mulut (60-85% tinggi, 25-75% lebar frame)
-        ↓
-CLAHE lokal → normalize pencahayaan
-        ↓
-Adaptive Threshold → deteksi area terang (gigi)
-        ↓
-Hitung persentase area terang
-        ↓
-> 6% area terang → SENYUM ✅
-< 6% area terang → TIDAK SENYUM ❌
-        ↓
-Voting 5 frame → hasil lebih stabil
-```
-
-> Untuk tuning: ubah `SMILE_WHITE_THRESHOLD = 0.06` di `predict.py`
-> - Turunkan (0.04) → lebih sensitif
-> - Naikkan (0.08) → lebih ketat
+Mode ini buka jendela OpenCV (bukan LCD), nampilin nama + confidence + rasio senyum
+buat kalibrasi. Berguna buat ngepas-in `SMILE_RATIO_THRESHOLD` dan threshold.
 
 ---
 
-## 📡 Output Format (untuk Tim IoT & Web)
+## Integrasi Backend
 
-Setiap absen berhasil, `predict.py` mengembalikan:
+Hasil presensi dikirim sebagai JSON ke:
+
+```
+POST {API_URL}/api/uploadfromml      # tanpa auth
+```
+
+`API_URL` di-set di `iot/main.py` (default: deployment Vercel). Payload:
 
 ```json
 {
-    "status"          : "recognized",
-    "assisstant_code" : "FDR",
-    "name"            : "daffa",
-    "confidence"      : 0.877,
-    "time"            : "2026-05-09T14:18:54.737Z",
-    "uuid"            : "5461f949-66a8-4409-bc2f-ef42b6126a5d",
-    "formattedTime"   : "Saturday, May 09, 2026",
-    "is_smiling"      : true,
-    "message"         : "Selamat Datang, daffa! Senyumnya Keren!"
+  "status": "recognized",
+  "assisstant_code": "FDL",
+  "name": "DAFFAFR",
+  "confidence": 0.82,
+  "time": "2026-06-24T08:30:00+00:00",
+  "uuid": "…",
+  "formattedTime": "Tuesday, June 24, 2026",
+  "is_smiling": true,
+  "message": "Selamat Datang, DAFFAFR!"
 }
 ```
 
-Dikirim ke backend via:
-```python
-requests.post("http://localhost:3000/api/uploadfromml", json=result)
-```
+> Field di-name `assisstant_code` (ada **typo double-s** yang ngikut skema backend
+> — jangan diperbaiki sepihak, nanti mismatch sama DB). Tipe `VARCHAR(3)`.
 
----
+### Kode asisten per orang
 
-## 👥 Cara Integrasi dengan Tim IoT
-
-```python
-from ml.predict import FaceRecognizer
-
-# Load sekali di awal
-recognizer = FaceRecognizer()
-
-# Panggil tiap frame
-result = recognizer.recognize(frame)
-
-if result["status"] == "recognized":
-    print(result["name"])       # nama mahasiswa
-    print(result["message"])    # pesan untuk LCD
-    print(result["is_smiling"]) # status senyum (bool)
-```
-
----
-
-## ➕ Daftarkan Mahasiswa Baru (Tanpa Train Ulang)
-
-```bash
-# 1. Ambil foto (hanya ~45 detik)
-python collect_faces.py --nama "Mahasiswa Baru" --jumlah 50
-
-# 2. Preprocessing (~30 detik)
-python preprocess.py
-
-# 3. Register saja (~30 detik)
-python train.py --register "Mahasiswa Baru"
-
-# Total: ~2 menit per mahasiswa ✅
-```
-
----
-
-## 🔧 Kode Asisten Custom
-
-Edit `KODE_ASISTEN` di `predict.py`:
+Diatur manual di `predict.py` → dict `KODE_ASISTEN`:
 
 ```python
 KODE_ASISTEN = {
-    "daffa" : "FDR",
-    "dirgi" : "DRG",
-    "rufus" : "RFS",
-    # tambah mahasiswa baru (max 3 huruf!):
-    # "nama" : "KOD",
+    "daffa"   : "FDR",
+    "dirgi"   : "DRG",
+    "DAFFAFR" : "FDL",
+    # "nama"  : "KODE",
 }
 ```
 
----
-
-## 📊 Hasil Evaluasi
-
-| Metrik | Nilai |
-|---|---|
-| Model | GhostFaceNet |
-| Akurasi | 90-94% |
-| Confidence Score | 0.8 – 0.9 |
-| Threshold | 0.55 |
-| Dataset | 50 foto × 15 aug = 750 data/orang |
-| Waktu daftar | ~2 menit/mahasiswa |
-| 100 mahasiswa | ~3.5 jam |
-| Smile Detection | Simple MAR (~1ms/frame) |
-| Status | ✅ Siap Deploy ke Raspberry Pi |
+Kalau nama nggak ada di map, fallback ke 3 huruf pertama (uppercase).
 
 ---
 
-## 💡 Solusi Masalah Umum
+## Crowd Prediction (opsional)
+
+`predict_crowd.py` baca tabel `Attendance`, latih RandomForest per `(hari, jam)`,
+lalu klasifikasi tiap slot jadi **ramai / sedang / sepi**, simpan ke tabel
+`Prediction`.
+
+```bash
+# butuh DIRECT_URL atau DATABASE_URL di .env
+python predict_crowd.py
+```
+
+Jam operasional default `7–19` (atur di konstanta `OPEN_HOUR`/`CLOSE_HOUR`).
+Idealnya dijadwalkan (cron) buat precompute berkala.
+
+---
+
+## Catatan Platform (Windows vs Pi)
+
+- **Backend kamera:** Windows pakai `cv2.CAP_DSHOW`, Linux/Pi pakai `cv2.CAP_V4L2`.
+  `predict.py` & `collect_faces_video.py` sudah auto-pilih sesuai OS — jangan
+  hardcode DSHOW di Linux (bakal gagal buka kamera).
+- **LCD SPI:** `cv2.imshow` ke LCD SPI hasilnya **hitam**. Tampilan di Pi dirender
+  via **pygame** (`iot/main.py`). Untuk lihat preview OpenCV, pakai HDMI.
+- **Headless di Pi:** saat collect via webcam di Pi, tambahkan `--headless` (nggak
+  ada preview window).
+- **Workflow deploy:** develop & tes di Windows → `scp` ke Pi → jalankan di Pi.
+
+---
+
+## Troubleshooting
 
 | Masalah | Solusi |
-|---|---|
-| Kamera tidak terbuka (hitam) | Tambahkan `cv2.CAP_DSHOW` + coba index 0 atau 1 |
-| Error `/tmp/` di Windows | Sudah difix pakai `tempfile.gettempdir()` |
-| Kamera lag | Gunakan `predict_thread.py` bukan `predict.py` |
-| Wajah tidak terdeteksi | Pastikan pencahayaan cukup, CLAHE aktif |
-| Raspi kepanasan | Naikkan `FRAME_SKIP` di config.py (8 → 10) |
-| Shapes not aligned | Model berubah → hapus `.pkl` lama, register ulang |
-| JSON not serializable | Pastikan `bool(is_smiling)` bukan numpy bool |
-| Smile tidak terdeteksi | Turunkan `SMILE_WHITE_THRESHOLD` di predict.py |
-| ImportError SMILE_VOTE | Tambahkan parameter smile di config.py |
+|---------|--------|
+| `FileNotFoundError: Jalankan train.py dulu` | `embeddings.pkl` belum ada — jalankan `python train.py` |
+| Kamera hitam / gagal buka di Pi | cek `CAMERA_INDEX`, pastikan pakai V4L2 (bukan DSHOW) |
+| Wajah valid jadi "Unknown" terus | turunkan `SIMILARITY_THRESHOLD`, atau re-collect di cahaya lebih baik |
+| Salah-kenal antar orang | naikkan `SIMILARITY_THRESHOLD`, tambah variasi dataset |
+| Senyum nggak kedeteksi / false positive | kalibrasi `SMILE_RATIO_THRESHOLD` lewat `python predict.py` (lihat angka ratio) |
+| dlib lama banget install di Pi | pakai `--extra-index-url https://www.piwheels.org/simple` |
+| LCD nampilin hitam | pakai pygame (`iot/main.py`), bukan `cv2.imshow` |
+| Suara nggak keluar | pastikan `espeak` terpasang (`sudo apt install espeak`) |
+| Crowd prediction error koneksi DB | set `DIRECT_URL`/`DATABASE_URL` di `.env`; cek Supabase nggak ke-pause |
 
 ---
 
-## 🔗 Deploy ke Raspberry Pi
+## Known Issues / WIP
 
-```bash
-# Di Raspberry Pi
-git clone https://github.com/Daffa12777/boostify-ml.git
-cd boostify-ml
-chmod +x ml/setup_raspi.sh
-./ml/setup_raspi.sh
-
-# Jalankan
-python3 ml/predict_thread.py
-```
-
----
-
-## 📦 Update ke GitHub
-
-```bash
-# Setiap ada perubahan kode
-git add .
-git commit -m "keterangan perubahan"
-git push
-
-# Setelah daftar mahasiswa baru
-git add ml/models/
-git commit -m "tambah mahasiswa baru - register"
-git push
-```
-
----
-# 🔗 Integrasi ML ke Web — Boostify
-
-## 📌 Metode Integrasi yang Dipakai
-
-Boostify menggunakan:
-
-* REST API
-* HTTP Request
-* JSON
-* Express.js API
-* Python `requests.post()`
-* Frontend `fetch()`
-
-Bukan:
-
-* MQTT
-* WebSocket
-* SocketIO
+- **`evaluate.py` belum kompatibel.** Script ini masih ekstrak embedding pakai
+  **DeepFace** (`represent` + cosine similarity), padahal `embeddings.pkl` dibikin
+  pakai **dlib** (Euclidean). Dua ruang vektor yang beda, jadi hasil evaluasinya
+  **tidak valid** untuk pipeline saat ini. Perlu di-port ke `face_recognition`
+  (dlib) + Euclidean distance dulu sebelum dipakai.
+- **Tabel `Prediction` di Supabase.** Fitur crowd prediction butuh tabel
+  `Prediction`, tapi tabel ini pernah hilang di Supabase meski skema terlihat sinkron
+  — pastikan model `Prediction` benar-benar ada di `schema.prisma` backend dan ter-migrate.
+- **Komentar threshold di `config.py` nggak sinkron** dengan nilai aktualnya
+  (`0.7`). Acuan yang benar adalah perilaku kode (lihat bagian "Cara kerja threshold").
 
 ---
 
-# 🧠 Alur Integrasi
+## Lisensi & Kontributor
 
-```txt id="4j9u1y"
-Camera
-↓
-ML Python (Face Recognition)
-↓
-POST Attendance
-↓
-Backend Express API
-↓
-Supabase Database
-↓
-Frontend Next.js
-↓
-LiveReport & Recap
-```
-
----
-
-# 🌐 PORT YANG DIPAKAI
-
-| Service          | Port                 |
-| ---------------- | -------------------- |
-| Backend Express  | 3000                 |
-| Frontend Next.js | 3001                 |
-| ML Python        | local python process |
-
----
-
-# 📡 STEP INTEGRASI ML → WEB
-
-## 1. ML Mengirim Data ke Backend
-
-File:
-
-```bash id="l6dj5n"
-predict.py
-```
-
-Tambahkan:
-
-```python id="7tt8oz"
-requests.post(
-    "http://localhost:3000/api/uploadfromml",
-    json=last_result
-)
-```
-
----
-
-## 2. Backend Menyediakan Endpoint
-
-File:
-
-```bash id="hl9qqm"
-src/routes/routes.js
-```
-
-Tambahkan:
-
-```js id="67wv9u"
-router.post("/uploadfromml", uploadAttendanceData);
-```
-
----
-
-## 3. Backend Menyimpan ke Supabase
-
-File:
-
-```bash id="bm29sk"
-sendDataController.js
-```
-
-Gunakan Prisma:
-
-```js id="p6s6lc"
-await prisma.attendance.create({
-  data: {
-    assistant_code,
-    name,
-    time
-  }
-})
-```
-
----
-
-## 4. Frontend Mengambil Data Attendance
-
-File:
-
-```bash id="jxf9ks"
-LiveReport.tsx
-```
-
-Gunakan:
-
-```ts id="s8gcxk"
-fetch("http://localhost:3000/api/attendances")
-```
-
----
-
-## 5. Frontend Menampilkan Data
-
-Data dari backend otomatis muncul di:
-
-* LiveReport
-* Recap
-
----
-
-# 🔐 AUTHENTICATION
-
-Frontend memakai:
-
-```txt id="d9jlwm"
-JWT + NextAuth
-```
-
-Token dikirim ke backend:
-
-```ts id="rshk8f"
-Authorization: `Bearer ${token}`
-```
-
----
-
-# 🛡️ ANTI SPAM
-
-File:
-
-```bash id="y97i8o"
-config.py
-```
-
-```python id="st3n3m"
-COOLDOWN_SEC = 60
-```
-
-Tujuan:
-
-* 1 orang tidak spam attendance
-* Supabase tetap bersih
-
----
-
-# 🚀 SAAT DEPLOY
-
-## Local Development
-
-| Service  | URL            |
-| -------- | -------------- |
-| Backend  | localhost:3000 |
-| Frontend | localhost:3001 |
-
----
-
-## Production
-
-| Service  | URL          |
-| -------- | ------------ |
-| Backend  | Vercel       |
-| Frontend | Vercel       |
-| Database | Supabase     |
-| ML       | Raspberry Pi |
-
----
-
-# 📌 FINAL FLOW
-
-```txt id="f3n7mi"
-ML Python
-↓
-POST /api/uploadfromml
-↓
-Backend Express
-↓
-Supabase
-↓
-Frontend Fetch API
-↓
-LiveReport & Recap
-```
-
----
-
-# ✅ HASIL
-
-✅ Attendance realtime
-✅ Data otomatis masuk Supabase
-✅ LiveReport realtime
-✅ Recap realtime
-✅ Anti spam aktif
-✅ Siap deploy Raspberry Pi
-
-
-## 🔗 Integrasi Project
-
-| Komponen | Teknologi | Status |
-|---|---|---|
-| Frontend | Next.js + TypeScript | ✅ |
-| Backend | Express.js + Prisma | ✅ |
-| Database | Supabase PostgreSQL | ✅ |
-| ML | Python + DeepFace + OpenCV | ✅ |
-| Auth | NextAuth + JWT | ✅ |
-
----
-
-## 👤 Tim
-
-
-**Repository** — [github.com/Daffa12777/boostify-ml](https://github.com/Daffa12777/boostify-ml)
-**Project** — Boostify Face Recognition Attendance System
-
----
-
-*Boostify ML — Smart Attendance for Smart Campus* 🐝
+Project lab CPS Laboratory. Modul ML/IoT: **Dappa** (Muhammad Daffa Fadlurrahman).
